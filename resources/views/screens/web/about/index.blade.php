@@ -5,7 +5,7 @@
 	<!-- About Section -->
 	<section class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-20">
 		<h3 class="text-5xl font-bold mb-12 text-center text-gray-900">
-			About Me
+			Meet The Author
 		</h3>
 
 		{{-- Author Bio and Image Section --}}
@@ -19,15 +19,20 @@
 
 			<!-- Author Bio -->
 			<div class="md:pt-10 text-center md:text-left">
-				<p class="text-xl leading-relaxed text-gray-700">
-					Rima Girnius is a Lithuanian-born writer, former Radio journalist, and author of <span
-						class="font-extrabold text-gray-900">Eureka And The Magical Trio</span>.
-				</p>
-				<p class="text-lg leading-relaxed mt-4 text-gray-700">
-					Blending a diverse background in Industrial Engineering and Sociology, she earned a Graduate
-					Certificate in Creative Writing from Humber College and
-					is currently based in Toronto, Canada.
-				</p>
+
+            <p class="text-xl leading-relaxed text-gray-700">
+Rima M. Girnius is a distinguished Lithuanian American writer who brings a unique blend of storytelling and academic insight to her work. With a strong professional background in journalism and sociology, Rima crafts narratives rich in cultural authenticity and emotional depth. Her work, especially Eureka and the Magical Trio, explores the vital intersection of heritage, transformation, and personal identity, offering profound perspectives on the immigrant experience. A dedicated advocate for cultural understanding, Rima’s books on immigration and identity resonate with readers seeking powerful, meaningful stories. Connect with Rima to follow her journey and learn more about the inspiration behind her writing.
+            </p>
+
+				<!-- <p class="text-xl leading-relaxed text-gray-700"> -->
+				<!-- 	Rima Girnius is a Lithuanian-born writer, former Radio journalist, and author of <span -->
+				<!-- 		class="font-extrabold text-gray-900">Eureka And The Magical Trio</span>. -->
+				<!-- </p> -->
+				<!-- <p class="text-lg leading-relaxed mt-4 text-gray-700"> -->
+				<!-- 	Blending a diverse background in Industrial Engineering and Sociology, she earned a Graduate -->
+				<!-- 	Certificate in Creative Writing from Humber College and -->
+				<!-- 	is currently based in Toronto, Canada. -->
+				<!-- </p> -->
 			</div>
 		</div>
 
@@ -41,7 +46,7 @@
 				</div>
 				<div>
 					<h4 class="text-xl font-bold mb-1 text-gray-800">Born in Lithuania</h4>
-					<p class="text-gray-600">born in lithuania, she started her life and education during the Soviet era</p>
+					<p class="text-gray-600">Born in lithuania, she started her life and education during the Soviet era.</p>
 				</div>
 			</div>
 

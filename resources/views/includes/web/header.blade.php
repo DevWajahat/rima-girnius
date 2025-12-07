@@ -8,7 +8,7 @@
 			<div class="flex space-x-4 sm:text-[0.8rem] md:text-md lg:text-md tracking-wider uppercase text-gray-600">
             	<a href="{{ route('home') }}" class="hover:text-primary-green transition duration-200">Home</a>
 				<a href="{{ route('about') }}" class="hover:text-primary-green transition duration-200">About</a>
-				<a href="#" class="hover:text-primary-green transition duration-200">Books</a>
+				<a href="{{ route('books') }}" class="hover:text-primary-green transition duration-200">Books</a>
 				<a href="" class="hover:text-primary-green transition duration-200">Blogs</a>
 				<a href="{{ route('contact') }}" class="hover:text-primary-green transition duration-200">Contact</a>
 			</div>

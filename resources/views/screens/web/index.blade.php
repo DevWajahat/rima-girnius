@@ -69,7 +69,7 @@
 
 	<section class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-20">
 		<h3 class="text-4xl font-bold mb-12 text-center text-gray-900">
-			About Me
+		    Meet The Author
 		</h3>
 
 		{{-- Author Bio and Image Section --}}
