@@ -1,0 +1,151 @@
+@font-face {
+    font-family: "mint-grotesk";
+    src: url('../../public/assets/web/fonts/MintGroteskTrial-Bold-BF64336b1cb5af2.otf') format("opentype");
+    font-style: normal;
+    font-weight: 100;
+}
+
+@font-face {
+    font-family: "mint-bold";
+    src: url('../../public/assets/web/fonts/MintGroteskTrial-Black-BF64336b1cc868f.otf') format('opentype');
+    font-style: normal;
+}
+
+@font-face {
+    font-family: "mint-regular";
+    src: url('../../public/assets/web/fonts/MintGroteskTrial-Regular-BF64336b1caef64.otf');
+}
+
+@import "tailwindcss";
+
+@source '../../vendor/laravel/framework/src/Illuminate/Pagination/resources/views/*.blade.php';
+@source '../../storage/framework/views/*.php';
+@source '../**/*.blade.php';
+@source '../**/*.js';
+
+@theme {
+    /* Custom CSS Variables for font stacks */
+    --font-bold: "mint-grotesk", "system-ui", "sans-serif";
+    --font-boldHeading: "mint-bold", "sans-serif", "system-ui";
+    --font-regular-stack: "mint-regular", "sans-serif", "system-ui";
+    --font-montaguSlab: "montagu-slab", "serif", "system-ui";
+    /* Colors (Mapping the 'extend' colors) */
+    --color-primary-green: #7BC34A;
+    --color-light-green-bg: #DFF3C7;
+    --color-dark-text: #333332;
+    --color-light-text: #f8f9f9;
+
+    /* Fonts (Mapping the 'extend' font families) */
+    --font-family-sans: var(--mint-grotesk-stack), 'Inter', 'sans-serif';
+    --font-family-serif: 'Georgia', 'Times New Roman', 'serif';
+    --font-family-boldHeading: var(--mint-bold-stack);
+    --font-family-mintRegular: var(--mint-regular-stack);
+
+    /* Box Shadows (Mapping the 'extend' box shadow) */
+    --box-shadow-book: 0 10px 20px rgba(0, 0, 0, 0.15);
+}
+
+/* --- FlyonUI and other directives (Using the recommended method) --- */
+@import "flyonui/variants.css";
+@plugin "flyonui";
+@source "../node_modules/flyonui/flyonui.js";
+
+/* FlyonUI theme configuration block */
+@plugin "flyonui" {
+    themes: light --default, dark --prefersdark;
+    --font-display--font-feature-settings: "cv02", "cv03", "cv04", "cv11";
+    --font-display--font-variation-settings: "opsz" 32;
+}
+
+@source '../../vendor/laravel/framework/src/Illuminate/Pagination/resources/views/*.blade.php';
+@source '../../storage/framework/views/*.php';
+@source '../**/*.blade.php';
+@source '../**/*.js';
+
+@plugin "@iconify/tailwind4";
+
+
+/* General body styling */
+
+body {
+
+    font-family: 'Inter', sans-serif;
+
+    color: #333333;
+
+    min-height: 100vh;
+
+}
+
+
+/* Custom styling for the book cover (now straight, no hover effect) */
+
+.book-cover {
+
+    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.15);
+
+    /* Keep the initial shadow */
+
+    transition: box-shadow 0.3s ease-in-out;
+
+    /* Simplified transition */
+
+}
+
+
+/* Custom styling for the circular author image container */
+
+.author-image-container {
+
+    border: 4px solid #333333;
+
+    border-radius: 50%;
+
+    overflow: hidden;
+
+    width: 180px;
+
+    height: 180px;
+
+    flex-shrink: 0;
+
+    /* Prevent shrinking on small screens */
+
+}
+
+
+/* Make it larger on medium screens and up */
+
+@media (min-width: 768px) {
+
+    .author-image-container {
+
+        width: 250px;
+
+        height: 250px;
+
+    }
+
+}
+
+
+/* CTA button hover effect */
+
+.cta-button {
+
+    transition: background-color 0.2s, color 0.2s, transform 0.2s;
+
+}
+
+
+.cta-button:hover {
+
+    background-color: #8BC34A;
+
+    color: white;
+
+    border-color: #8BC34A;
+
+    transform: translateY(-2px);
+
+}
