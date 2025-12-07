@@ -15,14 +15,16 @@
 		</div>
 
 		<!-- Multiple Book Cards Grid (Simplified Structure) -->
-		<div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8 mb-24 p-4 lg:p-0">
+		<!-- Changed to flex justify-center to center the single active card -->
+		<div class="flex flex-wrap justify-center gap-8 mb-24 p-4 lg:p-0">
 
 			{{-- Book Card 1: Eureka And The Magical Trio (Available) --}}
-			<div class="group bg-white rounded-xl shadow-xl transition duration-300 hover:shadow-2xl border border-gray-200 overflow-hidden">
+			<!-- Added max-w-sm to constrain the centered card's width -->
+			<div class="group bg-white rounded-xl shadow-xl transition duration-300 hover:shadow-2xl border border-gray-200 overflow-hidden max-w-sm">
 				<div class="p-4 bg-lime-50">
 					<div class="relative overflow-hidden rounded-lg h-56 flex items-center justify-center">
 						{{-- Placeholder Image 1 --}}
-						<img src="https://placehold.co/180x280/dcfce7/4ade80?text=Eureka+Cover"
+						<img src="{{ asset('assets/web/images/books/eureka-book.jpg') }}"
 							alt="Cover of Eureka And The Magical Trio"
 							class="h-full w-auto object-cover py-2 transform transition duration-500 group-hover:scale-[1.05]">
 						<span class="absolute top-2 right-2 px-3 py-1 text-sm font-bold bg-lime-500 text-white rounded-full shadow-md">Available</span>
@@ -32,16 +34,16 @@
 					<h4 class="text-xl font-extrabold text-gray-900 leading-snug">Eureka And The Magical Trio</h4>
 					<p class="text-2xl font-bold text-lime-600 mt-2">$14.99</p>
 					<a href="#" class="mt-4 inline-block px-6 py-2 text-sm font-semibold text-lime-600 border border-lime-300 rounded-lg hover:bg-lime-50 transition duration-150">
-						View Details
+						Buy Now
 					</a>
 				</div>
 			</div>
 
 			{{-- Book Card 2: The Secret of Whispering Woods (Upcoming) --}}
-			<div class="group bg-white rounded-xl shadow-xl transition duration-300 hover:shadow-2xl border border-gray-200 overflow-hidden opacity-90">
+			{{-- <div class="group bg-white rounded-xl shadow-xl transition duration-300 hover:shadow-2xl border border-gray-200 overflow-hidden opacity-90">
 				<div class="p-4 bg-teal-50">
 					<div class="relative overflow-hidden rounded-lg h-56 flex items-center justify-center">
-						{{-- Placeholder Image 2 --}}
+						 Placeholder Image 2
 						<img src="https://placehold.co/180x280/ccebeb/14b8a6?text=Secret+Cover"
 							alt="Cover of The Secret of Whispering Woods"
 							class="h-full w-auto object-cover py-2 transform transition duration-500 group-hover:scale-[1.05]">
@@ -55,13 +57,13 @@
 						Pre-Order Soon
 					</span>
 				</div>
-			</div>
+			</div> --}}
 
 			{{-- Book Card 3: Adventures in Crystal Caves (Planned) --}}
-			<div class="group bg-white rounded-xl shadow-xl transition duration-300 hover:shadow-2xl border border-gray-200 overflow-hidden opacity-70">
+	       {{--	<div class="group bg-white rounded-xl shadow-xl transition duration-300 hover:shadow-2xl border border-gray-200 overflow-hidden opacity-70">
 				<div class="p-4 bg-amber-50">
 					<div class="relative overflow-hidden rounded-lg h-56 flex items-center justify-center">
-						{{-- Placeholder Image 3 --}}
+						 Placeholder Image 3
 						<img src="https://placehold.co/180x280/fef3c7/f59e0b?text=Adventure+Cover"
 							alt="Cover of Adventures in Crystal Caves"
 							class="h-full w-auto object-cover py-2 transform transition duration-500 group-hover:scale-[1.05]">
@@ -75,7 +77,7 @@
 						Status: Early Draft
 					</span>
 				</div>
-			</div>
+			</div> --}}
 		</div>
 
 		<!-- Descriptive Text Content Section (Retained) -->
