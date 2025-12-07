@@ -39,24 +39,24 @@
 
 				<!-- Book Purchase Buttons -->
 				<div class="flex flex-wrap justify-center md:justify-start gap-3">
+					<!-- <button -->
+					<!-- 	class="cta-button text-sm font-medium border border-primary-green text-primary-green px-4 py-2 rounded-full min-w-[150px]"> -->
+					<!-- 	BARNES & NOBLE -->
+					<!-- </button> -->
 					<button
 						class="cta-button text-sm font-medium border border-primary-green text-primary-green px-4 py-2 rounded-full min-w-[150px]">
-						BARNES & NOBLE
-					</button>
-					<button
-						class="cta-button text-sm font-medium border border-primary-green text-primary-green px-4 py-2 rounded-full min-w-[150px]">
-						AMAZON
+						AMAZON KINDLE
 					</button>
 				</div>
-                <div class="flex flex-wrap mt-2.5 justify-center md:justify-start gap-3">
-					<button
-						class="cta-button text-sm font-medium border border-primary-green text-primary-green px-4 py-2 rounded-full min-w-[150px]">
-						BOOKSHOP
-					</button>
-					<button
-						class="cta-button text-sm font-medium border border-primary-green text-primary-green px-4 py-2 rounded-full min-w-[150px]">
-						AMAZON
-					</button>
+					<!--            <div class="flex flex-wrap mt-2.5 justify-center md:justify-start gap-3"> -->
+					<!-- <button -->
+					<!-- 	class="cta-button text-sm font-medium border border-primary-green text-primary-green px-4 py-2 rounded-full min-w-[150px]"> -->
+					<!-- 	BOOKSHOP -->
+					<!-- </button> -->
+					<!-- <button -->
+					<!-- 	class="cta-button text-sm font-medium border border-primary-green text-primary-green px-4 py-2 rounded-full min-w-[150px]"> -->
+					<!-- 	AMAZON -->
+					<!-- </button> -->
                 </div>
 			</div>
 		</div>
@@ -69,7 +69,7 @@
 
 	<section class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-20">
 		<h3 class="text-4xl font-bold mb-12 text-center text-gray-900">
-		    Meet The Author
+		    About The Author
 		</h3>
 
 		{{-- Author Bio and Image Section --}}

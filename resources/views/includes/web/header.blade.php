@@ -9,7 +9,7 @@
             	<a href="{{ route('home') }}" class="hover:text-primary-green transition duration-200">Home</a>
 				<a href="{{ route('about') }}" class="hover:text-primary-green transition duration-200">About</a>
 				<a href="{{ route('books') }}" class="hover:text-primary-green transition duration-200">Books</a>
-				<a href="" class="hover:text-primary-green transition duration-200">Blogs</a>
+				<a href="{{ route('blogs') }}" class="hover:text-primary-green transition duration-200">Blogs</a>
 				<a href="{{ route('contact') }}" class="hover:text-primary-green transition duration-200">Contact</a>
 			</div>
 
