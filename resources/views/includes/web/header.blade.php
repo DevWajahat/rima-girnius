@@ -6,11 +6,11 @@
 			<!-- Top Links -->
             <div class="w-screen flex  sm:px-6 mb-8 lg:px-8 py-4 justify-center items-center bg-[#E1E6DB] overflow-hidden">
 			<div class="flex space-x-4 sm:text-[0.8rem] md:text-md lg:text-md tracking-wider uppercase text-gray-600">
-            	<a href="{{ route('home') }}" class="hover:text-primary-green transition duration-200">Home</a>
-				<a href="{{ route('about') }}" class="hover:text-primary-green transition duration-200">About</a>
-				<a href="{{ route('books') }}" class="hover:text-primary-green transition duration-200">Books</a>
-				<a href="{{ route('blogs') }}" class="hover:text-primary-green transition duration-200">Blogs</a>
-				<a href="{{ route('contact') }}" class="hover:text-primary-green transition duration-200">Contact</a>
+            	<a href="{{ route('home') }}"  wire:navigate class="hover:text-primary-green transition duration-200">Home</a>
+				<a href="{{ route('about') }}" wire:navigate class="hover:text-primary-green transition duration-200">About</a>
+				<a href="{{ route('books') }}" wire:navigate class="hover:text-primary-green transition duration-200">Books</a>
+				<a href="{{ route('blogs') }}" wire:navigate class="hover:text-primary-green transition duration-200">Blogs</a>
+				<a href="{{ route('contact') }}" wire:navigate class="hover:text-primary-green transition duration-200">Contact</a>
 			</div>
 
             </div>
