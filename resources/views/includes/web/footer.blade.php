@@ -59,10 +59,10 @@
 			<div>
                 <h4 class="text-base font-bold mb-3 text-gray-900">Links</h4>
 				<ul class="space-y-2 text-sm">
-					<li><a href="{{ route('home') }}" class="hover:text-lime-600 transition duration-200">Rima Girnius</a></li>
-					<li><a href="{{ route('books') }}" class="hover:text-lime-600 transition duration-200">Eureka and the Magical Trio Book</a></li>
-					<li><a href="{{ route('about') }}" class="hover:text-lime-600 transition duration-200">About the Author</a></li>
-					<li><a href="{{ route('blogs') }}" class="hover:text-lime-600 transition duration-200">Blogs</a></li>
+					<li><a href="{{ route('home') }}"  wire:navigate class="hover:text-lime-600 transition duration-200">Rima Girnius</a></li>
+					<li><a href="{{ route('books') }}" wire:navigate  class="hover:text-lime-600 transition duration-200">Eureka and the Magical Trio Book</a></li>
+					<li><a href="{{ route('about') }}" wire:navigate  class="hover:text-lime-600 transition duration-200">About the Author</a></li>
+					<li><a href="{{ route('blogs') }}" wire:navigate class="hover:text-lime-600 transition duration-200">Blogs</a></li>
 				</ul>
 			</div>
 
@@ -70,7 +70,7 @@
 			<div>
                 <h4 class="text-base font-bold mb-3 text-gray-900">Books</h4>
 				<ul class="space-y-2 text-sm">
-					<li><a href="{{ route('books') }}" class="hover:text-lime-600 transition duration-200">Buy Rima Girnius Books</a></li>
+					<li><a href="{{ route('books') }}" wire:navigate class="hover:text-lime-600 transition duration-200">Buy Rima Girnius Books</a></li>
 				</ul>
 			</div>
 
