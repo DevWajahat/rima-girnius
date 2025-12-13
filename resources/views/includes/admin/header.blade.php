@@ -44,7 +44,7 @@
                         <div wire:ignore class="dropdown-menu bg-transparent border-0">
                             <a href="{{ route('admin.cms.meta.herosection.form') }}" wire:navigate class="dropdown-item">Hero Section</a>
                             <a href="{{ route('admin.cms.meta.featuredBookSection.form') }}" wire:navigate class="dropdown-item">Featured Book Section</a>
-                            <a href="element.html" class="dropdown-item">Other Elements</a>
+                            <a href="{{ route('admin.cms.meta.aboutSection.form') }}" wire:navigate class="dropdown-item">About Section</a>
                         </div>
                     </div>
 
