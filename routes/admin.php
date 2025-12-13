@@ -5,7 +5,7 @@ use App\Http\Controllers\Admin\HomeController;
 use App\Http\Controllers\Admin\CmsManagmentController;
 use App\Livewire\Admin\Cms\Home\HeroSection;
 use App\Livewire\Admin\Cms\Home\FeaturedSection;
-
+use App\Livewire\Admin\Cms\Home\AboutSection;
 
 Route::get("/",[HomeController::class,'index'])->name('index');
 
@@ -24,8 +24,11 @@ Route::prefix('cms/meta')->name('cms.meta.')->group(function () {
     Route::post('hero-section/store-or-update', HeroSection::class)->name('herosection.storeOrUpdate');
 
     //Home Featured Book Section
-    // Featured Book Section
     Route::get('home/featured-book-section', FeaturedSection::class)->name('featuredBookSection.form');
     Route::post('featured-book-section/store-or-update', FeaturedSection::class)->name('featuredBookSection.storeOrUpdate');
+
+    // About Section (Corrected Name)
+    Route::get('home/about-section', AboutSection::class)->name('aboutSection.form');
+    Route::post('about-section/store-or-update', AboutSection::class)->name('aboutSection.storeOrUpdate');
 
 });
