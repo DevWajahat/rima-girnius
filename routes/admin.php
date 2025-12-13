@@ -4,6 +4,8 @@ use Illuminate\Support\Facades\Routes;
 use App\Http\Controllers\Admin\HomeController;
 use App\Http\Controllers\Admin\CmsManagmentController;
 use App\Livewire\Admin\Cms\Home\HeroSection;
+use App\Livewire\Admin\Cms\Home\FeaturedSection;
+
 
 Route::get("/",[HomeController::class,'index'])->name('index');
 
@@ -17,12 +19,13 @@ Route::controller(CmsManagmentController::class)->name('cms.')->prefix('cms/page
 
 Route::prefix('cms/meta')->name('cms.meta.')->group(function () {
 
-    // Home page banner section (GET route to view the form/component)
+    // Home Hero section
     Route::get('home/hero-section', HeroSection::class)->name('herosection.form');
-
-    // Home page banner section (POST route, often not strictly needed for Livewire)
     Route::post('hero-section/store-or-update', HeroSection::class)->name('herosection.storeOrUpdate');
 
-    // ... (Other CMS meta routes)
+    //Home Featured Book Section
+    // Featured Book Section
+    Route::get('home/featured-book-section', FeaturedSection::class)->name('featuredBookSection.form');
+    Route::post('featured-book-section/store-or-update', FeaturedSection::class)->name('featuredBookSection.storeOrUpdate');
 
 });
