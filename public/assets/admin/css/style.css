@@ -79,6 +79,11 @@
     z-index: 999;
 }
 
+.sidebar::-webkit-scrollbar {
+    width: 3px;
+
+}
+
 .content {
     margin-left: 250px;
     min-height: 100vh;
@@ -129,6 +134,7 @@
     border-left: 3px solid var(--light);
     border-radius: 0 30px 30px 0;
     outline: none;
+    font-size: 14px;
 }
 
 .sidebar .navbar .navbar-nav .nav-link:hover,
@@ -161,6 +167,7 @@
     content: "\f107";
     font-family: "Font Awesome 5 Free";
     font-weight: 900;
+    font-size: 12px;
     transition: .5s;
 }
 

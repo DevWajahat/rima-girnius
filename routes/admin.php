@@ -6,6 +6,12 @@ use App\Http\Controllers\Admin\CmsManagmentController;
 use App\Livewire\Admin\Cms\Home\HeroSection;
 use App\Livewire\Admin\Cms\Home\FeaturedSection;
 use App\Livewire\Admin\Cms\Home\AboutSection;
+use App\Livewire\Admin\Cms\About\AboutSection as AboutPageSection;
+use App\Livewire\Admin\Cms\Books\StorytellingSection;
+use App\Livewire\Admin\Blogs\BlogIndex;
+use App\Livewire\Admin\Blogs\BlogCreate;
+use App\Livewire\Admin\Blogs\BlogEdit;
+
 
 Route::get("/",[HomeController::class,'index'])->name('index');
 
@@ -29,6 +35,34 @@ Route::prefix('cms/meta')->name('cms.meta.')->group(function () {
 
     // About Section (Corrected Name)
     Route::get('home/about-section', AboutSection::class)->name('aboutSection.form');
+
+    // About Page Section
     Route::post('about-section/store-or-update', AboutSection::class)->name('aboutSection.storeOrUpdate');
 
+    Route::get('about', AboutPageSection::class)->name('aboutPage.section');
+
+    // Books Page Section
+    // Books Page - Storytelling Section
+Route::get('books/storytelling-section', StorytellingSection::class)
+    ->name('books.storytellingSection.form');
+
+});
+
+
+// Note: We use a separate prefix 'blogs' to keep it clean
+Route::prefix('blogs')->name('blogs.')->group(function () {
+
+    // 1. READ (List all blogs)
+    Route::get('/', BlogIndex::class)->name('index');
+
+    // 2. CREATE (Show the create form)
+    Route::get('/create', BlogCreate::class)->name('create');
+
+    // 3. UPDATE (Show the edit form - requires ID)
+    Route::get('/{id}/edit', BlogEdit::class)->name('edit');
+
+    // 4. DELETE (Optional Route)
+    // In Livewire, delete is usually a method inside the Index component.
+    // However, if you want a specific route for it:
+    // Route::delete('/{id}', [BlogController::class, 'destroy'])->name('destroy');
 });
