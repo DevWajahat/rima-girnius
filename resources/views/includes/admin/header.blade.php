@@ -40,11 +40,38 @@
                     </div>
 
                     <div class="nav-item dropdown" wire:ignore>
-                        <a href="#" wire:ignore class="nav-link dropdown-toggle" data-bs-toggle="dropdown"><i class="fa fa-laptop me-2"></i>CMS Home Page</a>
+                        <a href="#" wire:ignore class="nav-link dropdown-toggle" data-bs-toggle="dropdown">
+
+                    <i class="fa fa-laptop me-2"></i>
+
+                    CMS Home Page</a>
                         <div wire:ignore class="dropdown-menu bg-transparent border-0">
                             <a href="{{ route('admin.cms.meta.herosection.form') }}" wire:navigate class="dropdown-item">Hero Section</a>
                             <a href="{{ route('admin.cms.meta.featuredBookSection.form') }}" wire:navigate class="dropdown-item">Featured Book Section</a>
                             <a href="{{ route('admin.cms.meta.aboutSection.form') }}" wire:navigate class="dropdown-item">About Section</a>
+                        </div>
+                    </div>
+
+                    <div class="nav-item dropdown" wire:ignore>
+                        <a href="#" wire:ignore class="nav-link dropdown-toggle" data-bs-toggle="dropdown"><i class="fa fa-laptop me-2"></i>CMS About Page</a>
+                        <div wire:ignore class="dropdown-menu bg-transparent border-0">
+                            <a href="{{ route('admin.cms.meta.aboutPage.section') }}" wire:navigate class="dropdown-item">About Section</a>
+                        </div>
+                    </div>
+
+                    <div class="nav-item dropdown" wire:ignore>
+                        <a href="#" wire:ignore class="nav-link dropdown-toggle" data-bs-toggle="dropdown"><i class="fa fa-laptop me-2"></i>CMS Books Page</a>
+                        <div wire:ignore class="dropdown-menu bg-transparent border-0">
+                            <a href="{{ route('admin.cms.meta.books.storytellingSection.form') }}" wire:navigate class="dropdown-item">Story Telling Section</a>
+                        </div>
+                    </div>
+
+                    <div class="nav-item dropdown" wire:ignore>
+                        <a href="#" wire:ignore class="nav-link dropdown-toggle" data-bs-toggle="dropdown">
+                    <i class="fa fa-laptop me-2"></i>Blogs</a>
+                        <div wire:ignore class="dropdown-menu bg-transparent border-0">
+                            <a href="{{ route('admin.blogs.index') }}" wire:navigate class="dropdown-item">All Posts</a>
+                            <a href="{{ route('admin.blogs.create') }}" wire:navigate class="dropdown-item">Create New Post</a>
                         </div>
                     </div>
 

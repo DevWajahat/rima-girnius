@@ -2,8 +2,6 @@
     {{-- CSS links kept minimal --}}
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
 
-    {{-- NOTE: CDN links removed from here as they are in the main layout --}}
-
     <style>
         /* Styles to keep the view clean and centered */
         #about-section-cms .card { margin-left: auto; margin-right: auto; max-width: 100%; }
@@ -61,7 +59,7 @@
                             </div>
                         @endif
 
-                        {{-- The Livewire Form (Removed wire:submit.prevent) --}}
+                        {{-- The Livewire Form --}}
                         <form class="form form-vertical mt-5 mb-5 my-5">
                             <div class="row">
 
@@ -116,23 +114,23 @@
                                         <label class="form-label d-flex align-items-center">
                                             <i class="fas fa-file-alt me-2"></i> Brief Paragraph About The Author
                                         </label>
-{{-- Add wire:key to help Livewire track this element distinctively --}}
-<div wire:ignore wire:key="froala-editor-container">
-    <textarea id="froala-author-brief" class="form-control" rows="5">{{ $initialContent }}</textarea>
-</div>
+                                        {{-- Wire:ignore is CRITICAL here --}}
+                                        <div wire:ignore wire:key="froala-editor-container">
+                                            <textarea id="froala-author-brief" class="form-control" rows="5">{{ $initialContent }}</textarea>
+                                        </div>
                                         @error('authorBrief') <span class="text-danger">{{ $message }}</span> @enderror
                                     </div>
                                 </div>
 
 
-                                {{-- Save Button (Changed to call JS function) --}}
+                                {{-- Save Button --}}
                                 <div class="col-12 mt-3">
                                     <button type="button"
-                                        class="btn btn-primary waves-effect waves-float waves-light me-1"
-                                        wire:loading.attr="disabled"
-                                        onclick="syncAndSubmit()">
-                                        <span wire:loading.remove>Save About Section</span>
-                                        <span wire:loading><i class="fas fa-sync fa-spin me-2"></i> Saving...</span>
+                                            class="btn btn-primary waves-effect waves-float waves-light me-1"
+                                            wire:loading.attr="disabled"
+                                            onclick="syncAndSubmit()">
+                                            <span wire:loading.remove>Save About Section</span>
+                                            <span wire:loading><i class="fas fa-sync fa-spin me-2"></i> Saving...</span>
                                     </button>
                                 </div>
                             </div>
@@ -146,17 +144,21 @@
 
 @script
 <script>
-    // 1. GLOBAL FUNCTION: Atomic Save
+    /**
+     * 1. Global Sync Function
+     * Accessible via onclick attribute in HTML
+     */
     window.syncAndSubmit = () => {
         const Froala = window.FroalaEditor;
-        const textarea = document.getElementById('froala-author-brief');
-
+        const textareaId = 'froala-author-brief';
+        const textarea = document.getElementById(textareaId);
         let contentToSave = '';
 
-        // Try to get content from Froala instance
+        // Safely extract content
         if (typeof Froala !== 'undefined' && Froala.instances) {
+            // Find the specific instance for this textarea
             const editor = Array.from(Froala.instances).find(instance =>
-                instance.$el[0].id === 'froala-author-brief'
+                instance.$el && instance.$el[0].id === textareaId
             );
 
             if (editor) {
@@ -168,38 +170,45 @@
             contentToSave = textarea.value;
         }
 
-        // ONE REQUEST: Send content directly to the PHP method.
-        // This stops the multiple request loop and flash message disappearance.
+        // Pass data to Livewire
         @this.saveAboutSection(contentToSave);
     };
 
-    // 2. INITIALIZATION LOGIC
-    document.addEventListener('livewire:initialized', () => {
+    /**
+     * 2. Logic Controller
+     * Encapsulates all editor logic to keep global scope clean
+     */
+    const FroalaManager = {
+        textareaId: 'froala-author-brief',
 
-        const initFroala = () => {
-            const Froala = window.FroalaEditor;
-            const textareaId = 'froala-author-brief';
-            const textarea = document.getElementById(textareaId);
+        init: function() {
+            // Safety Check: Are resources loaded?
+            if (typeof window.FroalaEditor === 'undefined') {
+                console.warn('Froala not loaded yet, retrying...');
+                setTimeout(() => this.init(), 100);
+                return;
+            }
 
-            if (!textarea) return;
+            const textarea = document.getElementById(this.textareaId);
+            if (!textarea) return; // Element not on page
 
-            // CLEANUP: Destroy zombies
-            if (Froala.instances) {
-                Array.from(Froala.instances).forEach(instance => {
-                    if (instance.$el[0].id === textareaId) {
+            // CLEANUP: Destroy existing instances on this element to prevent "ghosts"
+            if (window.FroalaEditor.instances) {
+                Array.from(window.FroalaEditor.instances).forEach(instance => {
+                    if (instance.$el && instance.$el[0].id === this.textareaId) {
                         instance.destroy();
                     }
                 });
             }
 
-            // RESET DOM
+            // CLEANUP: Remove initialized class if stuck
             if (textarea.classList.contains('fr-initialized')) {
                 textarea.classList.remove('fr-initialized');
             }
 
             // INITIALIZE
             try {
-                new Froala(`#${textareaId}`, {
+                new FroalaEditor(`#${this.textareaId}`, {
                     toolbarButtons: {
                         'moreText': {
                             'buttons': ['bold', 'italic', 'underline', 'strikeThrough', 'subscript', 'superscript', 'fontFamily', 'fontSize', 'textColor', 'backgroundColor', 'clearFormatting'],
@@ -219,27 +228,33 @@
                         }
                     },
                     heightMin: 200,
-                    events: {
-                        // NOTE: We REMOVED the 'contentChanged' listener here.
-                        // Since we are passing data directly on Submit, we don't need
-                        // continuous background requests causing conflicts.
-                    }
+                    // Remove 'contentChanged' event to rely solely on the Submit button sync
+                    events: {}
                 });
+                console.log('Froala Initialized');
             } catch (e) {
                 console.error("Froala Init Error:", e);
             }
-        };
+        }
+    };
 
-        // Run on Load
-        initFroala();
+    /**
+     * 3. Lifecycle Hooks (The Fix for wire:navigate)
+     */
 
-        // Run ONLY when Settings are Saved
-        document.addEventListener('settings-saved', () => {
-            // Wait for Livewire to finish DOM updates (flash message, etc)
-            setTimeout(() => {
-                initFroala();
-            }, 100);
-        });
+    // A. Initial Load (Hard Refresh)
+    FroalaManager.init();
+
+    // B. Navigation Load (wire:navigate)
+    // This is the CRITICAL fix. We wait 50ms for the DOM swap to finish.
+    document.addEventListener('livewire:navigated', () => {
+        setTimeout(() => FroalaManager.init(), 50);
     });
+
+    // C. Re-init after Save (optional, if you feel the editor breaks after save)
+    document.addEventListener('settings-saved', () => {
+        setTimeout(() => FroalaManager.init(), 100);
+    });
+
 </script>
 @endscript
