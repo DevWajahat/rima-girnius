@@ -11,6 +11,8 @@
     <!-- Favicon -->
     <link href="{{ asset('assets/admin/img/favicon.ico') }}" rel="icon">
 
+<meta http-equiv="Content-Security-Policy" content="upgrade-insecure-requests">
+
     <!-- Google Web Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>

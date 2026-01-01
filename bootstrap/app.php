@@ -5,6 +5,7 @@ use Illuminate\Foundation\Configuration\Exceptions;
 use Illuminate\Foundation\Configuration\Middleware;
 use Illuminate\Support\Facades\Route;
 use App\Http\Middleware\IsAdmin;
+use App\Http\Middleware\NgrokOverHttps;
 
 
 return Application::configure(basePath: dirname(__DIR__))
@@ -25,6 +26,8 @@ return Application::configure(basePath: dirname(__DIR__))
         $middleware->alias([
             'IsAdmin' => IsAdmin::class,
         ]);
+
+           $middleware->append(NgrokOverHttps::class);
     })
     ->withExceptions(function (Exceptions $exceptions): void {
         //
