@@ -1,77 +1,131 @@
 @extends('layouts.web.app')
+
 @section('content')
 
-	<!-- Contact Section -->
-	<section class="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8 py-20">
+<section class="bg-white py-16 px-4 sm:px-6 lg:px-8">
+    <div class="max-w-7xl mx-auto">
+        <div class="text-center">
+            <h1 class="text-4xl md:text-6xl font-['Times_New_Roman'] text-[#564744] font-bold">
+                Contact
+            </h1>
+            <p class="mt-4 text-lg text-gray-600 font-['Poppins'] max-w-2xl mx-auto">
+                Have a question about the book, or just want to say hello? I'd love to hear from you.
+            </p>
+        </div>
+    </div>
+</section>
 
-		<!-- Header -->
-		<div class="text-center mb-12">
-			<h3 class="text-4xl font-bold text-gray-900 mb-4">
-				Get in Touch
-			</h3>
-			<p class="text-lg text-gray-600 max-w-2xl mx-auto">
-				Ready to connect? Send a message below to reach out to Rima for book signings, press inquiries, or just to say hello.
-			</p>
-		</div>
+<section class="bg-[#F5F5F5] py-16 px-4 sm:px-6 lg:px-8">
+    <div class="max-w-6xl mx-auto">
+        <div class="grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-20 items-start">
 
-		<!-- Contact Form Card -->
-		<div class="bg-white p-8 sm:p-10 rounded-xl shadow-2xl border border-gray-100">
-			<form action="#" method="POST" class="space-y-6">
+            <div class="flex flex-col gap-8">
+                <div>
+                    <h2 class="text-3xl font-['Times_New_Roman'] font-bold text-[#564744] mb-4">
+                        Get in Touch
+                    </h2>
+                    <p class="text-gray-700 font-['Poppins'] leading-relaxed text-lg">
+                        Whether you are interested in a reading, a signed copy of <strong>Eureka and the Magical Trio</strong>, or simply want to share your thoughts, feel free to reach out.
+                    </p>
+                </div>
 
-				<!-- Name and Email (Two Columns) -->
-				<div class="grid grid-cols-1 sm:grid-cols-2 gap-6">
+                <div class="space-y-6 font-['Poppins']">
+                    <div class="flex items-start gap-4">
+                        <div class="w-12 h-12 rounded-full bg-[#564744]/10 flex items-center justify-center shrink-0 text-[#564744]">
+                            <i class="ri-mail-send-line text-2xl"></i>
+                        </div>
+                        <div>
+                            <h3 class="font-bold text-[#000] text-lg">Email</h3>
+                            <a href="mailto:RimaGirnius@hotmail.com" class="text-gray-600 hover:text-[#564744] transition-colors">
+                                RimaGirnius@hotmail.com
+                            </a>
+                        </div>
+                    </div>
 
-					<div>
-						<label for="name" class="block text-base font-semibold text-gray-700 mb-2">Your Name</label>
-						<input type="text" name="name" id="name" placeholder="Your Name" required
-							class="w-full px-4 py-3 border-2 border-lime-300 focus:border-lime-500 rounded-lg shadow-sm focus:ring-lime-500 focus:outline-none transition duration-150 text-gray-700">
-					</div>
+                    <div class="flex items-start gap-4">
+                        <div class="w-12 h-12 rounded-full bg-[#564744]/10 flex items-center justify-center shrink-0 text-[#564744]">
+                            <i class="ri-map-pin-line text-2xl"></i>
+                        </div>
+                        <div>
+                            <h3 class="font-bold text-[#000] text-lg">Location</h3>
+                            <p class="text-gray-600">
+                                Duxbury, MA, USA
+                            </p>
+                        </div>
+                    </div>
+                </div>
 
-					<div>
-						<label for="email" class="block text-base font-semibold text-gray-700 mb-2">Your Email</label>
-						<input type="email" name="email" id="email" placeholder="Your Email" required
-							class="w-full px-4 py-3 border-2 border-lime-300 focus:border-lime-500 rounded-lg shadow-sm focus:ring-lime-500 focus:outline-none transition duration-150 text-gray-700">
-					</div>
-				</div>
+                <div class="pt-4">
+                    <h3 class="font-['Poppins'] font-bold text-[#000] text-lg mb-4">Follow Me</h3>
+                    <div class="flex gap-4">
+                        <a href="#" class="w-12 h-12 rounded-full border-2 border-[#564744] text-[#564744] flex items-center justify-center hover:bg-[#564744] hover:text-white transition-all duration-300">
+                            <i class="ri-instagram-line text-xl"></i>
+                        </a>
+                        <a href="#" class="w-12 h-12 rounded-full border-2 border-[#564744] text-[#564744] flex items-center justify-center hover:bg-[#564744] hover:text-white transition-all duration-300">
+                            <i class="ri-twitter-x-line text-xl"></i>
+                        </a>
+                        <a href="#" class="w-12 h-12 rounded-full border-2 border-[#564744] text-[#564744] flex items-center justify-center hover:bg-[#564744] hover:text-white transition-all duration-300">
+                            <i class="ri-facebook-circle-fill text-xl"></i>
+                        </a>
+                    </div>
+                </div>
+            </div>
 
-				<!-- Subject (Full Width) -->
-				<div>
-					<label for="subject" class="block text-base font-semibold text-gray-700 mb-2">Subject</label>
-					<input type="text" name="subject" id="subject" placeholder="What is this about?" required
-						class="w-full px-4 py-3 border-2 border-lime-300 focus:border-lime-500 rounded-lg shadow-sm focus:ring-lime-500 focus:outline-none transition duration-150 text-gray-700">
-				</div>
+            <div class="bg-white rounded-xl shadow-xl p-8 md:p-10 border-t-4 border-[#564744]">
+                <form action="#" method="POST" class="space-y-6 font-['Poppins']">
+                    @csrf
 
-				<!-- Message (Textarea) -->
-				<div>
-					<label for="message" class="block text-base font-semibold text-gray-700 mb-2">Your Message</label>
-					<textarea name="message" id="message" rows="5" placeholder="Write your message here..." required
-						class="w-full px-4 py-3 border-2 border-lime-300 focus:border-lime-500 rounded-lg shadow-sm focus:ring-lime-500 focus:outline-none transition duration-150 text-gray-700 resize-none"></textarea>
-				</div>
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                        <div class="form-control w-full">
+                            <label class="label">
+                                <span class="label-text font-semibold text-[#000]">First Name</span>
+                            </label>
+                            <input type="text" placeholder="Jane" class="input input-bordered w-full bg-white focus:outline-none focus:border-[#564744] focus:ring-1 focus:ring-[#564744] rounded-md h-12" />
+                        </div>
+                        <div class="form-control w-full">
+                            <label class="label">
+                                <span class="label-text font-semibold text-[#000]">Last Name</span>
+                            </label>
+                            <input type="text" placeholder="Doe" class="input input-bordered w-full bg-white focus:outline-none focus:border-[#564744] focus:ring-1 focus:ring-[#564744] rounded-md h-12" />
+                        </div>
+                    </div>
 
-				<!-- Newsletter Checkbox (with FlyonUI style and Remix Icon checkmark) -->
-				<div class="flex items-start pt-2">
-					<div class="flex items-center h-5">
-						{{-- Using a custom checkmark style for the lime look --}}
-						<input id="newsletter" name="newsletter" type="checkbox"
-							class="w-5 h-5 text-lime-600 bg-lime-100 border-lime-300 rounded focus:ring-lime-500 checked:bg-lime-500 checked:text-white" />
-					</div>
-					<div class="ml-3 text-sm">
-						<label for="newsletter" class="font-medium text-gray-700 cursor-pointer">
-							Sign up for newsletter updates
-						</label>
-					</div>
-				</div>
+                    <div class="form-control w-full">
+                        <label class="label">
+                            <span class="label-text font-semibold text-[#000]">Email Address</span>
+                        </label>
+                        <input type="email" placeholder="jane@example.com" class="input input-bordered w-full bg-white focus:outline-none focus:border-[#564744] focus:ring-1 focus:ring-[#564744] rounded-md h-12" />
+                    </div>
 
+                    <div class="form-control w-full">
+                        <label class="label">
+                            <span class="label-text font-semibold text-[#000]">Subject</span>
+                        </label>
+                        <select class="select select-bordered w-full bg-white focus:outline-none focus:border-[#564744] focus:ring-1 focus:ring-[#564744] rounded-md h-12 font-normal">
+                            <option disabled selected>Select a topic</option>
+                            <option>Book Inquiry</option>
+                            <option>Speaking Engagement</option>
+                            <option>General Message</option>
+                        </select>
+                    </div>
 
-				<!-- Submit Button -->
-				<div class="pt-4">
-					<button type="submit"
-						class="w-full sm:w-auto px-8 py-3 bg-lime-500 text-white font-bold text-lg rounded-lg shadow-md hover:bg-lime-600 focus:outline-none focus:ring-4 focus:ring-lime-300 transition duration-150 ease-in-out transform hover:scale-[1.01] uppercase tracking-wider">
-						Submit
-					</button>
-				</div>
-			</form>
-		</div>
-	</section>
+                    <div class="form-control w-full">
+                        <label class="label">
+                            <span class="label-text font-semibold text-[#000]">Message</span>
+                        </label>
+                        <textarea class="textarea textarea-bordered h-32 w-full bg-white focus:outline-none focus:border-[#564744] focus:ring-1 focus:ring-[#564744] rounded-md text-base" placeholder="Write your message here..."></textarea>
+                    </div>
+
+                    <div class="pt-2">
+                        <button type="submit" class="btn bg-[#5C4B43] hover:bg-[#433328] text-white border-none rounded-full w-full h-12 text-sm font-bold uppercase tracking-widest shadow-lg hover:shadow-xl transition-all transform hover:-translate-y-0.5">
+                            Send Message
+                        </button>
+                    </div>
+                </form>
+            </div>
+
+        </div>
+    </div>
+</section>
 
 @endsection

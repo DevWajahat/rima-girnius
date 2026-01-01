@@ -1,102 +1,140 @@
 @extends('layouts.web.app')
+
 @section('content')
 
-	<!-- Books Section -->
-	<section class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-20">
+    <section class="bg-white pt-16 pb-8">
+        <div class="container mx-auto px-4">
+            <div class="text-center">
+                <h1 class="text-5xl md:text-7xl font-bold text-[#433328] font-['Times_New_Roman']">
+                    Books
+                </h1>
+            </div>
+        </div>
+    </section>
 
-		<!-- Header -->
-		<div class="text-center mb-16">
-			<h3 class="text-4xl font-bold text-gray-900 mb-4">
-				My Books
-			</h3>
-			<p class="text-lg text-gray-600 max-w-2xl mx-auto">
-				Explore the imaginative world created by Rima Girnius, starting with her debut novel.
-			</p>
-		</div>
+    <section class="bg-[#F8F7F5] py-16 md:py-24 antialiased font-['Poppins']">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
 
-		<!-- Multiple Book Cards Grid (Simplified Structure) -->
-		<!-- Changed to flex justify-center to center the single active card -->
-		<div class="flex flex-wrap justify-center gap-8 mb-24 p-4 lg:p-0">
+            <div class="flex flex-col lg:flex-row gap-12 lg:gap-16 items-start justify-center">
 
-			{{-- Book Card 1: Eureka And The Magical Trio (Available) --}}
-			<!-- Added max-w-sm to constrain the centered card's width -->
-			<div class="group bg-white rounded-xl shadow-xl transition duration-300 hover:shadow-2xl border border-gray-200 overflow-hidden max-w-sm">
-				<div class="p-4 bg-lime-50">
-					<div class="relative overflow-hidden rounded-lg h-56 flex items-center justify-center">
-						{{-- Placeholder Image 1 --}}
-						<img src="{{ asset('assets/web/images/books/eureka-book.jpg') }}"
-							alt="Cover of Eureka And The Magical Trio"
-							class="h-full w-auto object-cover py-2 transform transition duration-500 group-hover:scale-[1.05]">
-						<span class="absolute top-2 right-2 px-3 py-1 text-sm font-bold bg-lime-500 text-white rounded-full shadow-md">Available</span>
-					</div>
-				</div>
-				<div class="p-5 text-center">
-					<h4 class="text-xl font-extrabold text-gray-900 leading-snug">Eureka And The Magical Trio</h4>
-					<p class="text-2xl font-bold text-lime-600 mt-2">$14.99</p>
-					<a href="#" class="mt-4 inline-block px-6 py-2 text-sm font-semibold text-lime-600 border border-lime-300 rounded-lg hover:bg-lime-50 transition duration-150">
-						Buy Now
-					</a>
-				</div>
-			</div>
+                <div class="flex flex-row gap-4 w-full lg:w-auto shrink-0 justify-center h-[400px] sm:h-[500px] lg:h-[550px]">
 
-			{{-- Book Card 2: The Secret of Whispering Woods (Upcoming) --}}
-			{{-- <div class="group bg-white rounded-xl shadow-xl transition duration-300 hover:shadow-2xl border border-gray-200 overflow-hidden opacity-90">
-				<div class="p-4 bg-teal-50">
-					<div class="relative overflow-hidden rounded-lg h-56 flex items-center justify-center">
-						 Placeholder Image 2
-						<img src="https://placehold.co/180x280/ccebeb/14b8a6?text=Secret+Cover"
-							alt="Cover of The Secret of Whispering Woods"
-							class="h-full w-auto object-cover py-2 transform transition duration-500 group-hover:scale-[1.05]">
-						<span class="absolute top-2 right-2 px-3 py-1 text-sm font-bold bg-teal-500 text-white rounded-full shadow-md">Upcoming</span>
-					</div>
-				</div>
-				<div class="p-5 text-center">
-					<h4 class="text-xl font-extrabold text-gray-900 leading-snug">The Secret of Whispering Woods</h4>
-					<p class="text-2xl font-bold text-gray-400 mt-2">$14.99</p>
-					<span class="mt-4 inline-block px-6 py-2 text-sm font-semibold text-gray-500 border border-gray-300 rounded-lg bg-gray-100 cursor-default">
-						Pre-Order Soon
-					</span>
-				</div>
-			</div> --}}
+                    <div style="--swiper-navigation-color: #fff; --swiper-pagination-color: #fff"
+                        class="swiper bookMainSwiper w-[280px] sm:w-[380px] lg:w-[450px] h-full rounded-sm overflow-hidden bg-[#262626] shadow-xl">
+                        <div class="swiper-wrapper h-full">
 
-			{{-- Book Card 3: Adventures in Crystal Caves (Planned) --}}
-	       {{--	<div class="group bg-white rounded-xl shadow-xl transition duration-300 hover:shadow-2xl border border-gray-200 overflow-hidden opacity-70">
-				<div class="p-4 bg-amber-50">
-					<div class="relative overflow-hidden rounded-lg h-56 flex items-center justify-center">
-						 Placeholder Image 3
-						<img src="https://placehold.co/180x280/fef3c7/f59e0b?text=Adventure+Cover"
-							alt="Cover of Adventures in Crystal Caves"
-							class="h-full w-auto object-cover py-2 transform transition duration-500 group-hover:scale-[1.05]">
-						<span class="absolute top-2 right-2 px-3 py-1 text-sm font-bold bg-amber-500 text-white rounded-full shadow-md">Planned</span>
-					</div>
-				</div>
-				<div class="p-5 text-center">
-					<h4 class="text-xl font-extrabold text-gray-900 leading-snug">Adventures in Crystal Caves</h4>
-					<p class="text-2xl font-bold text-gray-400 mt-2">TBD</p>
-					<span class="mt-4 inline-block px-6 py-2 text-sm font-semibold text-gray-500 border border-gray-300 rounded-lg bg-gray-100 cursor-default">
-						Status: Early Draft
-					</span>
-				</div>
-			</div> --}}
-		</div>
+                            <div class="swiper-slide h-full flex justify-center items-center p-4 bg-[#262626]">
+                                <img src="{{ asset('assets/web/images/books/Book_Mockup_3.jpg') }}"
+                                    class="h-full w-auto object-contain drop-shadow-2xl" alt="Book Cover" />
+                            </div>
 
-		<!-- Descriptive Text Content Section (Retained) -->
-		<div class="max-w-4xl mx-auto pt-16 border-t-2 border-lime-100 space-y-8 text-lg text-gray-700">
-			<h4 class="text-3xl font-bold text-gray-900 mb-6">A Message from Rima on Storytelling</h4>
+                            <div class="swiper-slide h-full flex justify-center items-center p-4 bg-[#262626]">
+                                <img src="{{ asset('assets/web/images/books/eureka-book.jpg') }}"
+                                    class="h-full w-auto object-cover drop-shadow-2xl" alt="Book Angle" />
+                            </div>
 
-			<p>
-				My journey as a writer is deeply rooted in my background in Industrial Engineering and Sociology. While those disciplines might seem far removed from children's fiction, they instilled in me a fascination with how things work, how people interact, and the profound importance of structure and purpose in creation. This unique blend of logic and observation fuels the magical worlds I build.
-			</p>
+                            <div class="swiper-slide h-full flex justify-center items-center p-4 bg-[#262626]">
+                                <img src="{{ asset('assets/web/images/books/back-eureka-book.png') }}"
+                                    class="h-full w-auto object-contain drop-shadow-2xl" alt="Book Back" />
+                            </div>
 
-			<p>
-				<span class="font-extrabold text-lime-600">Eureka And The Magical Trio</span> is the culmination of this perspective. It's a story that celebrates curiosity, resilience, and the idea that our technical and emotional worlds are interconnected. I believe that powerful children's stories should not only entertain but also encourage young readers to look at the world with a sense of informed wonder.
-			</p>
+                        </div>
+                    </div>
 
-			<p>
-				Thank you for visiting, and I hope you and the young readers in your life enjoy the adventure!
-			</p>
-		</div>
+                    <div thumbsSlider="" class="swiper bookThumbSwiper w-20 sm:w-24 h-full shrink-0">
+                        <div class="swiper-wrapper">
 
-	</section>
+                            <div class="swiper-slide !h-auto aspect-[3/4] mb-3 cursor-pointer rounded-sm overflow-hidden border-2 border-transparent swiper-slide-thumb-active:border-[#564744] bg-white p-1 flex justify-center items-center transition-all opacity-70 swiper-slide-thumb-active:opacity-100">
+                                <img src="{{ asset('assets/web/images/books/Book_Mockup_3.jpg') }}"
+                                    class="w-full h-full object-contain" alt="Thumb 1" />
+                            </div>
+
+                            <div class="swiper-slide !h-auto aspect-[3/4] mb-3 cursor-pointer rounded-sm overflow-hidden border-2 border-transparent swiper-slide-thumb-active:border-[#564744] bg-white p-1 flex justify-center items-center transition-all opacity-70 swiper-slide-thumb-active:opacity-100">
+                                <img src="{{ asset('assets/web/images/books/eureka-book.jpg') }}"
+                                    class="w-full h-full object-contain" alt="Thumb 2" />
+                            </div>
+
+                            <div class="swiper-slide !h-auto aspect-[3/4] mb-3 cursor-pointer rounded-sm overflow-hidden border-2 border-transparent swiper-slide-thumb-active:border-[#564744] bg-white p-1 flex justify-center items-center transition-all opacity-70 swiper-slide-thumb-active:opacity-100">
+                                <img src="{{ asset('assets/web/images/books/back-eureka-book.png') }}"
+                                    class="w-full h-full object-contain" alt="Thumb 3" />
+                            </div>
+
+                        </div>
+                    </div>
+
+                </div>
+
+                <div class="flex flex-col space-y-5 pt-2 w-full lg:max-w-lg text-center lg:text-left">
+
+                    <span class="text-sm font-bold tracking-widest text-gray-500 uppercase">
+                        Geography & Cultures
+                    </span>
+
+                    <h2 class="text-3xl sm:text-4xl md:text-[2.75rem] font-[Poppins] font-medium text-black leading-[1.2] tracking-tight">
+                        Eureka and the magical trio
+                    </h2>
+
+                    <div class="flex items-baseline justify-center lg:justify-start gap-3 mt-1">
+                        <span class="text-3xl font-extrabold text-[#433328]">$30.00</span>
+                        <span class="text-2xl text-gray-400 line-through font-bold decoration-[3px]">$39.00</span>
+                    </div>
+
+                    <div class="flex flex-col sm:flex-row items-center justify-center lg:justify-start gap-4 sm:gap-6 py-4">
+                        <div class="flex items-center gap-3">
+                            <div class="w-12 h-12 rounded-full overflow-hidden shrink-0">
+                                <img src="{{ asset('assets/web/images/gallery/IMG_5941.PNG') }}"
+                                    class="object-cover w-full h-full" alt="Rima Marija Girnius" />
+                            </div>
+                            <span class="font-medium text-lg text-gray-700 whitespace-nowrap">Rima Marija Girnius</span>
+                        </div>
+
+                        <div class="flex items-center text-[#ff6b00] gap-1">
+                            <i class="ri-star-fill text-xl"></i>
+                            <i class="ri-star-fill text-xl"></i>
+                            <i class="ri-star-fill text-xl"></i>
+                            <i class="ri-star-fill text-xl"></i>
+                            <i class="ri-star-fill text-xl"></i>
+                        </div>
+                    </div>
+
+                    <div class="flex flex-col sm:flex-row gap-4 mt-2 w-full">
+                        <button class="btn bg-[#5C4B43] hover:bg-[#433328] text-white border-none rounded-full h-14 px-8 text-base font-bold uppercase tracking-widest shadow-lg hover:shadow-xl transition-all transform hover:-translate-y-0.5 w-full sm:flex-1">
+                            Buy Now
+                        </button>
+                        <button class="btn btn-outline bg-transparent border-2 border-[#5C4B43] text-[#5C4B43] hover:bg-[#5C4B43] hover:text-white hover:border-[#5C4B43] rounded-full h-14 px-8 text-base font-bold uppercase tracking-widest shadow-sm hover:shadow-xl transition-all transform hover:-translate-y-0.5 w-full sm:flex-1 whitespace-nowrap">
+                            Amazon Kindle
+                        </button>
+                    </div>
+
+                </div>
+
+            </div>
+        </div>
+    </section>
+
+    <script>
+        function initBookSwiper() {
+            // Check if element exists to avoid console errors
+            if(!document.querySelector('.bookThumbSwiper')) return;
+
+            var bookThumbSwiper = new Swiper(".bookThumbSwiper", {
+                direction: 'vertical',
+                spaceBetween: 12,
+                slidesPerView: 'auto',
+                freeMode: true,
+                watchSlidesProgress: true,
+            });
+
+            var bookMainSwiper = new Swiper(".bookMainSwiper", {
+                spaceBetween: 10,
+                thumbs: {
+                    swiper: bookThumbSwiper,
+                },
+            });
+        }
+
+        document.addEventListener('DOMContentLoaded', initBookSwiper);
+        document.addEventListener('livewire:navigated', initBookSwiper);
+    </script>
 
 @endsection
