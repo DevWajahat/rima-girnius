@@ -1,116 +1,150 @@
 <div>
-    {{-- CSS links kept minimal --}}
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
-
     <style>
-        /* [CSS styles from before remain unchanged] */
-        #hero-section-cms .card { margin-left: auto; margin-right: auto; max-width: 100%; }
-        .content-body .row { margin-left: 0; margin-right: 0; padding: 0; }
-        #hero-section-cms { overflow-x: hidden; }
-        .input-group-text { width: 40px; justify-content: center; }
-
-        /* Custom Style for Simple Success Message (Mimicking a nice notification) */
-        .livewire-success-message {
-            padding: 10px 15px;
-            margin-bottom: 20px;
-            border: 1px solid #c3e6cb;
-            border-radius: 4px;
-            color: #155724;
-            background-color: #d4edda;
+        /* Visual cue for the Category input to make it look "small" like the frontend */
+        .input-category {
+            text-transform: uppercase;
+            font-size: 0.85rem;
+            letter-spacing: 1px;
             font-weight: 600;
+            color: #6e6b7b;
+        }
+        /* Visual cue for the Title to look "Big" */
+        .input-title {
+            font-size: 1.2rem;
+            font-weight: bold;
+        }
+        .preview-container {
+            background: #f8f8f8;
+            border: 2px dashed #ddd;
+            border-radius: 8px;
+            text-align: center;
+            padding: 20px;
+            min-height: 400px; /* Kept height but added breathing room around image */
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+        }
+        .preview-image {
+            max-width: 90%; /* Reduced from 100% to prevent touching edges */
+            max-height: 320px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+            object-fit: cover;
         }
     </style>
 
-    <section class="mt-5 mb-5 my-5" id="hero-section-cms">
-        <div class="row justify-content-center">
-            <div class="col-12 col-lg-8">
-                <div class="card">
-                    <div class="card-header">
-                        <h4 class="card-title">Hero Section Content</h4>
-                    </div>
-                    <div class="card-body">
-
-                        {{-- **REPLACEMENT FOR TOASTR/BOOTSTRAP ALERT** --}}
-                        {{-- This uses Livewire 3's native session directive --}}
-                        @session('message')
-                            <div class="livewire-success-message">
-                                <i class="fas fa-check-circle me-2"></i> {{ $value }}
-                            </div>
-                        @endsession
-
-                        @if (session()->has('error'))
-                            <div class="alert alert-danger" role="alert">
-                                {{ session('error') }}
-                            </div>
-                        @endif
-
-                        {{-- The Livewire Form (unchanged logic) --}}
-                        <form class="form form-vertical mt-5 mb-5 my-5" wire:submit.prevent="saveHeroSection">
-                            <div class="row">
-
-                                {{-- 1. Title Input --}}
-                                <div class="col-12">
-                                    <div class="mb-3">
-                                        <label class="form-label d-flex align-items-center">
-                                            <i class="fas fa-heading me-2"></i> Heading / Title
-                                        </label>
-                                        <input type="text" class="form-control" placeholder="Enter the main headline for the Hero Section..." wire:model.defer="heroTitle">
-                                        @error('heroTitle') <span class="text-danger">{{ $message }}</span> @enderror
-                                    </div>
-                                </div>
-
-                                {{-- 2. Subtitle Textarea --}}
-                                <div class="col-12">
-                                    <div class="mb-3">
-                                        <label class="form-label d-flex align-items-center">
-                                            <i class="fas fa-paragraph me-2"></i> Subtitle Text
-                                        </label>
-                                        <textarea class="form-control" rows="3" placeholder="A short, descriptive paragraph beneath the title..." wire:model.defer="heroSubtitle"></textarea>
-                                        @error('heroSubtitle') <span class="text-danger">{{ $message }}</span> @enderror
-                                    </div>
-                                </div>
-
-                                {{-- 3. Button Group Design --}}
-                                <div class="col-12">
-                                    <h5 class="mt-3 mb-2 text-primary d-flex align-items-center"><i class="fas fa-link me-2"></i> Call to Action Button</h5>
-                                </div>
-
-                                {{-- Button Text Input --}}
-                                <div class="col-md-6">
-                                    <div class="mb-3">
-                                        <label class="form-label">Button Text</label>
-                                        <div class="input-group">
-                                            <span class="input-group-text"><i class="far fa-edit"></i></span>
-                                            <input type="text" class="form-control" placeholder="e.g., Get Started, View Solutions" wire:model.defer="heroButtonText">
-                                        </div>
-                                        @error('heroButtonText') <span class="text-danger">{{ $message }}</span> @enderror
-                                    </div>
-                                </div>
-
-                                {{-- Button Link Input --}}
-                                <div class="col-md-6">
-                                    <div class="mb-3">
-                                        <label class="form-label">Button Link (URL)</label>
-                                        <div class="input-group">
-                                            <span class="input-group-text"><i class="fas fa-globe"></i></span>
-                                            <input type="text" class="form-control" placeholder="e.g., https://yourdomain.com/contact" wire:model.defer="heroButtonLink">
-                                        </div>
-                                        @error('heroButtonLink') <span class="text-danger">{{ $message }}</span> @enderror
-                                    </div>
-                                </div>
-
-                                {{-- Save Button --}}
-                                <div class="col-12 mt-2">
-                                    <button type="submit" class="btn btn-primary waves-effect waves-float waves-light me-1" wire:loading.attr="disabled">
-                                        <span wire:loading.remove>Save Hero Section</span>
-                                        <span wire:loading>Saving...</span>
-                                    </button>
-                                </div>
-                            </div>
-                        </form>
+    <div class="content-header row">
+        <div class="content-header-left col-md-9 px-5 col-12 mb-2">
+            <div class="row breadcrumbs-top">
+                <div class="col-12">
+                    <h2 class="content-header-title float-start mb-0">Hero Section</h2>
+                    <div class="breadcrumb-wrapper">
+                        <ol class="breadcrumb">
+                            @foreach ($breadcrumbs as $crumb)
+                                <li class="breadcrumb-item"><a href="{{ $crumb['link'] }}">{{ $crumb['name'] }}</a></li>
+                            @endforeach
+                        </ol>
                     </div>
                 </div>
             </div>
         </div>
-    </section>
+    </div>
+
+    <div class="card">
+        <div class="card-header px-5 border-bottom">
+            <h4 class="card-title">Edit Hero Area</h4>
+            <div class="card-subtitle text-muted">Update the main visual area of your homepage.</div>
+        </div>
+
+        <div class="card-body p-4">
+
+            @session('message')
+                <div class="alert alert-success p-2 mb-3"><i class="fas fa-check"></i> {{ $value }}</div>
+            @endsession
+            @session('error')
+                 <div class="alert alert-danger p-2 mb-3"><i class="fas fa-exclamation"></i> {{ $value }}</div>
+            @endsession
+
+            <form wire:submit="save">
+                <div class="row g-5">
+
+                    <div class="col-md-5">
+                        <label class="form-label fw-bold mb-2">Book Cover Image</label>
+
+                        <div class="preview-container mb-3">
+                            @if ($heroBookImage)
+                                <img src="{{ $heroBookImage->temporaryUrl() }}" class="preview-image rounded">
+                                <span class="badge bg-primary mt-3">New Image Selected</span>
+                            @elseif($existingHeroBookImage)
+                                <img src="{{ asset('storage/' . $existingHeroBookImage) }}" class="preview-image rounded">
+                                <span class="badge bg-secondary mt-3">Current Image</span>
+                            @else
+                                <div class="text-muted p-3">
+                                    <i class="fas fa-image fa-3x mb-2"></i>
+                                    <p>No image uploaded yet.</p>
+                                </div>
+                            @endif
+                        </div>
+
+                        <div class="d-grid px-3">
+                            <input type="file" id="uploadImage" class="form-control" wire:model="heroBookImage" accept="image/*">
+                            @error('heroBookImage') <span class="text-danger small">{{ $message }}</span> @enderror
+                            <div class="form-text text-center mt-2">Recommended size: Portrait (e.g., 600x900px)</div>
+                            <div wire:loading wire:target="heroBookImage" class="text-primary text-center mt-1">
+                                <small>Uploading...</small>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="col-md-7 d-flex flex-column justify-content-center">
+                        <div class="p-4 border rounded bg-white shadow-sm">
+
+                            <div class="mb-4">
+                                <label class="form-label text-uppercase small text-muted">Category Tag</label>
+                                <input type="text" class="form-control input-category" placeholder="add Category" wire:model="heroCategory">
+                                @error('heroCategory') <span class="text-danger small">{{ $message }}</span> @enderror
+                            </div>
+
+                            <div class="mb-4">
+                                <label class="form-label fw-bold">Main Heading</label>
+                                <input type="text" class="form-control input-title" placeholder="add title" wire:model="heroTitle">
+                                @error('heroTitle') <span class="text-danger small">{{ $message }}</span> @enderror
+                            </div>
+
+                            <div class="mb-4">
+                                <label class="form-label">Description Paragraph</label>
+                                <textarea class="form-control" rows="5" placeholder="Enter the short book summary here..." wire:model="heroDescription"></textarea>
+                                @error('heroDescription') <span class="text-danger small">{{ $message }}</span> @enderror
+                            </div>
+
+                            <hr class="my-4">
+
+                            <div class="row g-3 align-items-end">
+                                <div class="col-md-5">
+                                    <label class="form-label fw-bold">Button Text</label>
+                                    <input type="text" class="form-control" placeholder="add button text" wire:model="heroButtonText">
+                                    @error('heroButtonText') <span class="text-danger small">{{ $message }}</span> @enderror
+                                </div>
+                                <div class="col-md-7">
+                                    <label class="form-label fw-bold">Button Link</label>
+                                    <div class="input-group">
+                                        <span class="input-group-text"><i class="fas fa-link"></i></span>
+                                        <input type="text" class="form-control" placeholder="add link" wire:model="heroButtonLink">
+                                    </div>
+                                    @error('heroButtonLink') <span class="text-danger small">{{ $message }}</span> @enderror
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="mt-4 text-end">
+                            <button type="submit" class="btn btn-primary btn-lg waves-effect waves-float waves-light px-4">
+                                <span wire:loading.remove>Save Changes</span>
+                                <span wire:loading><i class="fas fa-spinner fa-spin"></i> Saving...</span>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
 </div>

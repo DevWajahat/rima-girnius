@@ -27,7 +27,6 @@ return Application::configure(basePath: dirname(__DIR__))
             'IsAdmin' => IsAdmin::class,
         ]);
 
-           $middleware->append(NgrokOverHttps::class);
     })
     ->withExceptions(function (Exceptions $exceptions): void {
         //

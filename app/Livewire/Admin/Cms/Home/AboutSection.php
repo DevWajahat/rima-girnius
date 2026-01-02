@@ -2,154 +2,116 @@
 
 namespace App\Livewire\Admin\Cms\Home;
 
+use Livewire\Component;
+use Livewire\WithFileUploads;
 use App\Models\Cms;
 use App\Models\CmsMeta;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Storage;
-use Livewire\Component;
-use Livewire\WithFileUploads;
+use Illuminate\Support\Facades\Log;
 
 class AboutSection extends Component
 {
     use WithFileUploads;
 
-    // Properties
-    // We strictly define strings where possible to prevent hydration issues
-    public string $sectionHeading = '';
+    // --- Properties ---
+    public $aboutHeading;
+    public $aboutImage;         // For new upload
+    public $existingAboutImage; // For stored path
+    public $aboutDescription;   // Froala Content
 
-    // We keep this untyped to gracefully handle potential array hydration,
-    // but we treat it as a string everywhere in logic.
-    public $authorBrief = '';
-
-    public $authorImage;
-    public string $existingAuthorImage = '';
-
+    // --- System Identifiers ---
     private string $pageKey = 'home';
     private string $sectionKey = 'about-section';
 
     protected $rules = [
-        'sectionHeading'    => 'required|string|max:255',
-        'authorBrief'       => 'required|string|max:10000',
-        'authorImage'       => 'nullable|image|max:2048',
+        'aboutHeading'     => 'required|string|max:255',
+        // Increased max size to 5MB (5120KB) to prevent validation errors
+        'aboutImage'       => 'nullable|image|max:5120',
+        'aboutDescription' => 'nullable|string',
     ];
-
-    private function getCmsRecord()
-    {
-        return Cms::where('page', $this->pageKey)
-                   ->where('type', $this->sectionKey)
-                   ->first();
-    }
 
     public function mount()
     {
-        $cmsRecord = $this->getCmsRecord();
-        $data = [];
+        // 1. Fetch Existing Data
+        $cmsRecord = Cms::where('page', $this->pageKey)->where('type', $this->sectionKey)->first();
 
         if ($cmsRecord) {
-            $metaData = CmsMeta::where('cms_id', $cmsRecord->id)->get();
-            $data = $metaData->pluck('meta_value', 'meta_key')->toArray();
-        }
+            $data = CmsMeta::where('cms_id', $cmsRecord->id)->pluck('meta_value', 'meta_key')->toArray();
 
-        $this->sectionHeading      = (string) ($data['sectionHeading'] ?? 'About The Author');
-        // Ensure initial load is string
-        $this->authorBrief         = (string) ($data['authorBrief'] ?? '');
-        $this->existingAuthorImage = (string) ($data['authorImage'] ?? '');
-        $this->authorImage         = null;
-    }
-
-    // Intercept updates to force string type if array comes in from hydration
-    public function updatedAuthorBrief($value)
-    {
-        if (is_array($value)) {
-            $this->authorBrief = json_encode($value);
+            $this->aboutHeading       = $data['aboutHeading'] ?? '';
+            $this->existingAboutImage = $data['aboutImage'] ?? null;
+            $this->aboutDescription   = $data['aboutDescription'] ?? '';
         }
     }
 
-    /**
-     * Save method now accepts content directly from the frontend JS.
-     * This allows for a single "Atomic" request, fixing race conditions.
-     */
-    public function saveAboutSection($contentFromFrontend = null)
+    public function saveAboutSection()
     {
-        // 1. If frontend passed content directly via the save call, use it.
-        // This guarantees we have the latest editor state.
-        if ($contentFromFrontend !== null) {
-            $this->authorBrief = $contentFromFrontend;
+        // 1. Validation
+        try {
+            $this->validate();
+        } catch (\Illuminate\Validation\ValidationException $e) {
+            Log::error('About Section Validation Failed:', $e->errors());
+            throw $e;
         }
 
-        // 2. Sanity Check: Before validation, ensure it's a string.
-        if (is_array($this->authorBrief)) {
-            $this->authorBrief = empty($this->authorBrief) ? '' : json_encode($this->authorBrief);
+        // 2. Handle Image Upload
+        $finalImagePath = $this->existingAboutImage;
+
+        if ($this->aboutImage) {
+            // Delete old image if exists
+            if ($this->existingAboutImage && Storage::disk('public')->exists($this->existingAboutImage)) {
+                Storage::disk('public')->delete($this->existingAboutImage);
+            }
+            // Store new image
+            $finalImagePath = $this->aboutImage->store('cms/home/about', 'public');
         }
 
-        $dynamicRules = $this->rules;
-
-        if (empty($this->existingAuthorImage)) {
-            $dynamicRules['authorImage'] = 'required|image|max:2048';
-        }
-
-        $this->validate($dynamicRules);
-
-        $cmsRecord = $this->getCmsRecord();
-
-        if (!$cmsRecord) {
-            session()->flash('error', 'Error: Parent CMS record not found.');
-            return;
-        }
-
-        $cmsId = $cmsRecord->id;
-
+        // 3. Prepare Data
         $inputData = [
-            'sectionHeading'    => $this->sectionHeading,
-            'authorBrief'       => $this->authorBrief,
+            'aboutHeading'     => $this->aboutHeading,
+            'aboutImage'       => $finalImagePath,
+            'aboutDescription' => $this->aboutDescription,
         ];
 
-        // Handle Image Upload
-        if ($this->authorImage) {
-            $storagePath = 'uploads/images/home-about-section';
+        // 4. Save to DB
+        $cmsRecord = Cms::firstOrCreate(
+            ['page' => $this->pageKey, 'type' => $this->sectionKey],
+            ['created_at' => now(), 'updated_at' => now()]
+        );
 
-            if ($this->existingAuthorImage && Storage::disk('public')->exists($this->existingAuthorImage)) {
-                Storage::disk('public')->delete($this->existingAuthorImage);
-            }
-
-            $imagePath = $this->authorImage->store($storagePath, 'public');
-            $inputData['authorImage'] = $imagePath;
-        } else {
-            $inputData['authorImage'] = $this->existingAuthorImage;
-        }
-
-        // Database Transaction
         DB::beginTransaction();
         try {
-            foreach ($inputData as $meta_key => $meta_value) {
-                CmsMeta::updateOrCreate(
-                    ['cms_id' => $cmsId, 'meta_key' => $meta_key],
-                    ['meta_value' => (string) $meta_value] // Explicit cast for safety
-                );
+            foreach ($inputData as $key => $value) {
+                if (!is_null($value)) {
+                    CmsMeta::updateOrCreate(
+                        ['cms_id' => $cmsRecord->id, 'meta_key' => $key],
+                        ['meta_value' => $value]
+                    );
+                }
             }
             DB::commit();
 
-            $this->existingAuthorImage = $inputData['authorImage'];
+            // Reset Upload Property but keep the path for preview
+            $this->existingAboutImage = $finalImagePath;
+            $this->aboutImage = null;
 
-            session()->flash('message', 'About Section settings successfully saved.');
+            $this->dispatch('settings-saved');
+            session()->flash('message', 'About Section updated successfully.');
+
         } catch (\Exception $e) {
             DB::rollBack();
+            Log::error('About Section DB Error: ' . $e->getMessage());
             session()->flash('error', 'Database error: ' . $e->getMessage());
         }
-
-        $this->dispatch('settings-saved');
     }
 
     public function render()
     {
-        // SOLUTION: Create a SEPARATE variable for the view.
-        // We force-cast to string here. Even if $this->authorBrief is an array,
-        // $safeContent will be a string, preventing the htmlspecialchars crash.
-
-        $safeContent = is_array($this->authorBrief) ? json_encode($this->authorBrief) : (string) $this->authorBrief;
-
-        return view('livewire.admin.cms.home.about-section', [
-            'initialContent' => $safeContent
-        ]);
+        $breadcrumbs = [
+            ['link' => 'javascript:void(0)', 'name' => "Home"],
+            ['link' => 'javascript:void(0)', 'name' => "About Author"],
+        ];
+        return view('livewire.admin.cms.home.about-section', compact('breadcrumbs'));
     }
 }

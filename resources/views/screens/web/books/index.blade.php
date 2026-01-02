@@ -23,18 +23,18 @@
                         class="swiper bookMainSwiper w-[280px] sm:w-[380px] lg:w-[450px] h-full rounded-sm overflow-hidden bg-[#262626] shadow-xl">
                         <div class="swiper-wrapper h-full">
 
-                            <div class="swiper-slide h-full flex justify-center items-center p-4 bg-[#262626]">
-                                <img src="{{ asset('assets/web/images/books/Book_Mockup_3.jpg') }}"
+                            <div class="swiper-slide h-full flex justify-center items-center  bg-[#262626]">
+                                <img src="{{ asset('assets/web/images/books/5.jpg') }}"
                                     class="h-full w-auto object-contain drop-shadow-2xl" alt="Book Cover" />
                             </div>
 
-                            <div class="swiper-slide h-full flex justify-center items-center p-4 bg-[#262626]">
-                                <img src="{{ asset('assets/web/images/books/eureka-book.jpg') }}"
+                            <div class="swiper-slide h-full flex justify-center items-center  bg-[#262626]">
+                                <img src="{{ asset('assets/web/images/books/4.jpg') }}"
                                     class="h-full w-auto object-cover drop-shadow-2xl" alt="Book Angle" />
                             </div>
 
-                            <div class="swiper-slide h-full flex justify-center items-center p-4 bg-[#262626]">
-                                <img src="{{ asset('assets/web/images/books/back-eureka-book.png') }}"
+                            <div class="swiper-slide h-full flex justify-center items-center  bg-[#262626]">
+                                <img src="{{ asset('assets/web/images/books/3.jpg') }}"
                                     class="h-full w-auto object-contain drop-shadow-2xl" alt="Book Back" />
                             </div>
 

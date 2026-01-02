@@ -1,5 +1,13 @@
 @import "tailwindcss";
 
+/* 1. Register the custom font */
+@font-face {
+    font-family: "Times New Normal";
+    src: url("/assets/web/fonts/Times New Normal Regular.ttf") format("truetype");
+    font-weight: normal;
+    font-style: normal;
+}
+
 @source '../../vendor/laravel/framework/src/Illuminate/Pagination/resources/views/*.blade.php';
 @source '../../storage/framework/views/*.php';
 @source '../**/*.blade.php';
@@ -7,8 +15,11 @@
 @source "../node_modules/flyonui/flyonui.js";
 
 @theme {
-    --font-sans: "Poppins", "ui-sans-serif", "system-ui", "sans-serif";
+    --font-sans: "Poppins";
     --font-serif: "Playfair Display", "Times New Roman", "ui-serif", "serif";
+
+    /* 2. Add the new font variable */
+    --font-times: "Times New Normal";
 
     --color-brand-brown: #584743;
     --color-brand-grey: #F2F2F2;
