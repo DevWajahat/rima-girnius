@@ -11,7 +11,7 @@ use App\Livewire\Admin\Cms\Books\StorytellingSection;
 use App\Livewire\Admin\Blogs\BlogIndex;
 use App\Livewire\Admin\Blogs\BlogCreate;
 use App\Livewire\Admin\Blogs\BlogEdit;
-
+use App\Livewire\Admin\Cms\Home\AuthorGallerySection;
 
 Route::get("/",[HomeController::class,'index'])->name('index');
 
@@ -41,6 +41,8 @@ Route::prefix('cms/meta')->name('cms.meta.')->group(function () {
 
     Route::get('about', AboutPageSection::class)->name('aboutPage.section');
 
+    Route::get('home/author-gallery', AuthorGallerySection::class)->name('home.gallery');
+
     // Books Page Section
     // Books Page - Storytelling Section
 Route::get('books/storytelling-section', StorytellingSection::class)
@@ -65,4 +67,6 @@ Route::prefix('blogs')->name('blogs.')->group(function () {
     // In Livewire, delete is usually a method inside the Index component.
     // However, if you want a specific route for it:
     // Route::delete('/{id}', [BlogController::class, 'destroy'])->name('destroy');
+
+
 });

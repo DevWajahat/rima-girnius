@@ -18,17 +18,17 @@
 
       <div class="w-full md:w-7/12 flex flex-col items-center md:items-start text-center md:text-left space-y-6">
 
-        <span class="text-xs font-bold tracking-[0.2em] text-gray-500 uppercase font-sans">
+        <span class="text-xs font-bold tracking-[0.2em] text-gray-500 uppercase font-[Poppins]">
           Geography & Cultures
         </span>
 
-        <h1 class="font-['Times_New_Roman',Times,serif] font-semibold text-5xl md:text-6xl lg:text-7xl text-[#564744] leading-[1.1]">
+        <h1 class="font-times font-semibold text-5xl md:text-6xl lg:text-7xl text-[#564744] leading-[1.1]">
           Discover the Magic <br>
           of Who You <br>
           Truly Are
         </h1>
 
-        <p class="text-gray-600 text-base md:text-lg leading-relaxed max-w-xl font-sans font-light">
+        <p class="text-gray-600 text-base md:text-lg leading-relaxed max-w-xl font-[Poppins] font-light">
           Discover <span class="italic">Eureka and the Magical Trio</span>: The enchanting new novel by Lithuanian American writer Rima Girnius that celebrates heritage, self discovery, and the powerful bond in an immigrant mother daughter story.
         </p>
 
@@ -121,8 +121,8 @@
         Eureka And The Magical Trio
       </h1>
 
-      <div class="mt-8 space-y-6 text-xl text-neutral-700 leading-relaxed">
-        <p class="italic font-medium text-2xl text-[#5C4B43]">
+      <div class="mt-8 space-y-6 text-xl font-[Poppins] text-neutral-700 leading-relaxed">
+        <p class="italic font-regular text-xl text-[#5C4B43]">
           Dive into a beautifully woven tale of cultural identity in this YA novel.
         </p>
         <p>
@@ -182,7 +182,7 @@
       Author Gallery
     </h2>
 
-    <div class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 sm:gap-6 lg:gap-8 px-2 sm:px-0">
+    <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-6 lg:gap-8 px-2 sm:px-0">
 
       <div class="bg-white p-2 sm:p-3 rounded-sm shadow-[0_3px_10px_rgb(0,0,0,0.2)] transition-all duration-300 hover:-translate-y-1 hover:shadow-[0_8px_20px_rgb(0,0,0,0.25)]">
         <div class="aspect-[4/5] w-full overflow-hidden">
@@ -202,12 +202,6 @@
         </div>
       </div>
 
-{{--  <div class="bg-white p-2 sm:p-3 rounded-sm shadow-[0_3px_10px_rgb(0,0,0,0.2)] transition-all duration-300 hover:-translate-y-1 hover:shadow-[0_8px_20px_rgb(0,0,0,0.25)]">
-        <div class="aspect-[4/5] w-full overflow-hidden">
-          <img src="{{ asset('assets/web/images/gallery/IMG_5937.PNG') }}" alt="Author Photo 4" class="w-full h-full object-cover hover:scale-105 transition-transform duration-500">
-        </div>
-      </div> --}}
-
       <div class="bg-white p-2 sm:p-3 rounded-sm shadow-[0_3px_10px_rgb(0,0,0,0.2)] transition-all duration-300 hover:-translate-y-1 hover:shadow-[0_8px_20px_rgb(0,0,0,0.25)]">
         <div class="aspect-[4/5] w-full overflow-hidden relative">
            <img src="{{ asset('assets/web/images/gallery/IMG_5941.PNG') }}" alt="Author Photo 5" class="w-full h-full object-cover relative z-0">
@@ -226,18 +220,18 @@
         </div>
       </div>
 
-
     </div>
   </div>
 </section>
 
-<section class="bg-white py-16 px-4 font-sans">
+
+<section class="bg-white py-16 px-4 ">
   <div class="max-w-6xl mx-auto">
-    <h2 class="text-3xl md:text-4xl font-bold text-center text-black mb-12 tracking-tight">
+    <h2 class="text-3xl md:text-4xl font-[Poppins] font-medium text-center text-black mb-12 tracking-tight">
       Our Latest Blogs
     </h2>
 
-    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 lg:gap-8">
+    <div class="grid grid-cols-1 grid-[Poppins] md:grid-cols-2 lg:grid-cols-3 gap-6 lg:gap-8">
 
       <article class="bg-[#F5F5F5] p-5 rounded-xl transition-transform duration-300 hover:-translate-y-1 hover:shadow-lg">
         <div class="bg-[#333333] w-full h-52 rounded-lg flex items-center justify-center mb-5 overflow-hidden group">
@@ -249,11 +243,11 @@
             Dec 10, 2025
           </time>
 
-          <h3 class="text-lg font-bold text-gray-900 mb-6 leading-snug">
+          <h3 class="text-sm font-[Poppins] text-gray-900 mb-6 font-medium ">
             Lorem Ipsum is simply dummy text
           </h3>
 
-          <a href="#" class="text-sm font-bold text-gray-500 hover:text-gray-900 transition-colors inline-flex items-center gap-1">
+          <a href="#" class="text-sm font-[Poppins] text-gray-500 hover:text-gray-900 transition-colors inline-flex items-center gap-1">
             Read More
           </a>
         </div>
@@ -269,11 +263,11 @@
             Dec 10, 2025
           </time>
 
-          <h3 class="text-lg font-bold text-gray-900 mb-6 leading-snug">
+          <h3 class="text-sm font-[Poppins] text-gray-900 mb-6 font-medium">
             Lorem Ipsum is simply dummy text
           </h3>
 
-          <a href="#" class="text-sm font-bold text-gray-500 hover:text-gray-900 transition-colors inline-flex items-center gap-1">
+          <a href="#" class="text-sm font-regular text-gray-500 hover:text-gray-900 transition-colors inline-flex items-center gap-1">
             Read More
           </a>
         </div>
@@ -289,11 +283,11 @@
             Dec 10, 2025
           </time>
 
-          <h3 class="text-lg font-bold text-gray-900 mb-6 leading-snug">
+          <h3 class="text-sm font-[Poppins] text-gray-900 mb-6 font-medium">
             Lorem Ipsum is simply dummy text
           </h3>
 
-          <a href="#" class="text-sm font-bold text-gray-500 hover:text-gray-900 transition-colors inline-flex items-center gap-1">
+          <a href="#" class="text-sm font-regular text-gray-500 hover:text-gray-900 transition-colors inline-flex items-center gap-1">
             Read More
           </a>
         </div>

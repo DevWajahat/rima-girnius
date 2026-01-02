@@ -52,7 +52,7 @@
             </h2>
         </div>
 
-        <div class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6 lg:gap-8">
+        <div class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-3 gap-6 lg:gap-8">
             <div class="card bg-white p-2 sm:p-3 rounded-sm shadow-[0_3px_10px_rgba(0,0,0,0.2)] transition-all duration-300 hover:-translate-y-1 hover:shadow-[0_8px_20px_rgba(0,0,0,0.25)]">
                 <figure class="aspect-[4/5] w-full overflow-hidden">
                     <img src="{{ asset('assets/web/images/gallery/IMG_5921.jpg') }}" alt="Gallery 1" class="w-full h-full object-cover transition-transform duration-500 hover:scale-105" />
@@ -91,4 +91,5 @@
         </div>
     </div>
 </section>
+
 @endsection
