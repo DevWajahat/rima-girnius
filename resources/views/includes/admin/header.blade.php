@@ -58,6 +58,7 @@
                         <a href="#" wire:ignore class="nav-link dropdown-toggle" data-bs-toggle="dropdown"><i class="fa fa-laptop me-2"></i>CMS About Page</a>
                         <div wire:ignore class="dropdown-menu bg-transparent border-0">
                             <a href="{{ route('admin.cms.meta.aboutPage.section') }}" wire:navigate class="dropdown-item">About Section</a>
+                            <a href="{{ route('admin.cms.meta.about.gallery') }}" wire:navigate class="dropdown-item">Author Gallery</a>
                         </div>
                     </div>
 

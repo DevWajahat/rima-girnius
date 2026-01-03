@@ -15,7 +15,7 @@
                     <li><a href="{{ route('home') }}" wire:navigate class="text-[15px] font-medium text-#000 uppercase tracking-[0.2em] hover:text-black transition-colors">Home</a></li>
                     <li><a href="{{ route('about') }}" wire:navigate class="text-[15px] font-medium text-#000 uppercase tracking-[0.2em] hover:text-black transition-colors">About</a></li>
                     <li><a href="{{ route('books') }}" wire:navigate class="text-[15px] font-medium text-#000 uppercase tracking-[0.2em] hover:text-black transition-colors">Books</a></li>
-                    <li><a href="#blog" class="text-[15px] font-medium text-#000 uppercase tracking-[0.2em] hover:text-black transition-colors">Blogs</a></li>
+                    <li><a href="{{ route('blogs') }}" wire:navigate class="text-[15px] font-medium text-#000 uppercase tracking-[0.2em] hover:text-black transition-colors">Blogs</a></li>
                     <li><a href="{{ route('contact') }}" wire:navigate class="text-[15px] font-medium text-#000 uppercase tracking-[0.2em] hover:text-black transition-colors">Contact</a></li>
                 </ul>
             </div>
@@ -50,7 +50,7 @@
                     <li><a href="{{ route('home') }}" wire:navigate class="block py-4 text-sm font-bold uppercase tracking-widest text-gray-700 hover:text-black hover:bg-gray-50 border-b border-gray-100 transition-colors">Home</a></li>
                     <li><a href="{{ route('about') }}" wire:navigate class="block py-4 text-sm font-bold uppercase tracking-widest text-gray-700 hover:text-black hover:bg-gray-50 border-b border-gray-100 transition-colors">About</a></li>
                     <li><a href="{{ route('books') }}" wire:navigate class="block py-4 text-sm font-bold uppercase tracking-widest text-gray-700 hover:text-black hover:bg-gray-50 border-b border-gray-100 transition-colors">Books</a></li>
-                    <li><a href="#blog" class="block py-4 text-sm font-bold uppercase tracking-widest text-gray-700 hover:text-black hover:bg-gray-50 border-b border-gray-100 transition-colors">Blogs</a></li>
+                    <li><a href="{{ route('blogs') }}" wire:navigate class="block py-4 text-sm font-bold uppercase tracking-widest text-gray-700 hover:text-black hover:bg-gray-50 border-b border-gray-100 transition-colors">Blogs</a></li>
                     <li><a href="{{ route('contact') }}" wire:navigate class="block py-4 text-sm font-bold uppercase tracking-widest text-gray-700 hover:text-black hover:bg-gray-50 transition-colors">Contact</a></li>
                 </ul>
             </div>

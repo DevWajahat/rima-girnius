@@ -12,6 +12,8 @@ use App\Livewire\Admin\Blogs\BlogIndex;
 use App\Livewire\Admin\Blogs\BlogCreate;
 use App\Livewire\Admin\Blogs\BlogEdit;
 use App\Livewire\Admin\Cms\Home\AuthorGallerySection;
+use App\Livewire\Admin\Cms\About\AuthorGallerySection as AuthorGallery;
+use App\Livewire\Admin\Cms\Contact\GetInTouchSection;
 
 Route::get("/",[HomeController::class,'index'])->name('index');
 
@@ -45,8 +47,14 @@ Route::prefix('cms/meta')->name('cms.meta.')->group(function () {
 
     // Books Page Section
     // Books Page - Storytelling Section
-Route::get('books/storytelling-section', StorytellingSection::class)
-    ->name('books.storytellingSection.form');
+    Route::get('books/storytelling-section', StorytellingSection::class)
+        ->name('books.storytellingSection.form');
+
+    Route::get('about/author-gallery', AuthorGallery::class)->name('about.gallery');
+
+    Route::get('contact/get-in-touch', GetInTouchSection::class)->name('contact.getInTouch');
+
+
 
 });
 
