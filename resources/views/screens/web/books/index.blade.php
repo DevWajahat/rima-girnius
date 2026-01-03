@@ -45,12 +45,12 @@
                         <div class="swiper-wrapper">
 
                             <div class="swiper-slide !h-auto aspect-[3/4] mb-3 cursor-pointer rounded-sm overflow-hidden border-2 border-transparent swiper-slide-thumb-active:border-[#564744] bg-white p-1 flex justify-center items-center transition-all opacity-70 swiper-slide-thumb-active:opacity-100">
-                                <img src="{{ asset('assets/web/images/books/Book_Mockup_3.jpg') }}"
+                                <img src="{{ asset('assets/web/images/books/5.jpg') }}"
                                     class="w-full h-full object-contain" alt="Thumb 1" />
                             </div>
 
                             <div class="swiper-slide !h-auto aspect-[3/4] mb-3 cursor-pointer rounded-sm overflow-hidden border-2 border-transparent swiper-slide-thumb-active:border-[#564744] bg-white p-1 flex justify-center items-center transition-all opacity-70 swiper-slide-thumb-active:opacity-100">
-                                <img src="{{ asset('assets/web/images/books/eureka-book.jpg') }}"
+                                <img src="{{ asset('assets/web/images/books/4.jpg') }}"
                                     class="w-full h-full object-contain" alt="Thumb 2" />
                             </div>
 
