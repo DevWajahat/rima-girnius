@@ -22,7 +22,7 @@
           Geography & Cultures
         </span>
 
-        <h1 class="font-times font-semibold text-5xl md:text-6xl lg:text-7xl text-[#564744] leading-[1.1]">
+        <h1 class="font-serif font-semibold text-5xl md:text-6xl lg:text-7xl text-[#564744] leading-[1.1]">
           Discover the Magic <br>
           of Who You <br>
           Truly Are
