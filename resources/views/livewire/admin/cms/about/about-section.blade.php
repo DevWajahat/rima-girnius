@@ -92,8 +92,8 @@
 
                             <div class="image-upload-wrapper">
                                 {{-- 1. New Upload Preview --}}
-                                @if ($image)
-                                    <img src="{{ $image->temporaryUrl() }}" class="preview-img">
+                                @if ($aboutImage)
+                                    <img src="{{ $aboutImage->temporaryUrl() }}" class="preview-img">
 
                                 {{-- 2. Database Image --}}
                                 @elseif($existingImage)
@@ -112,7 +112,8 @@
                                 <div class="upload-overlay">
                                     <label class="btn-upload-trigger">
                                         <i class="fas fa-cloud-upload-alt"></i> Change Image
-                                        <input type="file" hidden wire:model="image" accept="image/*">
+                                        {{-- Fixed: wire:model matches property name "aboutImage" --}}
+                                        <input type="file" hidden wire:model="aboutImage" accept="image/*">
                                     </label>
                                 </div>
                             </div>
@@ -121,7 +122,7 @@
                                 <i class="fas fa-info-circle"></i> Best size: 600x800px (Portrait)<br>
                                 Max: 5MB (JPG, PNG, WEBP)
                             </div>
-                            @error('image') <span class="text-danger d-block mt-2">{{ $message }}</span> @enderror
+                            @error('aboutImage') <span class="text-danger d-block mt-2">{{ $message }}</span> @enderror
                         </div>
                     </div>
 
@@ -134,20 +135,22 @@
                             <label class="form-label fw-bold">Section Heading</label>
                             <div class="input-group input-group-merge">
                                 <span class="input-group-text"><i class="fas fa-heading"></i></span>
+                                {{-- Fixed: wire:model matches property "aboutHeading" --}}
                                 <input type="text" class="form-control form-control-lg"
                                        placeholder="e.g. About the Author"
-                                       wire:model="heading">
+                                       wire:model="aboutHeading">
                             </div>
-                            @error('heading') <span class="text-danger small">{{ $message }}</span> @enderror
+                            @error('aboutHeading') <span class="text-danger small">{{ $message }}</span> @enderror
                         </div>
 
                         {{-- Description Editor --}}
                         <div class="mb-4">
                             <label class="form-label fw-bold">Author Description</label>
                             <div wire:ignore>
-                                <textarea id="froala-about-page-desc" class="form-control" rows="8">{{ $description }}</textarea>
+                                {{-- Initial value loaded from $aboutDescription --}}
+                                <textarea id="froala-about-page-desc" class="form-control" rows="8">{{ $aboutDescription }}</textarea>
                             </div>
-                            @error('description') <span class="text-danger small">{{ $message }}</span> @enderror
+                            @error('aboutDescription') <span class="text-danger small">{{ $message }}</span> @enderror
                         </div>
 
                         <hr class="my-4">
@@ -188,10 +191,12 @@
             placeholderText: 'Write a compelling description about the author...',
             events: {
                 'contentChanged': function () {
-                    $wire.set('description', this.html.get(), false);
+                    // Fixed: Binding to property "aboutDescription"
+                    $wire.set('aboutDescription', this.html.get(), false);
                 },
                 'initialized': function() {
-                    const currentVal = $wire.get('description');
+                    // Fixed: Getting property "aboutDescription"
+                    const currentVal = $wire.get('aboutDescription');
                     if (currentVal && this.html.get() === '') {
                         this.html.set(currentVal);
                     }

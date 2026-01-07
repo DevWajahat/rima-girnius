@@ -7,7 +7,6 @@ use Livewire\WithFileUploads;
 use App\Models\Cms;
 use App\Models\CmsMeta;
 use Illuminate\Support\Facades\DB;
-use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\Log;
 
 class AuthorGallerySection extends Component
@@ -15,8 +14,10 @@ class AuthorGallerySection extends Component
     use WithFileUploads;
 
     // --- Properties ---
-    public $heading;
-    public $existingImages = []; // Array of paths from DB
+    // Renamed to match meta keys strictly
+    public $authorHeading;
+    public $galleryImages = []; // Array of paths (previously existingImages)
+
     public $newImages = [];      // Array of temporary uploaded files
 
     // --- System Identifiers ---
@@ -24,8 +25,8 @@ class AuthorGallerySection extends Component
     private string $sectionKey = 'author-gallery';
 
     protected $rules = [
-        'heading'      => 'required|string|max:255',
-        'newImages.*'  => 'image|max:10240', // 10MB max per image
+        'authorHeading' => 'required|string|max:255',
+        'newImages.*'   => 'image|max:10240', // 10MB max per image
     ];
 
     public function mount()
@@ -36,23 +37,21 @@ class AuthorGallerySection extends Component
         if ($cmsRecord) {
             $data = CmsMeta::where('cms_id', $cmsRecord->id)->pluck('meta_value', 'meta_key')->toArray();
 
-            $this->heading = $data['heading'] ?? 'Author Gallery';
+            // Mapping DB keys strictly
+            $this->authorHeading = $data['authorHeading'] ?? 'Author Gallery';
 
-            // Decode the JSON string back into an array for the view
-            if (isset($data['gallery_images'])) {
-                $this->existingImages = json_decode($data['gallery_images'], true) ?? [];
+            // Decode the JSON string using the key 'galleryImages'
+            if (isset($data['galleryImages'])) {
+                $this->galleryImages = json_decode($data['galleryImages'], true) ?? [];
             }
         }
     }
 
-    // Remove an image from the "Existing" list (Immediate UI update)
+    // Remove an image from the "Existing" list
     public function removeImage($index)
     {
-        // Optional: You could delete the file from storage here immediately,
-        // or just remove it from the list and let the file stay (orphaned) until a cleanup script runs.
-        // For CMS safety, we just remove it from the active list for now.
-        unset($this->existingImages[$index]);
-        $this->existingImages = array_values($this->existingImages); // Re-index array
+        unset($this->galleryImages[$index]);
+        $this->galleryImages = array_values($this->galleryImages); // Re-index array
     }
 
     // Clear the "New Uploads" buffer
@@ -69,16 +68,15 @@ class AuthorGallerySection extends Component
         try {
             // 1. Process New Images
             foreach ($this->newImages as $image) {
-                // Store and add path to existing list
+                // Store and add path to galleryImages list
                 $path = $image->store('cms/about/gallery', 'public');
-                $this->existingImages[] = $path;
+                $this->galleryImages[] = $path;
             }
 
-            // 2. Prepare Data for DB
-            // We store the array of paths as a JSON string
+            // 2. Prepare Data for DB (Using strictly requested keys)
             $inputData = [
-                'heading'        => $this->heading,
-                'gallery_images' => json_encode($this->existingImages),
+                'authorHeading' => $this->authorHeading,
+                'galleryImages' => json_encode($this->galleryImages),
             ];
 
             // 3. Save to DB
