@@ -15,19 +15,19 @@ class AboutSection extends Component
     use WithFileUploads;
 
     // --- Properties ---
-    public $heading;
-    public $image;          // For new upload
-    public $existingImage;  // For stored path
-    public $description;    // Froala Content
+    public $aboutHeading;
+    public $aboutImage;          // For new upload
+    public $existingImage;       // For stored path
+    public $aboutDescription;    // Froala Content
 
     // --- System Identifiers ---
     private string $pageKey = 'about';
     private string $sectionKey = 'about-section';
 
     protected $rules = [
-        'heading'     => 'required|string|max:255',
-        'image'       => 'nullable|image|max:5120', // Max 5MB
-        'description' => 'nullable|string',
+        'aboutHeading'     => 'required|string|max:255',
+        'aboutImage'       => 'nullable|image|max:5120', // Max 5MB
+        'aboutDescription' => 'nullable|string',
     ];
 
     public function mount()
@@ -38,9 +38,10 @@ class AboutSection extends Component
         if ($cmsRecord) {
             $data = CmsMeta::where('cms_id', $cmsRecord->id)->pluck('meta_value', 'meta_key')->toArray();
 
-            $this->heading       = $data['heading'] ?? '';
-            $this->existingImage = $data['image'] ?? null;
-            $this->description   = $data['description'] ?? '';
+            // Mapping DB keys strictly to properties
+            $this->aboutHeading     = $data['aboutHeading'] ?? '';
+            $this->existingImage    = $data['aboutImage'] ?? null;
+            $this->aboutDescription = $data['aboutDescription'] ?? '';
         }
     }
 
@@ -50,27 +51,27 @@ class AboutSection extends Component
         try {
             $this->validate();
         } catch (\Illuminate\Validation\ValidationException $e) {
-            $this->dispatch('validation-failed'); // Optional: for UI shake effects
+            $this->dispatch('validation-failed');
             throw $e;
         }
 
         // 2. Handle Image Upload
         $finalImagePath = $this->existingImage;
 
-        if ($this->image) {
+        if ($this->aboutImage) {
             // Delete old image if exists
             if ($this->existingImage && Storage::disk('public')->exists($this->existingImage)) {
                 Storage::disk('public')->delete($this->existingImage);
             }
             // Store new image
-            $finalImagePath = $this->image->store('cms/about/author', 'public');
+            $finalImagePath = $this->aboutImage->store('cms/about/author', 'public');
         }
 
-        // 3. Prepare Data
+        // 3. Prepare Data (Strictly using requested keys)
         $inputData = [
-            'heading'     => $this->heading,
-            'image'       => $finalImagePath,
-            'description' => $this->description,
+            'aboutHeading'     => $this->aboutHeading,
+            'aboutImage'       => $finalImagePath,
+            'aboutDescription' => $this->aboutDescription,
         ];
 
         // 4. Save to DB
@@ -82,6 +83,8 @@ class AboutSection extends Component
         DB::beginTransaction();
         try {
             foreach ($inputData as $key => $value) {
+                // We allow saving empty strings, but usually skip nulls if preferred.
+                // Here we update everything to keep sync.
                 if (!is_null($value)) {
                     CmsMeta::updateOrCreate(
                         ['cms_id' => $cmsRecord->id, 'meta_key' => $key],
@@ -93,7 +96,7 @@ class AboutSection extends Component
 
             // Reset Upload Property but keep the path for preview
             $this->existingImage = $finalImagePath;
-            $this->image = null;
+            $this->aboutImage = null;
 
             $this->dispatch('settings-saved');
             session()->flash('message', 'About Page details updated successfully.');

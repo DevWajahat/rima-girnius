@@ -95,8 +95,9 @@
                 {{-- 1. Section Heading --}}
                 <div class="mb-4">
                     <label class="form-label fw-bold">Gallery Section Title</label>
-                    <input type="text" class="form-control form-control-lg" wire:model="heading" placeholder="e.g. Moments & Memories">
-                    @error('heading') <span class="text-danger small">{{ $message }}</span> @enderror
+                    {{-- Fixed: wire:model matches property "authorHeading" --}}
+                    <input type="text" class="form-control form-control-lg" wire:model="authorHeading" placeholder="e.g. Moments & Memories">
+                    @error('authorHeading') <span class="text-danger small">{{ $message }}</span> @enderror
                 </div>
 
                 <hr class="my-4">
@@ -104,9 +105,10 @@
                 {{-- 2. Existing Gallery Grid --}}
                 <h5 class="fw-bold mb-3 text-primary"><i class="fas fa-images me-2"></i>Current Gallery</h5>
 
-                @if(count($existingImages) > 0)
+                {{-- Fixed: Iterating over "galleryImages" --}}
+                @if(count($galleryImages) > 0)
                     <div class="gallery-grid mb-4">
-                        @foreach($existingImages as $index => $path)
+                        @foreach($galleryImages as $index => $path)
                             <div class="gallery-item" wire:key="img-{{ $index }}">
                                 <img src="{{ asset('storage/' . $path) }}" class="gallery-img" alt="Gallery Image">
                                 <button type="button" class="btn-remove shadow-sm"
@@ -149,7 +151,6 @@
                         </div>
                         <h5 class="mb-1">Click here to Select Photos</h5>
                         <p class="text-muted small">Select multiple files to upload at once.</p>
-                        {{-- Note: 'multiple' attribute allows selecting many files --}}
                         <input type="file" id="gallery-upload" hidden wire:model="newImages" multiple accept="image/*">
                     </label>
                     @error('newImages.*') <span class="text-danger small">{{ $message }}</span> @enderror

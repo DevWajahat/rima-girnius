@@ -63,9 +63,9 @@
                     </div>
 
                     <div class="nav-item dropdown" wire:ignore>
-                        <a href="#" wire:ignore class="nav-link dropdown-toggle" data-bs-toggle="dropdown"><i class="fa fa-laptop me-2"></i>CMS Books Page</a>
+                        <a href="#" wire:ignore class="nav-link dropdown-toggle" data-bs-toggle="dropdown"><i class="fa fa-laptop me-2"></i>CMS Contact Page</a>
                         <div wire:ignore class="dropdown-menu bg-transparent border-0">
-                            <a href="{{ route('admin.cms.meta.books.storytellingSection.form') }}" wire:navigate class="dropdown-item">Story Telling Section</a>
+                            <a href="{{ route('admin.cms.meta.contact.getInTouch') }}" wire:navigate class="dropdown-item">Get In Touch Section</a>
                         </div>
                     </div>
 
