@@ -6,20 +6,22 @@
     <div class="text-center mb-12">
       <h2 class="font-serif text-4xl font-bold text-[#333] mb-6">Latest From The Author</h2>
 
-      <div class="flex flex-wrap justify-center gap-6 md:gap-8 text-sm font-bold tracking-widest uppercase text-gray-500 font-sans">
+            {{--   <div class="flex flex-wrap justify-center gap-6 md:gap-8 text-sm font-bold tracking-widest uppercase text-gray-500 font-sans">
         <a href="#" class="text-[#5c4d42] border-b-2 border-[#5c4d42] pb-1">All</a>
         <a href="#" class="hover:text-[#5c4d42] transition-colors pb-1 border-b-2 border-transparent hover:border-[#5c4d42]">Events</a>
         <a href="#" class="hover:text-[#5c4d42] transition-colors pb-1 border-b-2 border-transparent hover:border-[#5c4d42]">Interviews</a>
         <a href="#" class="hover:text-[#5c4d42] transition-colors pb-1 border-b-2 border-transparent hover:border-[#5c4d42]">Writing Tips</a>
         <a href="#" class="hover:text-[#5c4d42] transition-colors pb-1 border-b-2 border-transparent hover:border-[#5c4d42]">Culture</a>
-      </div>
+      </div> --}}
     </div>
 
     <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-x-8 gap-y-12 mb-16">
 
+
+    @forelse($posts as $post)
       <article class="group flex flex-col h-full bg-transparent">
-        <a href="#" class="block overflow-hidden rounded-sm mb-5 relative aspect-[3/2]">
-          <img src="https://images.unsplash.com/photo-1481627834876-b7833e8f5570?q=80&w=800&auto=format&fit=crop"
+        <a href="{{ route('blogs.show',$post->id) }}" class="block overflow-hidden rounded-sm mb-5 relative aspect-[3/2]">
+          <img src="{{ asset('storage/'. $post->image) }}"
                alt="Library"
                class="w-full h-full object-cover transform transition-transform duration-700 group-hover:scale-105">
           <div class="absolute inset-0 bg-black/10 opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
@@ -28,17 +30,17 @@
         <div class="flex flex-col flex-grow">
           <div class="mb-3">
             <a href="#" class="text-[11px] font-bold uppercase tracking-widest text-[#a85f47] hover:underline">
-              Culture, History
+
             </a>
           </div>
 
           <h3 class="font-serif text-2xl font-bold text-[#333] leading-tight mb-3 group-hover:text-[#5c4d42] transition-colors">
-            <a href="#">The Hidden Meaning Behind Lithuanian Folk Songs</a>
+            <a href="{{ route('blogs.show',$post->id) }}">{{ $post->title }}</a>
           </h3>
 
           <p class="text-gray-600 text-sm leading-relaxed mb-4 line-clamp-3 font-sans">
-            It's nice to win awards, but the true reward lies in discovering the ancient melodies that have shaped our cultural identity for centuries.
-          </p>
+                    {{ $post->description }}
+                    </p>
 
           <div class="mt-auto flex items-center gap-6 text-xs text-gray-400 font-sans border-t border-gray-100 pt-4">
             <div class="flex items-center gap-2">
@@ -57,7 +59,12 @@
         </div>
       </article>
 
-      <article class="group flex flex-col h-full bg-transparent">
+    @empty
+
+    @endforelse
+
+
+            {{--   <article class="group flex flex-col h-full bg-transparent">
         <a href="#" class="block overflow-hidden rounded-sm mb-5 relative aspect-[3/2]">
           <img src="https://images.unsplash.com/photo-1455390582262-044cdead277a?q=80&w=800&auto=format&fit=crop"
                alt="Writing Desk"
@@ -133,7 +140,7 @@
             </div>
           </div>
         </div>
-      </article>
+      </article> --}}
 
     </div>
 

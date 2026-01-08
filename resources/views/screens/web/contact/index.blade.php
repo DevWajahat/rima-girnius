@@ -108,7 +108,7 @@
             </div>
 
             <div class="bg-white rounded-xl shadow-xl p-8 md:p-10 border-t-4 border-[#564744]">
-                <form action="#" method="POST" class="space-y-6 font-['Poppins']">
+                <form action="#"  class="space-y-6 font-['Poppins']">
                     @csrf
 
                     <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
