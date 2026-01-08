@@ -318,27 +318,43 @@
 
     <div class="grid grid-cols-1 grid-[Poppins] md:grid-cols-2 lg:grid-cols-3 gap-6 lg:gap-8">
 
-      <article class="bg-[#F5F5F5] p-5 rounded-xl transition-transform duration-300 hover:-translate-y-1 hover:shadow-lg">
-        <div class="bg-[#333333] w-full h-52 rounded-lg flex items-center justify-center mb-5 overflow-hidden group">
-          <span class="text-white text-lg font-medium tracking-wide">Image</span>
-          </div>
+@forelse($posts as $post)
+    <article class="bg-[#F5F5F5] p-5 rounded-xl transition-transform duration-300 hover:-translate-y-1 hover:shadow-lg flex flex-col h-full">
 
-        <div class="flex flex-col">
-          <time datetime="2025-12-10" class="text-xs text-gray-500 font-medium mb-2 block">
-            Dec 10, 2025
-          </time>
-
-          <h3 class="text-sm font-[Poppins] text-gray-900 mb-6 font-medium ">
-            Lorem Ipsum is simply dummy text
-          </h3>
-
-          <a href="#" class="text-sm font-[Poppins] text-gray-500 hover:text-gray-900 transition-colors inline-flex items-center gap-1">
-            Read More
-          </a>
+        {{-- Image Container --}}
+        <div class="bg-[#333333] w-full h-52 rounded-lg mb-5 overflow-hidden group relative">
+            {{-- Added w-full, h-full, and object-cover to make the image fill the box perfectly --}}
+            <img src="{{ asset('storage/' . $post->image) }}"
+                 alt="{{ $post->title }}"
+                 class="w-full h-full object-cover transform group-hover:scale-105 transition-transform duration-500">
         </div>
-      </article>
 
-      <article class="bg-[#F5F5F5] p-5 rounded-xl transition-transform duration-300 hover:-translate-y-1 hover:shadow-lg">
+        <div class="flex flex-col flex-grow">
+            {{-- Date --}}
+            <time datetime="{{ $post->created_at->format('Y-m-d') }}" class="text-xs text-gray-500 font-medium mb-2 block font-sans">
+                {{ $post->created_at->format('M d, Y') }}
+            </time>
+
+            {{-- Title --}}
+            <h3 class="text-sm font-[Poppins] text-gray-900 mb-6 font-medium line-clamp-2">
+                {{ $post->title }}
+            </h3>
+
+            {{-- Read More Link --}}
+            <div class="mt-auto">
+                <a href="{{ route('blogs.show', $post->id) }}" class="text-sm font-[Poppins] text-gray-500 hover:text-gray-900 transition-colors inline-flex items-center gap-1 font-regular uppercase tracking-wide">
+                    Read More
+                </a>
+            </div>
+        </div>
+    </article>
+
+@empty
+    <div class="col-span-full text-center py-10">
+        <p class="text-gray-500">No blog posts found.</p>
+    </div>
+@endforelse
+            {{-- <article class="bg-[#F5F5F5] p-5 rounded-xl transition-transform duration-300 hover:-translate-y-1 hover:shadow-lg">
         <div class="bg-[#333333] w-full h-52 rounded-lg flex items-center justify-center mb-5 overflow-hidden">
           <span class="text-white text-lg font-medium tracking-wide">Image</span>
         </div>
@@ -356,9 +372,11 @@
             Read More
           </a>
         </div>
-      </article>
+      </article> --}}
 
-      <article class="bg-[#F5F5F5] p-5 rounded-xl transition-transform duration-300 hover:-translate-y-1 hover:shadow-lg">
+
+
+            {{-- <article class="bg-[#F5F5F5] p-5 rounded-xl transition-transform duration-300 hover:-translate-y-1 hover:shadow-lg">
         <div class="bg-[#333333] w-full h-52 rounded-lg flex items-center justify-center mb-5 overflow-hidden">
           <span class="text-white text-lg font-medium tracking-wide">Image</span>
         </div>
@@ -376,7 +394,7 @@
             Read More
           </a>
         </div>
-      </article>
+      </article> --}}
 
     </div>
   </div>

@@ -15,6 +15,7 @@ Route::get("about",[AboutController::class,'index'])->name('about');
 Route::get("contact",[ContactController::class, 'index'])->name('contact');
 Route::get("books",[BooksController::class,'index'])->name('books');
 Route::get("blogs",[BlogsController::class,'index'])->name('blogs');
+Route::get("blogs/{id}", [BlogsController::class, 'show'])->name('blogs.show');
 # Route::get("/")->name()
 
 
