@@ -25,7 +25,7 @@ class SendContactEmail
 public function handle(ContactFormSubmitted $event): void
     {
         // Replace this string with the actual author's email or config('mail.from.address')
-        $authorEmail = 'rimaginarius@example.com';
+        $authorEmail = 'info@rimagirnius.com';
 
         Mail::to($authorEmail)->send(new ContactFormMail($event->contact));
     }

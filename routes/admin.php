@@ -14,6 +14,9 @@ use App\Livewire\Admin\Blogs\BlogEdit;
 use App\Livewire\Admin\Cms\Home\AuthorGallerySection;
 use App\Livewire\Admin\Cms\About\AuthorGallerySection as AuthorGallery;
 use App\Livewire\Admin\Cms\Contact\GetInTouchSection;
+use App\Livewire\Admin\Contact\ContactIndex;
+use App\Livewire\Admin\Contact\ContactShow;
+
 
 Route::get("/",[HomeController::class,'index'])->name('index');
 
@@ -77,4 +80,10 @@ Route::prefix('blogs')->name('blogs.')->group(function () {
     // Route::delete('/{id}', [BlogController::class, 'destroy'])->name('destroy');
 
 
+});
+
+
+Route::prefix('contacts')->name('contacts.')->group(function () {
+    Route::get('/', ContactIndex::class)->name('index');
+    Route::get('/{id}',ContactShow::class)->name('show');
 });
