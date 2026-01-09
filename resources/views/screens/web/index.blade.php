@@ -342,7 +342,7 @@
 
             {{-- Read More Link --}}
             <div class="mt-auto">
-                <a href="{{ route('blogs.show', $post->id) }}" class="text-sm font-[Poppins] text-gray-500 hover:text-gray-900 transition-colors inline-flex items-center gap-1 font-regular uppercase tracking-wide">
+                <a href="{{ route('blogs.show', $post->id) }}" wire:navigate class="text-sm font-[Poppins] text-gray-500 hover:text-gray-900 transition-colors inline-flex items-center gap-1 font-regular uppercase tracking-wide">
                     Read More
                 </a>
             </div>

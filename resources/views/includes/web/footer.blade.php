@@ -6,17 +6,17 @@
       <div class="flex flex-col gap-4">
         <h3 class="font-bold text-lg text-black">Links</h3>
         <nav class="flex flex-col gap-3 text-sm font-medium text-neutral-600">
-          <a href="#" class="hover:text-black transition-colors">Rima Girnius</a>
-          <a href="#" class="hover:text-black transition-colors">Eureka and the Magical Trio Book</a>
-          <a href="#" class="hover:text-black transition-colors">About the Author</a>
-          <a href="#" class="hover:text-black transition-colors">Blogs</a>
+          <a href="{{ route('home') }}" wire:navigate class="hover:text-black transition-colors">Rima Girnius</a>
+          <a href="{{ route('books') }}" wire:navigate class="hover:text-black transition-colors">Eureka and the Magical Trio Book</a>
+          <a href="{{ route('about') }}" wire:navigate class="hover:text-black transition-colors">About the Author</a>
+          <a href="{{ route('blogs') }}" wire:navigate class="hover:text-black transition-colors">Blogs</a>
         </nav>
       </div>
 
       <div class="flex flex-col gap-4">
         <h3 class="font-bold text-lg text-black">Books</h3>
         <nav class="flex flex-col gap-3 text-sm font-medium text-neutral-600">
-          <a href="#" class="hover:text-black transition-colors">Buy Rima Girnius Books</a>
+          <a href="{{ route('books') }}" wire:navigate class="hover:text-black transition-colors">Buy Rima Girnius Books</a>
         </nav>
       </div>
 
