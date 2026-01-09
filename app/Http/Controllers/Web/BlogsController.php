@@ -11,7 +11,7 @@ class BlogsController extends Controller
     //
     public function index() {
 
-        $posts = Post::all();
+        $posts = Post::latest()->paginate(9);
 
         return view('screens.web.blogs.index',get_defined_vars());
     }
