@@ -62,9 +62,9 @@
 
         {{-- Hero Button --}}
         <div class="pt-4">
-          <a href="{{ $metaArray['hero_section']['heroButtonLink']->meta_value ?? '#' }}"
+          <a href="{{ $metaArray['hero-section']['heroButtonLink']->meta_value ?? '#' }}"
              class="btn btn-lg rounded-full bg-[#5c4d42] hover:bg-[#42362e] text-white border-none px-10 text-sm tracking-widest uppercase font-bold shadow-lg shadow-[#5c4d42]/30 flex items-center justify-center">
-            {{ $metaArray['hero_section']['heroButtonText']->meta_value ?? 'Order Your Copy Now' }}
+            {{ $metaArray['hero-section']['heroButtonText']->meta_value ?? '' }}
           </a>
         </div>
 
@@ -96,7 +96,7 @@
         <div class="lg:col-span-1 flex flex-col gap-5">
 
             {{-- Main Swiper (PhotoSwipe Container) --}}
-            <div id="book-gallery" class="swiper mySwiper2 w-full rounded-lg overflow-hidden bg-white relative border border-neutral-100 cursor-zoom-in">
+            <div wire:ignore id="book-gallery" class="swiper mySwiper2 w-full rounded-lg overflow-hidden bg-white relative border border-neutral-100 cursor-zoom-in">
                 <div class="swiper-wrapper">
                     @forelse($bookImages as $img)
                         {{-- Dynamic Slide --}}
@@ -123,7 +123,7 @@
             </div>
 
             {{-- Thumbnails Swiper --}}
-            <div thumbsSlider="" class="swiper mySwiper w-full max-w-xs mx-auto mt-2">
+            <div wire:ignore thumbsSlider="" class="swiper mySwiper w-full max-w-xs mx-auto mt-2">
                 <div class="swiper-wrapper flex justify-center">
                     @forelse($bookImages as $img)
                         <div class="swiper-slide cursor-pointer opacity-60 transition-opacity hover:opacity-100 rounded-md overflow-hidden border-2 border-transparent swiper-slide-thumb-active:border-[#433328] swiper-slide-thumb-active:opacity-100">
@@ -404,16 +404,50 @@
 
 
 @push('scripts')
-<script>
-    function initSwiper() {
+{{-- Load CSS for PhotoSwipe (Ensure this is loaded) --}}
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/photoswipe/5.4.2/photoswipe.min.css">
+
+<script type="module">
+    import PhotoSwipeLightbox from 'https://cdnjs.cloudflare.com/ajax/libs/photoswipe/5.4.2/photoswipe-lightbox.esm.min.js';
+    import PhotoSwipe from 'https://cdnjs.cloudflare.com/ajax/libs/photoswipe/5.4.2/photoswipe.esm.min.js';
+
+    // 1. Define a global store to track instances across Livewire navigations
+    window.galleryStore = window.galleryStore || {
+        main: null,
+        thumbs: null,
+        lightbox: null
+    };
+
+    window.initBookGallery = function() {
+        const galleryEl = document.getElementById('book-gallery');
+        const thumbsEl = document.querySelector('.mySwiper');
+
+        // Safety check: If elements aren't on this page, stop.
+        if (!galleryEl || !thumbsEl) return;
+
+        // 2. NUCLEAR CLEANUP: Destroy any existing instances on these specific elements
+        // Check if Swiper is attached to the DOM element and destroy it
+        if (galleryEl.swiper) galleryEl.swiper.destroy(true, true);
+        if (thumbsEl.swiper) thumbsEl.swiper.destroy(true, true);
+
+        // Also destroy our tracked references
+        if (window.galleryStore.lightbox) {
+            window.galleryStore.lightbox.destroy();
+            window.galleryStore.lightbox = null;
+        }
+
+        // 3. Initialize Thumbs Swiper
         const thumbSwiper = new Swiper(".mySwiper", {
             spaceBetween: 10,
-            slidesPerView: 4,
+            slidesPerView: 3,
             freeMode: true,
             watchSlidesProgress: true,
+            observer: true,       // CRITICAL for Livewire
+            observeParents: true, // CRITICAL for Livewire
         });
 
-        new Swiper(".mySwiper2", {
+        // 4. Initialize Main Swiper
+        const mainSwiper = new Swiper(".mySwiper2", {
             spaceBetween: 10,
             navigation: {
                 nextEl: ".swiper-button-next",
@@ -422,52 +456,42 @@
             thumbs: {
                 swiper: thumbSwiper,
             },
-        });
-    }
-
-    document.addEventListener('livewire:navigated', () => {
-        initSwiper();
-    });
-
-    document.addEventListener('DOMContentLoaded', () => {
-        initSwiper();
-    });
-</script>
-<script type="module">
-    import PhotoSwipeLightbox from 'https://cdnjs.cloudflare.com/ajax/libs/photoswipe/5.4.2/photoswipe-lightbox.esm.min.js';
-
-    function initPageModules() {
-        // Main Swiper
-        const thumbSwiper = new Swiper(".mySwiper", {
-            spaceBetween: 10,
-            slidesPerView: 3,
-            freeMode: true,
-            watchSlidesProgress: true,
+            observer: true,       // CRITICAL for Livewire
+            observeParents: true, // CRITICAL for Livewire
         });
 
-        const mainSwiper = new Swiper(".mySwiper2", {
-            spaceBetween: 10,
-            thumbs: {
-                swiper: thumbSwiper,
-            },
-        });
-
-        // PhotoSwipe Initialization
+        // 5. Initialize PhotoSwipe
         const lightbox = new PhotoSwipeLightbox({
             gallery: '#book-gallery',
             children: 'a',
-            pswpModule: () => import('https://cdnjs.cloudflare.com/ajax/libs/photoswipe/5.4.2/photoswipe.esm.min.js'),
-            // This ensures images aren't stretched if the data-pswp attributes are slightly off
+            pswpModule: PhotoSwipe,
             initialZoomLevel: 'fit',
             secondaryZoomLevel: 2,
             maxZoomLevel: 4,
         });
 
         lightbox.init();
+
+        // Save references globally
+        window.galleryStore.main = mainSwiper;
+        window.galleryStore.thumbs = thumbSwiper;
+        window.galleryStore.lightbox = lightbox;
+
+        console.log('Gallery Initialized');
     }
 
-    document.addEventListener('DOMContentLoaded', initPageModules);
-    document.addEventListener('livewire:navigated', initPageModules);
-</script>
+    // 6. Event Listeners for Livewire
+    // Run immediately if DOM is ready
+    if (document.readyState === 'loading') {
+        document.addEventListener('DOMContentLoaded', window.initBookGallery);
+    } else {
+        window.initBookGallery();
+    }
 
+    // Run specifically after Livewire swaps the page
+    document.addEventListener('livewire:navigated', () => {
+        // Small delay to ensure the new HTML is painted
+        setTimeout(window.initBookGallery, 50);
+    });
+</script>
 @endpush
