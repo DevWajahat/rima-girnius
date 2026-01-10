@@ -86,6 +86,13 @@
                         </div>
                     </div>
 
+                    <div class="nav-item dropdown" wire:ignore>
+                        <a href="#" wire:ignore class="nav-link dropdown-toggle" data-bs-toggle="dropdown"><i class="fa fa-laptop me-2"></i>Books</a>
+                        <div wire:ignore class="dropdown-menu bg-transparent border-0">
+                            <a href="{{ route('admin.books.index') }}" wire:navigate class="dropdown-item">All Books</a>
+                            <a href="{{ route('admin.books.create') }}" wire:navigate class="dropdown-item">Add Book</a>
+                        </div>
+                    </div>
 
 
 
