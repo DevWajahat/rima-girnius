@@ -11,7 +11,7 @@ use Illuminate\Http\Request;
 use App\Livewire\Auth\Web\VerifyEmail;
 use App\Livewire\Auth\Web\Register;
 use App\Livewire\Auth\Web\Login;
-
+use App\Http\Controllers\Web\CheckoutController;
 
 
 /* Route::get('/', function () { */
@@ -64,5 +64,12 @@ Route::get('/logout', function () {
 })->name('logout');
 
 Route::get('login', Login::class)->name('login')->middleware('guest');
+
+
+Route::get('/checkout/{id}', [CheckoutController::class, 'index'])->name('checkout.index');
+
+// Process Order (Fake) & Download
+Route::post('/checkout/{id}/process', [CheckoutController::class, 'process'])->name('checkout.process');
+
 
 ?>

@@ -123,12 +123,17 @@
                         </div>
                     </div>
 
+
                     <div class="flex flex-col sm:flex-row gap-4 mt-2 w-full">
-                        <button class="btn bg-[#5C4B43] hover:bg-[#433328] text-white border-none rounded-full h-14 px-8 text-base font-bold uppercase tracking-widest shadow-lg hover:shadow-xl transition-all transform hover:-translate-y-0.5 w-full sm:flex-1">
+                        {{-- Update the HREF to point to checkout.index --}}
+                        <a href="{{ route('checkout.index', $book->id) }}"
+                            class="btn bg-[#5C4B43] hover:bg-[#433328] text-white border-none rounded-full h-14 px-8 text-base font-bold uppercase tracking-widest shadow-lg hover:shadow-xl transition-all transform hover:-translate-y-0.5 w-full sm:flex-1 flex items-center justify-center text-decoration-none">
                             Buy Now
-                        </button>
+                         </a>
                     </div>
-                </div>
+
+            </div>
+
 
             </div>
         </div>
