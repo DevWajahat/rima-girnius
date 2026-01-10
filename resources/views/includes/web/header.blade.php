@@ -17,6 +17,27 @@
                     <li><a href="{{ route('books') }}" wire:navigate class="text-[15px] font-medium text-#000 uppercase tracking-[0.2em] hover:text-black transition-colors">Books</a></li>
                     <li><a href="{{ route('blogs') }}" wire:navigate class="text-[15px] font-medium text-#000 uppercase tracking-[0.2em] hover:text-black transition-colors">Blogs</a></li>
                     <li><a href="{{ route('contact') }}" wire:navigate class="text-[15px] font-medium text-#000 uppercase tracking-[0.2em] hover:text-black transition-colors">Contact</a></li>
+
+
+                    @auth
+                    <li><a href="{{ route('logout') }}" wire:navigate class="py-2 px-3 text-white bg-[#5c4d42] text-sm font-extrabold border-2 border-[#5c4d42] hover:bg-white hover:text-[#5c4d42] rounded-md transition-colors">Logout</a></li>
+
+                    @else
+                    <li>
+                        <a href="{{ route('register') }}" wire:navigate
+                           class="py-2 px-3 text-[#5c4d42] text-sm font-extrabold border-2 border-[#5c4d42] hover:bg-[#5c4d42] rounded-md hover:text-white transition-colors">
+                            Register</a>
+                    </li>
+
+                    <li>
+                        <a href="{{route('login') }}" wire:navigate
+                           class="py-2 px-3 text-white bg-[#5c4d42] text-sm font-extrabold border-2 border-[#5c4d42] hover:bg-white hover:text-[#5c4d42] rounded-md transition-colors">
+                            Login</a>
+                    </li>
+
+                    @endauth
+
+
                 </ul>
             </div>
 

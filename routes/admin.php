@@ -16,6 +16,10 @@ use App\Livewire\Admin\Cms\About\AuthorGallerySection as AuthorGallery;
 use App\Livewire\Admin\Cms\Contact\GetInTouchSection;
 use App\Livewire\Admin\Contact\ContactIndex;
 use App\Livewire\Admin\Contact\ContactShow;
+use App\Livewire\Admin\Books\BookIndex;
+use App\Livewire\Admin\Books\BookCreate;
+use App\Livewire\Admin\Books\BookEdit;
+
 
 
 Route::get("/",[HomeController::class,'index'])->name('index');
@@ -86,4 +90,19 @@ Route::prefix('blogs')->name('blogs.')->group(function () {
 Route::prefix('contacts')->name('contacts.')->group(function () {
     Route::get('/', ContactIndex::class)->name('index');
     Route::get('/{id}',ContactShow::class)->name('show');
+});
+
+
+Route::prefix('books')->name('books.')->group(function () {
+
+    // 1. READ (List all books)
+    Route::get('/', BookIndex::class)->name('index');
+
+    // 2. CREATE (Show the create form)
+    Route::get('/create', BookCreate::class)->name('create');
+
+    // 3. UPDATE (Show the edit form)
+    // We use {id} because we removed the slug
+    Route::get('/{id}/edit', BookEdit::class)->name('edit');
+
 });

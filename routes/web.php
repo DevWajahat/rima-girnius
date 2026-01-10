@@ -10,7 +10,7 @@ use Illuminate\Foundation\Auth\EmailVerificationRequest;
 use Illuminate\Http\Request;
 use App\Livewire\Auth\Web\VerifyEmail;
 use App\Livewire\Auth\Web\Register;
-
+use App\Livewire\Auth\Web\Login;
 
 
 
@@ -63,5 +63,6 @@ Route::get('/logout', function () {
     return redirect('/');
 })->name('logout');
 
+Route::get('login', Login::class)->name('login')->middleware('guest');
 
 ?>

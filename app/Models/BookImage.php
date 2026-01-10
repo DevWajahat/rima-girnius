@@ -10,7 +10,7 @@ class BookImage extends Model
 {
     protected $guarded = [];
 
-    public function Book() :BelongsTo
+    public function book() :BelongsTo
     {
         return $this->belongsTo(Book::class);
     }

@@ -2,17 +2,21 @@
 
 namespace App\Models;
 
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
-use Illuminate\Database\Eloquent\HasMany;
+use Illuminate\Database\Eloquent\SoftDeletes;
 
 
 class Book extends Model
 {
+    use HasFactory, SoftDeletes;
+
     protected $guarded = [];
 
-    public function book_images(): HasMany
+
+    public function images()
     {
-        return $this->HasMany(BookImage::class);
+        return $this->hasMany(\App\Models\BookImage::class);
     }
 
 }

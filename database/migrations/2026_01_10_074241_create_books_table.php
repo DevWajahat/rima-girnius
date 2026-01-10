@@ -16,7 +16,7 @@ return new class extends Migration
             $table->string('title');
             $table->text('description');
             $table->float('price');
-            $table->float('sales_price');
+            $table->float('sale_price');
             $table->string('cover_image');
             $table->string('pdf');
             $table->string('is_published');
