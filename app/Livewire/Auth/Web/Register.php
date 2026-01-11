@@ -7,6 +7,7 @@ use App\Models\User;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 use Livewire\Component;
+use Illuminate\Auth\Events\Registered; // <--- 1. IMPORT THIS AT THE TOP
 
 class Register extends Component
 {
@@ -36,7 +37,7 @@ class Register extends Component
 
         // --- CHANGE THIS LINE ---
         // Dispatch your custom event
-        UserRegistered::dispatch($user);
+        event(new Registered($user));
 
         Auth::login($user);
 

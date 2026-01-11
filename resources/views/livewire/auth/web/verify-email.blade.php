@@ -23,11 +23,10 @@
             </button>
 
             {{-- Logout (In case they used the wrong email) --}}
-            <button wire:click="$parent.logout"
-                onclick="event.preventDefault(); document.getElementById('logout-form').submit();"
+            <a href="{{ route('logout') }}" wire:navigate
                 class="text-sm text-gray-500 underline hover:text-[#333]">
                 Log Out
-            </button>
+            </a>
 
             {{-- Hidden Logout Form (Standard Laravel) --}}
             <form id="logout-form" action="{{ route('logout') }}" method="POST" class="hidden">

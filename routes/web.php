@@ -65,15 +65,26 @@ Route::get('/logout', function () {
 
 Route::get('login', Login::class)->name('login')->middleware('guest');
 
-Route::middleware(['auth'])->group(function () {
+Route::middleware(['auth', 'verified'])->group(function () {
+
+    // Checkout Routes
     Route::get('/checkout/{id}', [CheckoutController::class, 'index'])->name('checkout.index');
-
-    // 1. Start Payment
     Route::post('/checkout/{id}/process', [CheckoutController::class, 'process'])->name('checkout.process');
-
-    // 2. Returns from PayPal
     Route::get('/checkout/{id}/success', [CheckoutController::class, 'success'])->name('checkout.success');
+
+
+    Route::get('/books/download/{id}', [BooksController::class, 'download'])->name('books.download');
+
+   // 1. The "Thank You" Page
+Route::get('/checkout/success/{book_id}/{order_id}', [CheckoutController::class, 'thankYou'])->name('checkout.thankyou');
+
+// 2. The Actual File Download Route
+Route::get('/checkout/download/{book_id}/{order_id}', [CheckoutController::class, 'downloadPDF'])->name('checkout.download.pdf');
+
+
     Route::get('/checkout/{id}/cancel', [CheckoutController::class, 'cancel'])->name('checkout.cancel');
+
 });
 
-?>
+
+

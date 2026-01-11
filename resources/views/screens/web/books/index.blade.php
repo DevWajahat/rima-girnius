@@ -127,11 +127,19 @@
                     <div class="flex flex-col sm:flex-row gap-4 mt-2 w-full">
                         {{-- Update the HREF to point to checkout.index --}}
 
-                    <a href="{{ route('checkout.index', $book->id) }}"
-                            class="btn bg-[#5C4B43] hover:bg-[#433328] text-white border-none rounded-full h-14 px-8 text-base font-bold uppercase tracking-widest shadow-lg hover:shadow-xl transition-all transform hover:-translate-y-0.5 w-full sm:flex-1 flex items-center justify-center text-decoration-none">
-                            Buy Now
-                         </a>
-
+@if($hasPurchased)
+        {{-- OPTION A: DOWNLOAD BUTTON (If purchased) --}}
+        <a href="{{ route('books.download', $book->id) }}"
+           class="btn bg-green-700 hover:bg-green-800 text-white border-none rounded-full h-14 px-8 text-base font-bold uppercase tracking-widest shadow-lg hover:shadow-xl transition-all transform hover:-translate-y-0.5 w-full sm:flex-1 flex items-center justify-center text-decoration-none">
+            <i class="fas fa-download me-2"></i> Download Book
+        </a>
+    @else
+        {{-- OPTION B: BUY BUTTON (If NOT purchased) --}}
+        <a href="{{ route('checkout.index', $book->id) }}"
+           class="btn bg-[#5C4B43] hover:bg-[#433328] text-white border-none rounded-full h-14 px-8 text-base font-bold uppercase tracking-widest shadow-lg hover:shadow-xl transition-all transform hover:-translate-y-0.5 w-full sm:flex-1 flex items-center justify-center text-decoration-none">
+            Buy Now
+        </a>
+    @endif
 
                     </div>
 

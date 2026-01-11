@@ -4,154 +4,146 @@ namespace App\Http\Controllers\Web;
 
 use App\Http\Controllers\Controller;
 use App\Models\Book;
-use App\Models\Order;
+use App\Models\Order; // Your Order Model
 use Illuminate\Http\Request;
+use Srmklive\PayPal\Services\PayPal as PayPalClient; // <--- The Package
 use Illuminate\Support\Facades\Auth;
-use Illuminate\Support\Facades\Http; // <--- This is required
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Str;
 
 class CheckoutController extends Controller
 {
-    // --- STANDARD CHECKOUT METHODS ---
-
+    // 1. Show the Checkout Page
     public function index($id)
     {
         $book = Book::findOrFail($id);
         return view('screens.web.checkout.index', compact('book'));
     }
 
+    // 2. Process Transaction (Redirect to PayPal)
     public function process($id)
     {
         $book = Book::findOrFail($id);
-        $price = $book->sale_price ?? $book->price;
+        $price = $book->sale_price ?? $book->price; // Dynamic Price
 
         try {
-            $returnUrl = route('checkout.success', ['id' => $book->id]);
-            $cancelUrl = route('checkout.cancel', ['id' => $book->id]);
+            // Initialize the Package
+            $provider = new PayPalClient;
+            $provider->setApiCredentials(config('paypal'));
+            $paypalToken = $provider->getAccessToken();
 
-            // Call the local private method instead of the service
-            $order = $this->createPayPalOrder($price, $returnUrl, $cancelUrl);
-
-            foreach ($order['links'] as $link) {
-                if ($link['rel'] === 'approve') {
-                    return redirect($link['href']);
-                }
-            }
-
-            return back()->with('error', 'PayPal did not return an approval link.');
-
-        } catch (\Exception $e) {
-            return back()->with('error', 'PayPal Error: ' . $e->getMessage());
-        }
-    }
-
-    public function success(Request $request, $id)
-    {
-        $book = Book::findOrFail($id);
-        $paypalToken = $request->get('token');
-
-        try {
-            // Call the local private method
-            $response = $this->capturePayPalPayment($paypalToken);
-
-            if ($response['status'] === 'COMPLETED') {
-
-                Order::create([
-                    'user_id' => Auth::id(),
-                    'transaction_id' => $response['id'],
-                    'status' => 'completed',
-                ]);
-
-                session()->flash('message', 'Payment Successful! Downloading...');
-
-                $filename = Str::slug($book->title) . '.pdf';
-                return Storage::download($book->pdf, $filename);
-            }
-
-        } catch (\Exception $e) {
-            return redirect()->route('checkout.index', $id)->with('error', 'Payment Failed: ' . $e->getMessage());
-        }
-
-        return redirect()->route('checkout.index', $id)->with('error', 'Payment not completed.');
-    }
-
-    public function cancel($id)
-    {
-        return redirect()->route('checkout.index', $id)->with('error', 'Payment cancelled.');
-    }
-
-    // --- PAYPAL LOGIC MOVED HERE (PRIVATE METHODS) ---
-
-    private function getPayPalAccessToken()
-    {
-        $url = env('PAYPAL_MODE') === 'sandbox'
-            ? 'https://api-m.sandbox.paypal.com'
-            : 'https://api-m.paypal.com';
-
-        $clientId = env('PAYPAL_SANDBOX_CLIENT_ID');
-        $secret = env('PAYPAL_SANDBOX_CLIENT_SECRET');
-
-        $response = Http::withBasicAuth($clientId, $secret)
-            ->asForm()
-            ->post("$url/v1/oauth2/token", [
-                'grant_type' => 'client_credentials',
-            ]);
-
-        if ($response->successful()) {
-            return $response->json()['access_token'];
-        }
-
-        throw new \Exception('PayPal Auth Failed: ' . $response->body());
-    }
-
-    private function createPayPalOrder($amount, $returnUrl, $cancelUrl)
-    {
-        $url = env('PAYPAL_MODE') === 'sandbox'
-            ? 'https://api-m.sandbox.paypal.com'
-            : 'https://api-m.paypal.com';
-
-        $accessToken = $this->getPayPalAccessToken();
-
-        $response = Http::withToken($accessToken)
-            ->post("$url/v2/checkout/orders", [
-                'intent' => 'CAPTURE',
-                'purchase_units' => [[
-                    'amount' => [
-                        'currency_code' => env('PAYPAL_CURRENCY', 'USD'),
-                        'value' => number_format($amount, 2, '.', ''),
+            // Create Order
+            $response = $provider->createOrder([
+                "intent" => "CAPTURE",
+                "application_context" => [
+                    "return_url" => route('checkout.success', ['id' => $book->id]), // Dynamic Return URL
+                    "cancel_url" => route('checkout.cancel', ['id' => $book->id]),
+                ],
+                "purchase_units" => [
+                    0 => [
+                        "amount" => [
+                            "currency_code" => "USD",
+                            "value" => number_format($price, 2, '.', '') // Format: 10.00
+                        ]
                     ]
-                ]],
-                'application_context' => [
-                    'return_url' => $returnUrl,
-                    'cancel_url' => $cancelUrl,
-                    'user_action' => 'PAY_NOW',
                 ]
             ]);
 
-        if ($response->successful()) {
-            return $response->json();
-        }
+            // Redirect to PayPal Approval Link
+            if (isset($response['id']) && $response['id'] != null) {
+                foreach ($response['links'] as $links) {
+                    if ($links['rel'] == 'approve') {
+                        return redirect()->away($links['href']);
+                    }
+                }
+            }
 
-        throw new \Exception('Create Order Failed: ' . $response->body());
+            return redirect()->route('checkout.index', $id)->with('error', 'Something went wrong with PayPal.');
+
+        } catch (\Exception $e) {
+            return redirect()->route('checkout.index', $id)->with('error', $e->getMessage());
+        }
     }
 
-    private function capturePayPalPayment($orderId)
+    // 3. Success Transaction (Capture & Download)
+// ... keep index, process, cancel methods exactly as they were ...
+
+    // UPDATE THIS METHOD
+    public function success(Request $request, $id)
     {
-        $url = env('PAYPAL_MODE') === 'sandbox'
-            ? 'https://api-m.sandbox.paypal.com'
-            : 'https://api-m.paypal.com';
+        $book = Book::findOrFail($id);
 
-        $accessToken = $this->getPayPalAccessToken();
+        try {
+            $provider = new PayPalClient;
+            $provider->setApiCredentials(config('paypal'));
+            $provider->getAccessToken();
+            $response = $provider->capturePaymentOrder($request['token']);
 
-        $response = Http::withToken($accessToken)
-            ->withHeaders(['Content-Type' => 'application/json'])
-            ->post("$url/v2/checkout/orders/{$orderId}/capture");
+            if (isset($response['status']) && $response['status'] == 'COMPLETED') {
 
-        if ($response->successful()) {
-            return $response->json();
+                // 1. Create Order
+                $order = Order::create([
+                    'user_id'        => Auth::id(),
+                    'transaction_id' => $response['id'],
+                    'status'         => 'completed',
+                ]);
+
+                // 2. INSTEAD OF DOWNLOADING, REDIRECT TO SUCCESS PAGE
+                // We pass both book_id and order_id because your orders table doesn't have book_id
+                return redirect()->route('checkout.thankyou', [
+                    'book_id' => $book->id,
+                    'order_id' => $order->id
+                ]);
+            }
+
+            return redirect()->route('checkout.index', $id)
+                ->with('error', $response['message'] ?? 'Payment not completed.');
+
+        } catch (\Exception $e) {
+            return redirect()->route('checkout.index', $id)->with('error', 'System Error: ' . $e->getMessage());
+        }
+    }
+
+    // ADD THIS NEW METHOD (The Page)
+    public function thankYou($book_id, $order_id)
+    {
+        $order = Order::findOrFail($order_id);
+
+        // Security: Ensure the logged-in user owns this order
+        if(Auth::id() !== $order->user_id) {
+            abort(403, 'Unauthorized');
         }
 
-        throw new \Exception('Capture Failed: ' . $response->body());
+        return view('screens.web.checkout.success', [
+            'order' => $order,
+            'bookId' => $book_id
+        ]);
+    }
+
+    // ADD THIS NEW METHOD (The File)
+    public function downloadPDF($book_id, $order_id)
+    {
+        $order = Order::findOrFail($order_id);
+        $book = Book::findOrFail($book_id);
+
+        // Security Check
+        if(Auth::id() !== $order->user_id) {
+            abort(403, 'Unauthorized');
+        }
+
+        if (!Storage::exists($book->pdf)) {
+            abort(404, 'File not found');
+        }
+
+        $filename = Str::slug($book->title) . '.pdf';
+        return Storage::download($book->pdf, $filename);
+    }
+
+
+
+    // 4. Cancel Transaction
+    public function cancel($id)
+    {
+        return redirect()->route('checkout.index', $id)->with('error', 'You have canceled the transaction.');
     }
 }
