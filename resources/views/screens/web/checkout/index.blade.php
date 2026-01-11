@@ -44,15 +44,15 @@
                 </div>
 
                 {{-- Complete Order Button --}}
-                <form action="{{ route('checkout.process', $book->id) }}" method="POST">
-                    @csrf
-                    <button type="submit" class="btn w-full bg-[#5C4B43] hover:bg-[#433328] text-white border-none rounded-full h-14 text-base font-bold uppercase tracking-widest shadow-lg hover:shadow-xl transition-all transform hover:-translate-y-0.5">
-                        Complete Order & Download
-                    </button>
-                    <p class="text-xs text-center text-gray-400 mt-3">
-                        By clicking above, you agree to our Terms of Service.
-                    </p>
-                </form>
+
+
+<form action="{{ route('checkout.process', $book->id) }}" method="POST">
+    @csrf
+    <button type="submit" class="btn w-full bg-[#5C4B43] ...">
+        Pay with PayPal
+    </button>
+</form>
+
             </div>
         </div>
 
