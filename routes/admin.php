@@ -19,7 +19,7 @@ use App\Livewire\Admin\Contact\ContactShow;
 use App\Livewire\Admin\Books\BookIndex;
 use App\Livewire\Admin\Books\BookCreate;
 use App\Livewire\Admin\Books\BookEdit;
-
+use App\Livewire\Admin\Orders;
 
 
 Route::get("/",[HomeController::class,'index'])->name('index');
@@ -64,6 +64,10 @@ Route::prefix('cms/meta')->name('cms.meta.')->group(function () {
 
 
 });
+
+    Route::get('orders', Orders::class)->name('orders');
+
+
 
 
 // Note: We use a separate prefix 'blogs' to keep it clean

@@ -95,6 +95,13 @@
                     </div>
 
 
+                                <div class="nav-item dropdown" wire:ignore>
+                        <a href="#" wire:ignore class="nav-link dropdown-toggle" data-bs-toggle="dropdown"><i class="fa fa-laptop me-2"></i>Orders</a>
+                        <div wire:ignore class="dropdown-menu bg-transparent border-0">
+                            <a href="{{ route('admin.orders') }}" wire:navigate class="dropdown-item">All Orders</a>
+                        </div>
+                    </div>
+
 
                     <a href="widget.html" class="nav-item nav-link"><i class="fa fa-th me-2"></i>Widgets</a>
                     <a href="form.html" class="nav-item nav-link"><i class="fa fa-keyboard me-2"></i>Forms</a>

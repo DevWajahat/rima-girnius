@@ -85,6 +85,7 @@ class CheckoutController extends Controller
                 $order = Order::create([
                     'user_id'        => Auth::id(),
                     'transaction_id' => $response['id'],
+                    'book_id'        => $book->id, // <--- ADD THIS LINE
                     'status'         => 'completed',
                 ]);
 
