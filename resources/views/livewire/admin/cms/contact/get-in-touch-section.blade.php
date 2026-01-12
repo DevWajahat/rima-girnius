@@ -1,4 +1,11 @@
 <div>
+    {{-- Internal Styles --}}
+    <style>
+        /* Summernote Fixes */
+        .note-editor.note-frame { border-radius: 0.375rem; border-color: #d1d5db; }
+        .note-modal-backdrop { display: none !important; }
+    </style>
+
     {{-- Breadcrumbs --}}
     <div class="content-header row">
         <div class="content-header-left col-md-9 col-12 mb-2">
@@ -69,11 +76,96 @@
                             @error('contentHeading') <span class="text-danger small">{{ $message }}</span> @enderror
                         </div>
 
-                        {{-- Description Editor --}}
+                        {{-- SUMMERNOTE EDITOR --}}
                         <div class="mb-4">
                             <label class="form-label fw-bold">Description Text</label>
-                            <div wire:ignore>
-                                <textarea id="froala-contact-desc" class="form-control" rows="5">{{ $contentDescription }}</textarea>
+
+                            <div wire:ignore
+                                 x-data="{
+                                    value: @entangle('contentDescription'),
+                                    isLoaded: false,
+                                    init() {
+                                        // 1. Inject CSS immediately
+                                        if (!document.querySelector('link[href*=\'summernote\']')) {
+                                            let link = document.createElement('link');
+                                            link.href = 'https://cdn.jsdelivr.net/npm/summernote@0.8.18/dist/summernote-lite.min.css';
+                                            link.rel = 'stylesheet';
+                                            document.head.appendChild(link);
+                                        }
+
+                                        // 2. Define Script Loader Promise
+                                        const loadScript = (src) => {
+                                            return new Promise((resolve, reject) => {
+                                                if (document.querySelector(`script[src='${src}']`)) {
+                                                    resolve(); return;
+                                                }
+                                                let script = document.createElement('script');
+                                                script.src = src;
+                                                script.onload = resolve;
+                                                script.onerror = reject;
+                                                document.head.appendChild(script);
+                                            });
+                                        };
+
+                                        // 3. Load Sequence: jQuery -> Summernote -> Init
+                                        const loadDependencies = async () => {
+                                            if (typeof jQuery === 'undefined') {
+                                                await loadScript('https://code.jquery.com/jquery-3.6.0.min.js');
+                                            }
+                                            if (typeof jQuery.fn.summernote === 'undefined') {
+                                                await loadScript('https://cdn.jsdelivr.net/npm/summernote@0.8.18/dist/summernote-lite.min.js');
+                                            }
+                                            this.initEditor();
+                                        };
+
+                                        loadDependencies();
+                                    },
+                                    initEditor() {
+                                        this.isLoaded = true;
+                                        let $editor = $(this.$refs.editor);
+
+                                        if ($editor.data('summernote')) {
+                                            $editor.summernote('destroy');
+                                        }
+
+                                        $editor.summernote({
+                                            placeholder: 'Write the Get in Touch description...',
+                                            tabsize: 2,
+                                            height: 200,
+                                            dialogsInBody: true,
+                                            toolbar: [
+                                                ['style', ['style']],
+                                                ['font', ['bold', 'underline', 'clear']],
+                                                ['para', ['ul', 'ol', 'paragraph']],
+                                                ['insert', ['link', 'hr']],
+                                                ['view', ['fullscreen', 'codeview', 'help']]
+                                            ],
+                                            callbacks: {
+                                                onChange: (contents) => {
+                                                    this.value = contents;
+                                                }
+                                            }
+                                        });
+
+                                        if (this.value) {
+                                            $editor.summernote('code', this.value);
+                                        }
+
+                                        this.$watch('value', (newValue) => {
+                                            if ($editor.summernote('code') != newValue) {
+                                                $editor.summernote('code', newValue);
+                                            }
+                                        });
+                                    }
+                                 }"
+                            >
+                                {{-- Loading State Visual --}}
+                                <div x-show="!isLoaded" class="text-center p-3 text-muted bg-light border rounded">
+                                    <i class="fas fa-spinner fa-spin me-2"></i> Loading Editor...
+                                </div>
+
+                                {{-- The Editor --}}
+                                <textarea x-ref="editor" class="form-control" style="display:none;"></textarea>
                             </div>
                             @error('contentDescription') <span class="text-danger small">{{ $message }}</span> @enderror
                         </div>
@@ -157,39 +249,3 @@
         </div>
     </form>
 </div>
-
-{{-- FROALA SCRIPT --}}
-@script
-<script>
-    const editorId = 'froala-contact-desc';
-
-    const initEditor = () => {
-        if (typeof FroalaEditor !== 'undefined' && FroalaEditor.INSTANCES) {
-             const existing = FroalaEditor.INSTANCES.find(i => i.$el[0].id === editorId);
-             if(existing) existing.destroy();
-        }
-
-        new FroalaEditor(`#${editorId}`, {
-            toolbarButtons: ['bold', 'italic', 'underline', 'formatUL', 'insertLink', 'undo', 'redo', 'html'],
-            heightMin: 150,
-            placeholderText: 'Write the "Get in Touch" description...',
-            events: {
-                'contentChanged': function () {
-                    $wire.set('contentDescription', this.html.get(), false);
-                },
-                'initialized': function() {
-                    const currentVal = $wire.get('contentDescription');
-                    if (currentVal && this.html.get() === '') {
-                        this.html.set(currentVal);
-                    }
-                }
-            }
-        });
-    }
-
-    initEditor();
-
-    document.addEventListener('livewire:navigated', () => { setTimeout(initEditor, 100); });
-    $wire.on('settings-saved', () => { setTimeout(initEditor, 100); });
-</script>
-@endscript

@@ -1,17 +1,29 @@
 <div>
-    {{-- Styles unchanged ... --}}
+    {{-- Internal Styles --}}
     <style>
-        /* ... your existing styles ... */
         .star-rating i { font-size: 1.5rem; cursor: pointer; color: #ddd; transition: color 0.2s; }
         .star-rating i.active { color: #ff9f43; }
         .img-thumbnail-wrapper { position: relative; display: inline-block; margin: 5px; }
         .btn-delete-img { position: absolute; top: -5px; right: -5px; background: red; color: white; border-radius: 50%; width: 20px; height: 20px; font-size: 10px; display: flex; align-items: center; justify-content: center; cursor: pointer; }
         .avatar-preview { width: 60px; height: 60px; border-radius: 50%; object-fit: cover; border: 2px solid #ddd; }
+
+        /* Summernote Fixes from Reference */
+        .note-editor.note-frame { border-radius: 0.375rem; border-color: #d1d5db; }
+        .note-modal-backdrop { display: none !important; }
     </style>
 
-    {{-- Content Header and Breadcrumbs (unchanged) --}}
+    {{-- Breadcrumbs --}}
     <div class="content-header row">
-       {{-- ... --}}
+        <div class="content-header-left col-md-9 col-12 mb-2">
+            <div class="row breadcrumbs-top">
+                <div class="col-12">
+                    <h2 class="content-header-title float-start mb-0">Featured Book</h2>
+                    <div class="breadcrumb-wrapper">
+                        {{-- Add your breadcrumbs here if needed --}}
+                    </div>
+                </div>
+            </div>
+        </div>
     </div>
 
     <div class="card">
@@ -23,15 +35,11 @@
             @session('message') <div class="alert alert-success p-2 mb-3"><i class="fas fa-check"></i> {{ $value }}</div> @endsession
             @session('error') <div class="alert alert-danger p-2 mb-3"><i class="fas fa-exclamation"></i> {{ $value }}</div> @endsession
 
-            {{-- FORM: Removed 'wire:submit' temporarily to debug via manual button click logic if needed,
-                 but standard wire:submit is best. Let's keep wire:submit and debug why it fails. --}}
             <form wire:submit="saveFeaturedSection">
                 <div class="row g-5">
-                    {{-- LEFT COLUMN (Carousel, Inputs) --}}
+                    {{-- LEFT COLUMN --}}
                     <div class="col-lg-5 col-md-12 border-end-lg">
-                         {{-- ... (Images, Category, Title, Price, Author, Rating, Buttons inputs remain unchanged) ... --}}
-                         {{-- Just pasting the inputs for brevity, keep your original HTML here --}}
-                         <div class="mb-4">
+                        <div class="mb-4">
                             <label class="form-label fw-bold">Carousel Images</label>
                             <div class="mb-2 p-2 bg-light rounded">
                                 @if(count($existingFeaturedImages) > 0)
@@ -115,7 +123,7 @@
                         </div>
                     </div>
 
-                    {{-- RIGHT COLUMN (Heading, Rich Text) --}}
+                    {{-- RIGHT COLUMN --}}
                     <div class="col-lg-7 col-md-12">
                         <div class="mb-4">
                             <label class="form-label fw-bold fs-5">Right Side Heading</label>
@@ -123,17 +131,106 @@
                             @error('featuredRightHeading') <span class="text-danger small">{{ $message }}</span> @enderror
                         </div>
 
+                        {{-- SUMMERNOTE EDITOR --}}
                         <div class="mb-4">
                             <label class="form-label fw-bold">Summary Content</label>
-                            <div wire:ignore>
-                                {{-- IMPORTANT: Removed wire:model completely to rely on manual JS binding --}}
-                                <textarea id="froala-featured-summary" class="form-control" rows="10">{{ $featuredRightSummary }}</textarea>
+
+                            <div wire:ignore
+                                 x-data="{
+                                    value: @entangle('featuredRightSummary'),
+                                    isLoaded: false,
+                                    init() {
+                                        // 1. Inject CSS immediately
+                                        if (!document.querySelector('link[href*=\'summernote\']')) {
+                                            let link = document.createElement('link');
+                                            link.href = 'https://cdn.jsdelivr.net/npm/summernote@0.8.18/dist/summernote-lite.min.css';
+                                            link.rel = 'stylesheet';
+                                            document.head.appendChild(link);
+                                        }
+
+                                        // 2. Define Script Loader Promise
+                                        const loadScript = (src) => {
+                                            return new Promise((resolve, reject) => {
+                                                if (document.querySelector(`script[src='${src}']`)) {
+                                                    resolve(); return;
+                                                }
+                                                let script = document.createElement('script');
+                                                script.src = src;
+                                                script.onload = resolve;
+                                                script.onerror = reject;
+                                                document.head.appendChild(script);
+                                            });
+                                        };
+
+                                        // 3. Load Sequence: jQuery -> Summernote -> Init
+                                        const loadDependencies = async () => {
+                                            if (typeof jQuery === 'undefined') {
+                                                await loadScript('https://code.jquery.com/jquery-3.6.0.min.js');
+                                            }
+                                            if (typeof jQuery.fn.summernote === 'undefined') {
+                                                await loadScript('https://cdn.jsdelivr.net/npm/summernote@0.8.18/dist/summernote-lite.min.js');
+                                            }
+                                            this.initEditor();
+                                        };
+
+                                        loadDependencies();
+                                    },
+                                    initEditor() {
+                                        this.isLoaded = true;
+                                        let $editor = $(this.$refs.editor);
+
+                                        if ($editor.data('summernote')) {
+                                            $editor.summernote('destroy');
+                                        }
+
+                                        $editor.summernote({
+                                            placeholder: 'Write the featured book summary here...',
+                                            tabsize: 2,
+                                            height: 300,
+                                            dialogsInBody: true,
+                                            toolbar: [
+                                                ['style', ['style']],
+                                                ['font', ['bold', 'underline', 'clear']],
+                                                ['fontname', ['fontname']],
+                                                ['fontsize', ['fontsize']],
+                                                ['color', ['color']],
+                                                ['para', ['ul', 'ol', 'paragraph', 'height']],
+                                                ['table', ['table']],
+                                                ['insert', ['link', 'picture', 'video', 'hr']],
+                                                ['view', ['fullscreen', 'codeview', 'help']]
+                                            ],
+                                            callbacks: {
+                                                onChange: (contents) => {
+                                                    this.value = contents;
+                                                }
+                                            }
+                                        });
+
+                                        if (this.value) {
+                                            $editor.summernote('code', this.value);
+                                        }
+
+                                        this.$watch('value', (newValue) => {
+                                            if ($editor.summernote('code') != newValue) {
+                                                $editor.summernote('code', newValue);
+                                            }
+                                        });
+                                    }
+                                 }"
+                            >
+                                {{-- Loading State Visual --}}
+                                <div x-show="!isLoaded" class="text-center p-3 text-muted bg-light border rounded">
+                                    <i class="fas fa-spinner fa-spin me-2"></i> Loading Editor...
+                                </div>
+
+                                {{-- The Editor --}}
+                                <textarea x-ref="editor" class="form-control" style="display:none;"></textarea>
                             </div>
                             @error('featuredRightSummary') <span class="text-danger small">{{ $message }}</span> @enderror
                         </div>
 
                         <div class="text-end mt-4">
-                            <button type="submit" id="submit-featured-btn" class="btn btn-primary btn-lg px-5">
+                            <button type="submit" class="btn btn-primary btn-lg px-5">
                                 <span wire:loading.remove>Save Featured Section</span>
                                 <span wire:loading>Saving...</span>
                             </button>
@@ -144,62 +241,3 @@
         </div>
     </div>
 </div>
-
-@script
-<script>
-    const textareaId = 'froala-featured-summary';
-
-    const initEditor = () => {
-        console.log("DEBUG: Initializing Editor...");
-
-        // Cleanup ghosts
-        if (typeof FroalaEditor !== 'undefined' && FroalaEditor.INSTANCES) {
-             const existing = FroalaEditor.INSTANCES.find(i => i.$el[0].id === textareaId);
-             if(existing) {
-                 console.log("DEBUG: Destroying existing instance");
-                 existing.destroy();
-             }
-        }
-
-        new FroalaEditor(`#${textareaId}`, {
-            toolbarButtons: {
-                 'moreText': { 'buttons': ['bold', 'italic', 'underline', 'strikeThrough', 'subscript', 'superscript', 'fontFamily', 'fontSize', 'textColor', 'backgroundColor', 'clearFormatting'], 'buttonsVisible': 4 },
-                 'moreParagraph': { 'buttons': ['alignLeft', 'alignCenter', 'alignRight', 'alignJustify', 'formatOL', 'formatUL', 'paragraphFormat', 'paragraphStyle', 'lineHeight', 'outdent', 'indent'], 'buttonsVisible': 4 },
-                 'moreRich': { 'buttons': ['insertLink', 'insertImage', 'insertVideo', 'insertTable', 'emoticons', 'specialCharacters', 'html'], 'buttonsVisible': 4 },
-                 'moreMisc': { 'buttons': ['undo', 'redo', 'fullscreen', 'print', 'getPDF', 'spellChecker', 'selectAll', 'help'], 'buttonsVisible': 2 }
-            },
-            heightMin: 250,
-            events: {
-                'contentChanged': function () {
-                    const html = this.html.get();
-                    console.log("DEBUG: Froala content changed. Length:", html.length);
-                    // Defer network request (last arg 'false' means don't send immediately, wait for next submit)
-                    $wire.set('featuredRightSummary', html, false);
-                },
-                'initialized': function() {
-                    console.log("DEBUG: Froala Initialized.");
-                    const currentVal = $wire.get('featuredRightSummary');
-                    if (currentVal && this.html.get() === '') {
-                        console.log("DEBUG: Restoring content from Livewire");
-                        this.html.set(currentVal);
-                    }
-                }
-            }
-        });
-    }
-
-    // Initialize
-    initEditor();
-
-    // Re-init hooks
-    document.addEventListener('livewire:navigated', () => {
-        console.log("DEBUG: livewire:navigated");
-        setTimeout(initEditor, 100);
-    });
-
-    $wire.on('settings-saved', () => {
-        console.log("DEBUG: settings-saved event received");
-        setTimeout(initEditor, 100);
-    });
-</script>
-@endscript

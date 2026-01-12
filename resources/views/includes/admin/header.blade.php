@@ -28,7 +28,7 @@
                     </div>
                 </div>
                 <div class="navbar-nav w-100">
-                    <a href="{{ route('admin.index') }}" wire:navigate class="nav-item nav-link active"><i class="fa fa-tachometer-alt me-2"></i>Dashboard</a>
+                    <a href="{{ route('admin.index') }}"  class="nav-item nav-link active"><i class="fa fa-tachometer-alt me-2"></i>Dashboard</a>
 
                     <div class="nav-item dropdown">
                         <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown"><i class="fa fa-laptop me-2"></i>Elements</a>
@@ -46,10 +46,10 @@
 
                     CMS Home Page</a>
                         <div wire:ignore class="dropdown-menu bg-transparent border-0">
-                            <a href="{{ route('admin.cms.meta.herosection.form') }}" wire:navigate class="dropdown-item">Hero Section</a>
-                            <a href="{{ route('admin.cms.meta.featuredBookSection.form') }}" wire:navigate class="dropdown-item">Featured Book Section</a>
-                            <a href="{{ route('admin.cms.meta.aboutSection.form') }}" wire:navigate class="dropdown-item">About Section</a>
-                            <a href="{{ route('admin.cms.meta.home.gallery') }}" wire:navigate class="dropdown-item">Author Gallery Section</a>
+                            <a href="{{ route('admin.cms.meta.herosection.form') }}"  class="dropdown-item">Hero Section</a>
+                            <a href="{{ route('admin.cms.meta.featuredBookSection.form') }}"  class="dropdown-item">Featured Book Section</a>
+                            <a href="{{ route('admin.cms.meta.aboutSection.form') }}"  class="dropdown-item">About Section</a>
+                            <a href="{{ route('admin.cms.meta.home.gallery') }}"  class="dropdown-item">Author Gallery Section</a>
 
                         </div>
                     </div>
@@ -57,22 +57,22 @@
                     <div class="nav-item dropdown" wire:ignore>
                         <a href="#" wire:ignore class="nav-link dropdown-toggle" data-bs-toggle="dropdown"><i class="fa fa-laptop me-2"></i>CMS About Page</a>
                         <div wire:ignore class="dropdown-menu bg-transparent border-0">
-                            <a href="{{ route('admin.cms.meta.aboutPage.section') }}" wire:navigate class="dropdown-item">About Section</a>
-                            <a href="{{ route('admin.cms.meta.about.gallery') }}" wire:navigate class="dropdown-item">Author Gallery</a>
+                            <a href="{{ route('admin.cms.meta.aboutPage.section') }}"  class="dropdown-item">About Section</a>
+                            <a href="{{ route('admin.cms.meta.about.gallery') }}" class="dropdown-item">Author Gallery</a>
                         </div>
                     </div>
 
                     <div class="nav-item dropdown" wire:ignore>
                         <a href="#" wire:ignore class="nav-link dropdown-toggle" data-bs-toggle="dropdown"><i class="fa fa-laptop me-2"></i>CMS Contact Page</a>
                         <div wire:ignore class="dropdown-menu bg-transparent border-0">
-                            <a href="{{ route('admin.cms.meta.contact.getInTouch') }}" wire:navigate class="dropdown-item">Get In Touch Section</a>
+                            <a href="{{ route('admin.cms.meta.contact.getInTouch') }}"  class="dropdown-item">Get In Touch Section</a>
                         </div>
                     </div>
 
                     <div class="nav-item dropdown" wire:ignore>
                         <a href="#" wire:ignore class="nav-link dropdown-toggle" data-bs-toggle="dropdown"><i class="fa fa-laptop me-2"></i>Contacts</a>
                         <div wire:ignore class="dropdown-menu bg-transparent border-0">
-                            <a href="{{ route('admin.contacts.index') }}" wire:navigate class="dropdown-item">All Contacts</a>
+                            <a href="{{ route('admin.contacts.index') }}"  class="dropdown-item">All Contacts</a>
                         </div>
                     </div>
 
@@ -81,16 +81,16 @@
                         <a href="#" wire:ignore class="nav-link dropdown-toggle" data-bs-toggle="dropdown">
                     <i class="fa fa-laptop me-2"></i>Blogs</a>
                         <div wire:ignore class="dropdown-menu bg-transparent border-0">
-                            <a href="{{ route('admin.blogs.index') }}" wire:navigate class="dropdown-item">All Posts</a>
-                            <a href="{{ route('admin.blogs.create') }}" wire:navigate class="dropdown-item">Create New Post</a>
+                            <a href="{{ route('admin.blogs.index') }}"  class="dropdown-item">All Posts</a>
+                            <a href="{{ route('admin.blogs.create') }}" class="dropdown-item">Create New Post</a>
                         </div>
                     </div>
 
                     <div class="nav-item dropdown" wire:ignore>
                         <a href="#" wire:ignore class="nav-link dropdown-toggle" data-bs-toggle="dropdown"><i class="fa fa-laptop me-2"></i>Books</a>
                         <div wire:ignore class="dropdown-menu bg-transparent border-0">
-                            <a href="{{ route('admin.books.index') }}" wire:navigate class="dropdown-item">All Books</a>
-                            <a href="{{ route('admin.books.create') }}" wire:navigate class="dropdown-item">Add Book</a>
+                            <a href="{{ route('admin.books.index') }}" class="dropdown-item">All Books</a>
+                            <a href="{{ route('admin.books.create') }}"  class="dropdown-item">Add Book</a>
                         </div>
                     </div>
 
@@ -98,7 +98,7 @@
                                 <div class="nav-item dropdown" wire:ignore>
                         <a href="#" wire:ignore class="nav-link dropdown-toggle" data-bs-toggle="dropdown"><i class="fa fa-laptop me-2"></i>Orders</a>
                         <div wire:ignore class="dropdown-menu bg-transparent border-0">
-                            <a href="{{ route('admin.orders') }}" wire:navigate class="dropdown-item">All Orders</a>
+                            <a href="{{ route('admin.orders') }}"  class="dropdown-item">All Orders</a>
                         </div>
                     </div>
 
@@ -126,7 +126,7 @@
         <div class="content">
             <!-- Navbar Start -->
             <nav class="navbar navbar-expand bg-light navbar-light sticky-top px-4 py-0">
-                <a href="{{ route('admin.index') }}" wire:navigate class="navbar-brand d-flex d-lg-none me-4">
+                <a href="{{ route('admin.index') }}"  class="navbar-brand d-flex d-lg-none me-4">
                     <h2 class="text-primary mb-0"><i class="fa fa-hashtag"></i></h2>
                 </a>
                 <a href="#" class="sidebar-toggler flex-shrink-0">
