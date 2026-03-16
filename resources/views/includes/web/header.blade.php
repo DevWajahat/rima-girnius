@@ -14,7 +14,7 @@
             <ul class="flex gap-4 xl:gap-8 items-center">
                 <li><a href="{{ route('home') }}" wire:navigate class="text-[12px] xl:text-[15px] font-medium text-black uppercase tracking-wider xl:tracking-[0.2em] hover:opacity-70 transition-colors">Home</a></li>
                 <li><a href="{{ route('about') }}" wire:navigate class="text-[12px] xl:text-[15px] font-medium text-black uppercase tracking-wider xl:tracking-[0.2em] hover:opacity-70 transition-colors">About</a></li>
-                <li><a href="{{ route('eureka.universe') }}" wire:navigate class="text-[12px] xl:text-[15px] font-medium text-black uppercase tracking-wider xl:tracking-[0.2em] hover:opacity-70 transition-colors">Eureka World</a></li>
+                <li><a href="{{ route('eureka.universe') }}" wire:navigate class="text-[12px] xl:text-[15px] font-medium text-black uppercase tracking-wider xl:tracking-[0.2em] hover:opacity-70 transition-colors">Eureka's World</a></li>
                 <li><a href="{{ route('books') }}" wire:navigate class="text-[12px] xl:text-[15px] font-medium text-black uppercase tracking-wider xl:tracking-[0.2em] hover:opacity-70 transition-colors">Books</a></li>
                 <li><a href="{{ route('blogs') }}" wire:navigate class="text-[12px] xl:text-[15px] font-medium text-black uppercase tracking-wider xl:tracking-[0.2em] hover:opacity-70 transition-colors">Blogs</a></li>
                 <li><a href="{{ route('contact') }}" wire:navigate class="text-[12px] xl:text-[15px] font-medium text-black uppercase tracking-wider xl:tracking-[0.2em] hover:opacity-70 transition-colors">Contact</a></li>
@@ -61,7 +61,7 @@
             <ul class="flex flex-col gap-2">
                 <li><a href="{{ route('home') }}" wire:navigate class="block py-4 text-sm font-bold uppercase tracking-widest text-gray-700 hover:text-black hover:bg-gray-50 border-b border-gray-100 transition-colors">Home</a></li>
                 <li><a href="{{ route('about') }}" wire:navigate class="block py-4 text-sm font-bold uppercase tracking-widest text-gray-700 hover:text-black hover:bg-gray-50 border-b border-gray-100 transition-colors">About</a></li>
-                <li><a href="{{ route('eureka.universe') }}" wire:navigate class="block py-4 text-sm font-bold uppercase tracking-widest text-gray-700 hover:text-black hover:bg-gray-50 border-b border-gray-100 transition-colors">Eureka World</a></li>
+                <li><a href="{{ route('eureka.universe') }}" wire:navigate class="block py-4 text-sm font-bold uppercase tracking-widest text-gray-700 hover:text-black hover:bg-gray-50 border-b border-gray-100 transition-colors">Eureka's World</a></li>
                 <li><a href="{{ route('books') }}" wire:navigate class="block py-4 text-sm font-bold uppercase tracking-widest text-gray-700 hover:text-black hover:bg-gray-50 border-b border-gray-100 transition-colors">Books</a></li>
                 <li><a href="{{ route('blogs') }}" wire:navigate class="block py-4 text-sm font-bold uppercase tracking-widest text-gray-700 hover:text-black hover:bg-gray-50 border-b border-gray-100 transition-colors">Blogs</a></li>
                 <li><a href="{{ route('contact') }}" wire:navigate class="block py-4 text-sm font-bold uppercase tracking-widest text-gray-700 hover:text-black hover:bg-gray-50 transition-colors">Contact</a></li>
