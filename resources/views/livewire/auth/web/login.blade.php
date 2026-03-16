@@ -33,19 +33,19 @@
 
             {{-- Remember Me & Forgot Password --}}
             <div class="flex items-center justify-between">
-                <div class="flex items-center">
-                    <input type="checkbox" wire:model="remember" id="remember"
-                           class="h-4 w-4 text-[#5c4d42] focus:ring-[#5c4d42] border-gray-300 rounded">
-                    <label for="remember" class="ml-2 block text-sm text-gray-900">
-                        Remember me
-                    </label>
-                </div>
+                <!--<div class="flex items-center">-->
+                <!--    <input type="checkbox" wire:model="remember" id="remember"-->
+                <!--           class="h-4 w-4 text-[#5c4d42] focus:ring-[#5c4d42] border-gray-300 rounded">-->
+                <!--    <label for="remember" class="ml-2 block text-sm text-gray-900">-->
+                <!--        Remember me-->
+                <!--    </label>-->
+                <!--</div>-->
 
-                <div class="text-sm">
-                    <a href="#" class="font-medium text-[#5c4d42] hover:text-[#333] transition-colors hover:underline">
-                        Forgot password?
-                    </a>
-                </div>
+                <!--<div class="text-sm">-->
+                <!--    <a href="#" class="font-medium text-[#5c4d42] hover:text-[#333] transition-colors hover:underline">-->
+                <!--        Forgot password?-->
+                <!--    </a>-->
+                <!--</div>-->
             </div>
 
             {{-- Submit Button --}}
@@ -68,5 +68,4 @@
 
         </form>
     </div>
-</div>    {{-- Success is as dangerous as failure. --}}
-
+</div> 
