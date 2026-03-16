@@ -47,7 +47,7 @@ Route::middleware('auth')->group(function () {
     /*     return view('books'); // Replace with your Books component */
     /* })->middleware('verified')->name('books.index'); // Add 'verified' here! */
 });
-
+Route::get('/from-the-world-of-eureka', [HomeController::class, 'eurekaUniverse'])->name('eureka.universe');
 
 Route::get('/register', Register::class)->name('register')->middleware('guest');
 

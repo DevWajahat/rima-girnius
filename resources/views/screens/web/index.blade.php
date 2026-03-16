@@ -318,9 +318,11 @@
     if (!is_array($socialPosters)) {
         $socialPosters = [];
     }
+
+    $previewPosters = array_slice($socialPosters, 0, 4);
 @endphp
 
-@if(count($socialPosters) > 0)
+@if(count($previewPosters) > 0)
 <section class="bg-white py-16 px-4">
   <div class="max-w-6xl mx-auto">
 
@@ -330,7 +332,7 @@
 
     <div id="social-poster-gallery" class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6 lg:gap-8 px-2 sm:px-0">
 
-      @foreach($socialPosters as $poster)
+      @foreach($previewPosters as $poster)
           @php
               $absolutePath = storage_path('app/public/' . $poster);
               $width = 1000;
@@ -347,29 +349,26 @@
 
           <article class="bg-[#F8F7F5] p-3 rounded-xl transition-all duration-300 hover:-translate-y-1 shadow-[0_3px_10px_rgb(0,0,0,0.1)] hover:shadow-[0_8px_20px_rgb(0,0,0,0.2)] flex flex-col h-full group">
             <div class="w-full rounded-lg overflow-hidden relative bg-[#333333] flex items-center justify-center">
-
-              <a href="{{ asset('storage/' . $poster) }}"
-                 data-pswp-width="{{ $width }}"
-                 data-pswp-height="{{ $height }}"
-                 target="_blank"
-                 class="w-full flex items-center justify-center cursor-zoom-in">
-
-                  <img
-                    src="{{ asset('storage/' . $poster) }}"
-                    alt="World of Eureka Poster {{ $loop->iteration }}"
-                    class="w-full h-auto object-contain transform group-hover:scale-105 transition-transform duration-500"
-                  >
+              <a href="{{ asset('storage/' . $poster) }}" data-pswp-width="{{ $width }}" data-pswp-height="{{ $height }}" target="_blank" class="w-full flex items-center justify-center cursor-zoom-in">
+                  <img src="{{ asset('storage/' . $poster) }}" alt="Eureka Poster" class="w-full h-auto object-contain transform group-hover:scale-105 transition-transform duration-500">
               </a>
-
             </div>
           </article>
       @endforeach
 
     </div>
+
+    @if(count($socialPosters) > 4)
+    <div class="mt-12 text-center">
+        <a href="{{ route('eureka.universe') }}" class="inline-block rounded-full uppercase tracking-widest font-bold bg-[#5c4d42] hover:bg-[#4a3b32] text-white px-10 py-3 shadow-xl transition-colors">
+            View More
+        </a>
+    </div>
+    @endif
+
   </div>
 </section>
 @endif
-
 
 <section class="bg-white py-16 px-4 ">
   <div class="max-w-6xl mx-auto">
