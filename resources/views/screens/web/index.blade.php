@@ -310,6 +310,67 @@
   </div>
 </section>
 
+@php
+    $socialPosterHeading = $metaArray['social-poster-section']['posterHeading']->meta_value ?? 'From The World Of Eureka';
+    $socialPosterImagesJson = $metaArray['social-poster-section']['posterImages']->meta_value ?? '[]';
+    $socialPosters = json_decode($socialPosterImagesJson, true);
+
+    if (!is_array($socialPosters)) {
+        $socialPosters = [];
+    }
+@endphp
+
+@if(count($socialPosters) > 0)
+<section class="bg-white py-16 px-4">
+  <div class="max-w-6xl mx-auto">
+
+    <h2 class="text-3xl md:text-4xl font-[Poppins] font-medium text-center text-[#000] mb-12 tracking-tight">
+      {{ $socialPosterHeading }}
+    </h2>
+
+    <div id="social-poster-gallery" class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6 lg:gap-8 px-2 sm:px-0">
+
+      @foreach($socialPosters as $poster)
+          @php
+              $absolutePath = storage_path('app/public/' . $poster);
+              $width = 1000;
+              $height = 1000;
+
+              if (file_exists($absolutePath)) {
+                  $imgSize = getimagesize($absolutePath);
+                  if ($imgSize) {
+                      $width = $imgSize[0];
+                      $height = $imgSize[1];
+                  }
+              }
+          @endphp
+
+          <article class="bg-[#F8F7F5] p-3 rounded-xl transition-all duration-300 hover:-translate-y-1 shadow-[0_3px_10px_rgb(0,0,0,0.1)] hover:shadow-[0_8px_20px_rgb(0,0,0,0.2)] flex flex-col h-full group">
+            <div class="w-full rounded-lg overflow-hidden relative bg-[#333333] flex items-center justify-center">
+
+              <a href="{{ asset('storage/' . $poster) }}"
+                 data-pswp-width="{{ $width }}"
+                 data-pswp-height="{{ $height }}"
+                 target="_blank"
+                 class="w-full flex items-center justify-center cursor-zoom-in">
+
+                  <img
+                    src="{{ asset('storage/' . $poster) }}"
+                    alt="World of Eureka Poster {{ $loop->iteration }}"
+                    class="w-full h-auto object-contain transform group-hover:scale-105 transition-transform duration-500"
+                  >
+              </a>
+
+            </div>
+          </article>
+      @endforeach
+
+    </div>
+  </div>
+</section>
+@endif
+
+
 <section class="bg-white py-16 px-4 ">
   <div class="max-w-6xl mx-auto">
     <h2 class="text-3xl md:text-4xl font-[Poppins] font-medium text-center text-black mb-12 tracking-tight">
@@ -404,49 +465,42 @@
 
 
 @push('scripts')
-{{-- Load CSS for PhotoSwipe (Ensure this is loaded) --}}
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/photoswipe/5.4.2/photoswipe.min.css">
 
 <script type="module">
     import PhotoSwipeLightbox from 'https://cdnjs.cloudflare.com/ajax/libs/photoswipe/5.4.2/photoswipe-lightbox.esm.min.js';
     import PhotoSwipe from 'https://cdnjs.cloudflare.com/ajax/libs/photoswipe/5.4.2/photoswipe.esm.min.js';
 
-    // 1. Define a global store to track instances across Livewire navigations
     window.galleryStore = window.galleryStore || {
         main: null,
         thumbs: null,
-        lightbox: null
+        lightbox: null,
+        socialLightbox: null
     };
 
     window.initBookGallery = function() {
         const galleryEl = document.getElementById('book-gallery');
         const thumbsEl = document.querySelector('.mySwiper');
 
-        // Safety check: If elements aren't on this page, stop.
         if (!galleryEl || !thumbsEl) return;
 
-        // 2. NUCLEAR CLEANUP: Destroy any existing instances on these specific elements
-        // Check if Swiper is attached to the DOM element and destroy it
         if (galleryEl.swiper) galleryEl.swiper.destroy(true, true);
         if (thumbsEl.swiper) thumbsEl.swiper.destroy(true, true);
 
-        // Also destroy our tracked references
         if (window.galleryStore.lightbox) {
             window.galleryStore.lightbox.destroy();
             window.galleryStore.lightbox = null;
         }
 
-        // 3. Initialize Thumbs Swiper
         const thumbSwiper = new Swiper(".mySwiper", {
             spaceBetween: 10,
             slidesPerView: 3,
             freeMode: true,
             watchSlidesProgress: true,
-            observer: true,       // CRITICAL for Livewire
-            observeParents: true, // CRITICAL for Livewire
+            observer: true,
+            observeParents: true,
         });
 
-        // 4. Initialize Main Swiper
         const mainSwiper = new Swiper(".mySwiper2", {
             spaceBetween: 10,
             navigation: {
@@ -456,11 +510,10 @@
             thumbs: {
                 swiper: thumbSwiper,
             },
-            observer: true,       // CRITICAL for Livewire
-            observeParents: true, // CRITICAL for Livewire
+            observer: true,
+            observeParents: true,
         });
 
-        // 5. Initialize PhotoSwipe
         const lightbox = new PhotoSwipeLightbox({
             gallery: '#book-gallery',
             children: 'a',
@@ -472,26 +525,49 @@
 
         lightbox.init();
 
-        // Save references globally
         window.galleryStore.main = mainSwiper;
         window.galleryStore.thumbs = thumbSwiper;
         window.galleryStore.lightbox = lightbox;
-
-        console.log('Gallery Initialized');
     }
 
-    // 6. Event Listeners for Livewire
-    // Run immediately if DOM is ready
+    window.initSocialPosterGallery = function() {
+        const posterGalleryEl = document.getElementById('social-poster-gallery');
+
+        if (!posterGalleryEl) return;
+
+        if (window.galleryStore.socialLightbox) {
+            window.galleryStore.socialLightbox.destroy();
+            window.galleryStore.socialLightbox = null;
+        }
+
+        const socialLightbox = new PhotoSwipeLightbox({
+            gallery: '#social-poster-gallery',
+            children: 'a',
+            pswpModule: PhotoSwipe,
+            initialZoomLevel: 'fit',
+            secondaryZoomLevel: 2,
+            maxZoomLevel: 4,
+        });
+
+        socialLightbox.init();
+        window.galleryStore.socialLightbox = socialLightbox;
+    }
+
     if (document.readyState === 'loading') {
-        document.addEventListener('DOMContentLoaded', window.initBookGallery);
+        document.addEventListener('DOMContentLoaded', () => {
+            window.initBookGallery();
+            window.initSocialPosterGallery();
+        });
     } else {
         window.initBookGallery();
+        window.initSocialPosterGallery();
     }
 
-    // Run specifically after Livewire swaps the page
     document.addEventListener('livewire:navigated', () => {
-        // Small delay to ensure the new HTML is painted
-        setTimeout(window.initBookGallery, 50);
+        setTimeout(() => {
+            window.initBookGallery();
+            window.initSocialPosterGallery();
+        }, 50);
     });
 </script>
 @endpush
