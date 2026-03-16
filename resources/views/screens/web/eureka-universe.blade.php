@@ -55,22 +55,43 @@
 @endsection
 
 @push('scripts')
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/photoswipe/5.4.2/photoswipe.min.css">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/photoswipe/5.4.2/photoswipe.min.css">
 
-    <script type="module">
-        import PhotoSwipeLightbox from 'https://cdnjs.cloudflare.com/ajax/libs/photoswipe/5.4.2/photoswipe-lightbox.esm.min.js';
-        import PhotoSwipe from 'https://cdnjs.cloudflare.com/ajax/libs/photoswipe/5.4.2/photoswipe.esm.min.js';
+<script type="module">
+    import PhotoSwipeLightbox from 'https://cdnjs.cloudflare.com/ajax/libs/photoswipe/5.4.2/photoswipe-lightbox.esm.min.js';
+    import PhotoSwipe from 'https://cdnjs.cloudflare.com/ajax/libs/photoswipe/5.4.2/photoswipe.esm.min.js';
 
-        document.addEventListener('DOMContentLoaded', () => {
-            const lightbox = new PhotoSwipeLightbox({
-                gallery: '#full-social-poster-gallery',
-                children: 'a',
-                pswpModule: PhotoSwipe,
-                initialZoomLevel: 'fit',
-                secondaryZoomLevel: 2,
-                maxZoomLevel: 4,
-            });
-            lightbox.init();
+    let eurekaLightbox = null;
+
+    function initEurekaGallery() {
+        const galleryEl = document.getElementById('full-social-poster-gallery');
+        if (!galleryEl) return;
+
+        if (eurekaLightbox) {
+            eurekaLightbox.destroy();
+            eurekaLightbox = null;
+        }
+
+        eurekaLightbox = new PhotoSwipeLightbox({
+            gallery: '#full-social-poster-gallery',
+            children: 'a',
+            pswpModule: PhotoSwipe,
+            initialZoomLevel: 'fit',
+            secondaryZoomLevel: 2,
+            maxZoomLevel: 4,
         });
-    </script>
+
+        eurekaLightbox.init();
+    }
+
+    if (document.readyState === 'loading') {
+        document.addEventListener('DOMContentLoaded', initEurekaGallery);
+    } else {
+        initEurekaGallery();
+    }
+
+    document.addEventListener('livewire:navigated', () => {
+        setTimeout(initEurekaGallery, 50);
+    });
+</script>
 @endpush
