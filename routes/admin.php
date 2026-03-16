@@ -1,6 +1,6 @@
 <?php
 
-use Illuminate\Support\Facades\Routes;
+use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Admin\HomeController;
 use App\Http\Controllers\Admin\CmsManagmentController;
 use App\Livewire\Admin\Cms\Home\HeroSection;
@@ -21,14 +21,14 @@ use App\Livewire\Admin\Books\BookCreate;
 use App\Livewire\Admin\Books\BookEdit;
 use App\Livewire\Admin\Orders;
 
+use App\Livewire\Admin\Cms\Home\SocialPosterSection;
 
-Route::get("/",[HomeController::class,'index'])->name('index');
+Route::get("/", [HomeController::class, 'index'])->name('index');
 
 Route::controller(CmsManagmentController::class)->name('cms.')->prefix('cms/page-sections/')->group(function () {
-    Route::get('/','index')->name('index');
-    Route::get('add','create')->name('create');
-    Route::post('store','store')->name('store');
-
+    Route::get('/', 'index')->name('index');
+    Route::get('add', 'create')->name('create');
+    Route::post('store', 'store')->name('store');
 });
 
 
@@ -37,6 +37,10 @@ Route::prefix('cms/meta')->name('cms.meta.')->group(function () {
     // Home Hero section
     Route::get('home/hero-section', HeroSection::class)->name('herosection.form');
     Route::post('hero-section/store-or-update', HeroSection::class)->name('herosection.storeOrUpdate');
+
+    Route::get('home/social-posters', SocialPosterSection::class)->name('home.social-posters');
+
+
 
     //Home Featured Book Section
     Route::get('home/featured-book-section', FeaturedSection::class)->name('featuredBookSection.form');
@@ -60,12 +64,9 @@ Route::prefix('cms/meta')->name('cms.meta.')->group(function () {
     Route::get('about/author-gallery', AuthorGallery::class)->name('about.gallery');
 
     Route::get('contact/get-in-touch', GetInTouchSection::class)->name('contact.getInTouch');
-
-
-
 });
 
-    Route::get('orders', Orders::class)->name('orders');
+Route::get('orders', Orders::class)->name('orders');
 
 
 
@@ -87,13 +88,12 @@ Route::prefix('blogs')->name('blogs.')->group(function () {
     // However, if you want a specific route for it:
     // Route::delete('/{id}', [BlogController::class, 'destroy'])->name('destroy');
 
-
 });
 
 
 Route::prefix('contacts')->name('contacts.')->group(function () {
     Route::get('/', ContactIndex::class)->name('index');
-    Route::get('/{id}',ContactShow::class)->name('show');
+    Route::get('/{id}', ContactShow::class)->name('show');
 });
 
 
@@ -108,5 +108,4 @@ Route::prefix('books')->name('books.')->group(function () {
     // 3. UPDATE (Show the edit form)
     // We use {id} because we removed the slug
     Route::get('/{id}/edit', BookEdit::class)->name('edit');
-
 });

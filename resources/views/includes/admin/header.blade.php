@@ -50,7 +50,7 @@
                             <a href="{{ route('admin.cms.meta.featuredBookSection.form') }}"  class="dropdown-item">Featured Book Section</a>
                             <a href="{{ route('admin.cms.meta.aboutSection.form') }}"  class="dropdown-item">About Section</a>
                             <a href="{{ route('admin.cms.meta.home.gallery') }}"  class="dropdown-item">Author Gallery Section</a>
-
+                            <a href="{{ route('admin.cms.meta.home.social-posters') }}" class="dropdown-item">Social Posters</a>
                         </div>
                     </div>
 
