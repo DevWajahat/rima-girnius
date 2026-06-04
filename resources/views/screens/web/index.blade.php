@@ -220,6 +220,21 @@
 </section>
 
 
+<section class="bg-white py-16">
+    <div class="w-full mx-0 overflow-hidden">
+        <h2 class="text-4xl font-medium text-center text-[#000] mb-12 font-[Poppins]">
+            Book Trailer
+        </h2>
+
+        <div class="w-full max-h-[55vh] bg-black shadow-xl flex justify-center items-center">
+            <video id="player" playsinline controls class="w-full h-full object-contain">
+                <source src="{{ asset('assets/web/video/eureka-book-trailer.mp4') }}" type="video/mp4">
+            </video>
+        </div>
+    </div>
+</section>
+
+
 <section class="bg-white py-16 px-4">
   <div class="max-w-5xl mx-auto">
 
@@ -465,6 +480,20 @@
 
 @push('scripts')
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/photoswipe/5.4.2/photoswipe.min.css">
+
+<script src="https://cdn.plyr.io/3.7.8/plyr.js"></script>
+<script>
+    document.addEventListener('livewire:navigated', () => {
+        if (document.querySelector('#player')) {
+            const player = new Plyr('#player', {
+                controls: ['play-large', 'play', 'progress', 'current-time', 'mute', 'volume', 'fullscreen']
+            });
+        }
+    });
+</script>
+
+
+
 
 <script type="module">
     import PhotoSwipeLightbox from 'https://cdnjs.cloudflare.com/ajax/libs/photoswipe/5.4.2/photoswipe-lightbox.esm.min.js';
