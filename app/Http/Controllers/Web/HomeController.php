@@ -30,6 +30,11 @@ class HomeController extends Controller
             $socialPosters = is_array($decoded) ? $decoded : [];
         }
 
-        return view('screens.web.eureka-universe', compact('socialPosters', 'heading'));
+        return view('screens.web.eureka-universe.index', compact('socialPosters', 'heading'));
+    }
+
+    public function video_archive()
+    {
+        return view('screens.web.archive.index');
     }
 }

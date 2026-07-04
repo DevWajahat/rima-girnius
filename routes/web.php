@@ -18,11 +18,11 @@ use App\Http\Controllers\Web\CheckoutController;
 /*     return view('welcome'); */
 /* }); */
 
-Route::get("/",[HomeController::class, 'index'])->name('home');
-Route::get("about",[AboutController::class,'index'])->name('about');
-Route::get("contact",[ContactController::class, 'index'])->name('contact');
-Route::get("books",[BooksController::class,'index'])->name('books');
-Route::get("blogs",[BlogsController::class,'index'])->name('blogs');
+Route::get("/", [HomeController::class, 'index'])->name('home');
+Route::get("about", [AboutController::class, 'index'])->name('about');
+Route::get("contact", [ContactController::class, 'index'])->name('contact');
+Route::get("books", [BooksController::class, 'index'])->name('books');
+Route::get("blogs", [BlogsController::class, 'index'])->name('blogs');
 Route::get("blogs/{id}", [BlogsController::class, 'show'])->name('blogs.show');
 # Route::get("/")->name()
 
@@ -65,6 +65,8 @@ Route::get('/logout', function () {
 
 Route::get('login', Login::class)->name('login')->middleware('guest');
 
+Route::get('/archive', [HomeController::class, 'video_archive'])->name('archive');
+
 Route::middleware(['auth', 'verified'])->group(function () {
 
     // Checkout Routes
@@ -75,16 +77,11 @@ Route::middleware(['auth', 'verified'])->group(function () {
 
     Route::get('/books/download/{id}', [BooksController::class, 'download'])->name('books.download');
 
-   // 1. The "Thank You" Page
-Route::get('/checkout/success/{book_id}/{order_id}', [CheckoutController::class, 'thankYou'])->name('checkout.thankyou');
-
-// 2. The Actual File Download Route
-Route::get('/checkout/download/{book_id}/{order_id}', [CheckoutController::class, 'downloadPDF'])->name('checkout.download.pdf');
+    // 1. The "Thank You" Page
+    Route::get('/checkout/success/{book_id}/{order_id}', [CheckoutController::class, 'thankYou'])->name('checkout.thankyou');
+    // 2. The Actual File Download Route
+    Route::get('/checkout/download/{book_id}/{order_id}', [CheckoutController::class, 'downloadPDF'])->name('checkout.download.pdf');
 
 
     Route::get('/checkout/{id}/cancel', [CheckoutController::class, 'cancel'])->name('checkout.cancel');
-
 });
-
-
-
