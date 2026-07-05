@@ -14,9 +14,39 @@
             <ul class="flex gap-4 xl:gap-8 items-center">
                 <li><a href="{{ route('home') }}" wire:navigate class="text-[12px] xl:text-[15px] font-medium text-black uppercase tracking-wider xl:tracking-[0.2em] hover:opacity-70 transition-colors">Home</a></li>
                 <li><a href="{{ route('about') }}" wire:navigate class="text-[12px] xl:text-[15px] font-medium text-black uppercase tracking-wider xl:tracking-[0.2em] hover:opacity-70 transition-colors">About</a></li>
-                <li><a href="{{ route('eureka.universe') }}" wire:navigate class="text-[12px] xl:text-[15px] font-medium text-black uppercase tracking-wider xl:tracking-[0.2em] hover:opacity-70 transition-colors">Eureka's World</a></li>
+
+                {{-- Dropdown Menu --}}
+                <li class="relative group">
+                    <button class="flex items-center gap-1 text-[12px] xl:text-[15px] font-medium text-black uppercase tracking-wider xl:tracking-[0.2em] hover:opacity-70 transition-colors py-2 focus:outline-none">
+                        Explore
+                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" class="w-4 h-4 transition-transform group-hover:rotate-180">
+                            <path stroke-linecap="round" stroke-linejoin="round" d="M19.5 8.25l-7.5 7.5-7.5-7.5" />
+                        </svg>
+                    </button>
+
+                    {{-- Dropdown Items --}}
+                    <div class="absolute left-0 top-full mt-0 hidden pt-2 group-hover:block z-50 w-56">
+                        <ul class="bg-white shadow-xl rounded-md border border-gray-100 overflow-hidden">
+                            <li>
+                                <a href="{{ route('eureka.universe') }}" wire:navigate class="block px-5 py-3.5 text-xs font-bold text-black uppercase tracking-widest border-b border-gray-50 hover:bg-gray-50 hover:text-[#5c4d42] transition-colors">
+                                    Eureka's World
+                                </a>
+                            </li>
+                            <li>
+                                <a href="{{ route('blogs') }}" wire:navigate class="block px-5 py-3.5 text-xs font-bold text-black uppercase tracking-widest border-b border-gray-50 hover:bg-gray-50 hover:text-[#5c4d42] transition-colors">
+                                    Blogs
+                                </a>
+                            </li>
+                            <li>
+                                <a href="{{ route('archive') }}" wire:navigate class="block px-5 py-3.5 text-xs font-bold text-black uppercase tracking-widest hover:bg-gray-50 hover:text-[#5c4d42] transition-colors">
+                                    The Archive
+                                </a>
+                            </li>
+                        </ul>
+                    </div>
+                </li>
+
                 <li><a href="{{ route('books') }}" wire:navigate class="text-[12px] xl:text-[15px] font-medium text-black uppercase tracking-wider xl:tracking-[0.2em] hover:opacity-70 transition-colors">Books</a></li>
-                <li><a href="{{ route('blogs') }}" wire:navigate class="text-[12px] xl:text-[15px] font-medium text-black uppercase tracking-wider xl:tracking-[0.2em] hover:opacity-70 transition-colors">Blogs</a></li>
                 <li><a href="{{ route('contact') }}" wire:navigate class="text-[12px] xl:text-[15px] font-medium text-black uppercase tracking-wider xl:tracking-[0.2em] hover:opacity-70 transition-colors">Contact</a></li>
 
                 @auth
@@ -61,9 +91,25 @@
             <ul class="flex flex-col gap-2">
                 <li><a href="{{ route('home') }}" wire:navigate class="block py-4 text-sm font-bold uppercase tracking-widest text-gray-700 hover:text-black hover:bg-gray-50 border-b border-gray-100 transition-colors">Home</a></li>
                 <li><a href="{{ route('about') }}" wire:navigate class="block py-4 text-sm font-bold uppercase tracking-widest text-gray-700 hover:text-black hover:bg-gray-50 border-b border-gray-100 transition-colors">About</a></li>
-                <li><a href="{{ route('eureka.universe') }}" wire:navigate class="block py-4 text-sm font-bold uppercase tracking-widest text-gray-700 hover:text-black hover:bg-gray-50 border-b border-gray-100 transition-colors">Eureka's World</a></li>
+
+                {{-- Mobile Dropdown (Accordion) --}}
+                <li class="border-b border-gray-100">
+                    <details class="group">
+                        <summary class="flex items-center justify-between py-4 text-sm font-bold uppercase tracking-widest text-gray-700 hover:text-black hover:bg-gray-50 transition-colors cursor-pointer list-none [&::-webkit-details-marker]:hidden">
+                            <span>Explore</span>
+                            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" class="w-4 h-4 transition-transform group-open:rotate-180">
+                                <path stroke-linecap="round" stroke-linejoin="round" d="M19.5 8.25l-7.5 7.5-7.5-7.5" />
+                            </svg>
+                        </summary>
+                        <ul class="flex flex-col pb-4 pl-4 gap-1">
+                            <li><a href="{{ route('eureka.universe') }}" wire:navigate class="block py-3 text-xs font-bold uppercase tracking-widest text-gray-500 hover:text-[#5c4d42] transition-colors border-l-2 border-transparent hover:border-[#5c4d42] pl-3">Eureka's World</a></li>
+                            <li><a href="{{ route('blogs') }}" wire:navigate class="block py-3 text-xs font-bold uppercase tracking-widest text-gray-500 hover:text-[#5c4d42] transition-colors border-l-2 border-transparent hover:border-[#5c4d42] pl-3">Blogs</a></li>
+                            <li><a href="{{ route('archive') }}" wire:navigate class="block py-3 text-xs font-bold uppercase tracking-widest text-gray-500 hover:text-[#5c4d42] transition-colors border-l-2 border-transparent hover:border-[#5c4d42] pl-3">The Archive</a></li>
+                        </ul>
+                    </details>
+                </li>
+
                 <li><a href="{{ route('books') }}" wire:navigate class="block py-4 text-sm font-bold uppercase tracking-widest text-gray-700 hover:text-black hover:bg-gray-50 border-b border-gray-100 transition-colors">Books</a></li>
-                <li><a href="{{ route('blogs') }}" wire:navigate class="block py-4 text-sm font-bold uppercase tracking-widest text-gray-700 hover:text-black hover:bg-gray-50 border-b border-gray-100 transition-colors">Blogs</a></li>
                 <li><a href="{{ route('contact') }}" wire:navigate class="block py-4 text-sm font-bold uppercase tracking-widest text-gray-700 hover:text-black hover:bg-gray-50 transition-colors">Contact</a></li>
             </ul>
         </div>
