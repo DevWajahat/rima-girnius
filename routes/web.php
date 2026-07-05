@@ -26,6 +26,8 @@ Route::get("blogs", [BlogsController::class, 'index'])->name('blogs');
 Route::get("blogs/{id}", [BlogsController::class, 'show'])->name('blogs.show');
 # Route::get("/")->name()
 
+Route::get('/archive/media/{id}', [HomeController::class, 'getPlaylistMedia'])->name('archive.media.ajax');
+
 Route::middleware('auth')->group(function () {
 
     // --- THIS IS THE MISSING PART ---
@@ -65,7 +67,7 @@ Route::get('/logout', function () {
 
 Route::get('login', Login::class)->name('login')->middleware('guest');
 
-Route::get('/archive', [HomeController::class, 'video_archive'])->name('archive');
+Route::get('/archive', [HomeController::class, 'archive'])->name('archive');
 
 Route::middleware(['auth', 'verified'])->group(function () {
 

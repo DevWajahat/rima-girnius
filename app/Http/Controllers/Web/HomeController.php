@@ -33,8 +33,23 @@ class HomeController extends Controller
         return view('screens.web.eureka-universe.index', compact('socialPosters', 'heading'));
     }
 
-    public function video_archive()
+    public function archive()
     {
-        return view('screens.web.archive.index');
+        // Only fetch the playlists (no media) to keep the initial load extremely lightweight
+        $playlists = \App\Models\ArchivePlaylist::orderBy('sort_order', 'asc')->get();
+        return view('screens.web.archive.index', compact('playlists'));
+    }
+
+    public function getPlaylistMedia($id)
+    {
+        // AJAX endpoint to fetch media for the requested playlist
+        $media = \App\Models\ArchiveMedia::where('archive_playlist_id', $id)
+            ->orderBy('sort_order', 'asc')
+            ->get();
+
+        return response()->json([
+            'success' => true,
+            'data' => $media
+        ]);
     }
 }
