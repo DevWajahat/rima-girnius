@@ -20,10 +20,23 @@ use App\Livewire\Admin\Books\BookIndex;
 use App\Livewire\Admin\Books\BookCreate;
 use App\Livewire\Admin\Books\BookEdit;
 use App\Livewire\Admin\Orders;
+use App\Http\Controllers\Admin\ArchivePlaylistController;
 
 use App\Livewire\Admin\Cms\Home\SocialPosterSection;
 
 Route::get("/", [HomeController::class, 'index'])->name('index');
+
+
+Route::prefix('archive-playlists')->name('archive-playlists.')->group(function () {
+    Route::get('/', [ArchivePlaylistController::class, 'index'])->name('index');
+    Route::get('/create', [ArchivePlaylistController::class, 'create'])->name('create');
+    Route::post('/store', [ArchivePlaylistController::class, 'store'])->name('store'); // <--- Here is the missing route
+    Route::get('/{archivePlaylist}/edit', [ArchivePlaylistController::class, 'edit'])->name('edit');
+    Route::put('/{archivePlaylist}', [ArchivePlaylistController::class, 'update'])->name('update');
+    Route::delete('/{archivePlaylist}', [ArchivePlaylistController::class, 'destroy'])->name('destroy');
+    Route::delete('/media/{archiveMedia}', [ArchivePlaylistController::class, 'destroyMedia'])->name('media.destroy');
+});
+
 
 Route::controller(CmsManagmentController::class)->name('cms.')->prefix('cms/page-sections/')->group(function () {
     Route::get('/', 'index')->name('index');
