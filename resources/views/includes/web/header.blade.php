@@ -142,7 +142,7 @@
                                 <li><a href="{{ route('blogs') }}" wire:navigate
                                         class="block py-3 text-xs font-bold uppercase tracking-widest text-gray-500 hover:text-[#5c4d42] transition-colors border-l-2 border-transparent hover:border-[#5c4d42] pl-3">Blogs</a>
                                 </li>
-                                <li><a href="{{ route('archive') }}" wire:navigate
+                                <li><a href="{{ route('archive') }}"
                                         class="block py-3 text-xs font-bold uppercase tracking-widest text-gray-500 hover:text-[#5c4d42] transition-colors border-l-2 border-transparent hover:border-[#5c4d42] pl-3">The
                                         Archive</a></li>
                             </ul>
